@@ -1,0 +1,71 @@
+      <!-- Categories -->
+      <div class="container g-pt-100 g-pb-70">
+        <div class="row g-mx-minus-10">
+          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
+            <article class="u-block-hover">
+              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img1.jpg" alt="Image Description">
+              <div class="g-pos-abs g-bottom-30 g-left-30">
+                <span class="d-block g-color-black">Collections</span>
+                <h2 class="h1 mb-0">Women</h2>
+              </div>
+              <a class="u-link-v2" href="#!"></a>
+            </article>
+          </div>
+
+          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
+            <article class="u-block-hover">
+              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img2.jpg" alt="Image Description">
+              <div class="g-pos-abs g-bottom-30 g-left-30">
+                <span class="d-block g-color-black">Collections</span>
+                <h2 class="h1 mb-0">Children</h2>
+              </div>
+              <a class="u-link-v2" href="#!"></a>
+            </article>
+          </div>
+
+          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
+            <article class="u-block-hover">
+              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img3.jpg" alt="Image Description">
+              <div class="g-pos-abs g-bottom-30 g-left-30">
+                <span class="d-block g-color-black">Collections</span>
+                <h2 class="h1 mb-0">Men</h2>
+              </div>
+              <a class="u-link-v2" href="#!"></a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <!-- End Categories -->
+
+
+
+
+
+
+
+
+     {{--  <!-- Categories -->
+      <div class="container-fluid px-0">
+        <div class="row align-items-center no-gutters">
+          <div class="col-md-7 col-lg-8 u-block-hover g-bg-size-cover g-min-height-500 g-flex-centered" data-bg-img-src="assets/img-temp/1200x800/img1.jpg">
+            <div class="g-flex-centered-item text-right g-pa-50">
+              <h2 class="g-color-white g-font-weight-700 g-font-size-50 text-uppercase g-line-height-1 mb-4">Summer<br>Collection
+              </h2>
+              <span class="u-link-v5 g-color-black g-color-primary--hover g-font-size-18">Shop Now</span>
+            </div>
+
+            <a class="u-link-v2" href="#!"></a>
+          </div>
+
+          <div class="col-md-5 col-lg-4 u-block-hover g-bg-size-cover g-min-height-500 g-flex-centered" data-bg-img-src="assets/img/bg/secondary.png">
+            <div class="text-center">
+              <img class="img-fluid mb-3" src="assets/img-temp/500x320/img1.png" alt="Image Description">
+              <h3 class="h5 u-link-v5 g-color-primary--hover g-font-weight-400 mb-3">Sneaker Shoes for Man</h3>
+              <span class="g-color-primary g-font-weight-700 g-font-size-20">$45.00</span>
+            </div>
+
+            <a class="u-link-v2" href="#!"></a>
+          </div>
+        </div>
+      </div>
+      <!-- End Categories --> --}}
