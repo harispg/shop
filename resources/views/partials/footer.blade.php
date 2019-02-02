@@ -349,48 +349,48 @@
     <div class="u-outer-spaces-helper"></div>
 
     <!-- JS Global Compulsory -->
-    <script src="unifyAssets/vendor/jquery/jquery.min.js"></script>
-    <script src="unifyAssets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-    <script src="unifyAssets/vendor/popper.js/popper.min.js"></script>
-    <script src="unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="/unifyAssets/vendor/jquery/jquery.min.js"></script>
+    <script src="/unifyAssets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+    <script src="/unifyAssets/vendor/popper.js/popper.min.js"></script>
+    <script src="/unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
 
     <!-- JS Implementing Plugins -->
-    <script src="unifyAssets/vendor/jquery.countdown.min.js"></script>
-    <script src="unifyAssets/vendor/slick-carousel/slick/slick.js"></script>
-    <script src="unifyAssets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
-    <script src="unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="unifyAssets/vendor/appear.js"></script>
+    <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
+    <script src="/unifyAssets/vendor/slick-carousel/slick/slick.js"></script>
+    <script src="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+    <script src="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/unifyAssets/vendor/appear.js"></script>
 
     <!-- JS Unify -->
-    <script src="unifyAssets/js/hs.core.js"></script>
-    <script src="unifyAssets/js/components/hs.header.js"></script>
-    <script src="unifyAssets/js/helpers/hs.hamburgers.js"></script>
-    <script src="unifyAssets/js/components/hs.dropdown.js"></script>
-    <script src="unifyAssets/js/components/hs.scrollbar.js"></script>
-    <script src="unifyAssets/js/components/hs.countdown.js"></script>
-    <script src="unifyAssets/js/components/hs.count-qty.js"></script>
-    <script src="unifyAssets/js/components/hs.carousel.js"></script>
-    <script src="unifyAssets/js/components/hs.go-to.js"></script>
-    <script  src="unifyAssets/js/components/hs.rating.js"></script>
+    <script src="/unifyAssets/js/hs.core.js"></script>
+    <script src="/unifyAssets/js/components/hs.header.js"></script>
+    <script src="/unifyAssets/js/helpers/hs.hamburgers.js"></script>
+    <script src="/unifyAssets/js/components/hs.dropdown.js"></script>
+    <script src="/unifyAssets/js/components/hs.scrollbar.js"></script>
+    <script src="/unifyAssets/js/components/hs.countdown.js"></script>
+    <script src="/unifyAssets/js/components/hs.count-qty.js"></script>
+    <script src="/unifyAssets/js/components/hs.carousel.js"></script>
+    <script src="/unifyAssets/js/components/hs.go-to.js"></script>
+    <script  src="/unifyAssets/js/components/hs.rating.js"></script>
 
     <!-- JS Revolution Slider -->
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.revolution.min.js"></script>
 
-    <script src="unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/js/revolution.addon.typewriter.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/js/revolution.addon.typewriter.min.js"></script>
 
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.migration.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script src="unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.video.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.migration.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.video.min.js"></script>
 
     <!-- JS Customization -->
-    <script src="unifyAssets/js/custom.js"></script>
+    <script src="/unifyAssets/js/custom.js"></script>
 
     <!-- JS Plugins Init. -->
     <script>

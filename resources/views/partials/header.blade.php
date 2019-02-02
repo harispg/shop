@@ -16,31 +16,31 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
 
     <!-- CSS Global Compulsory -->
-    <link rel="stylesheet" href="unifyAssets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/bootstrap/bootstrap.min.css">
 
     <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="unifyAssets/vendor/icon-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/icon-line-pro/style.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/slick-carousel/slick/slick.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/icon-hs/style.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/hamburgers/hamburgers.min.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/hs-megamenu/src/hs.megamenu.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/animate.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/icon-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/icon-line-pro/style.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/icon-hs/style.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/animate.css">
 
     <!-- CSS Unify Theme -->
-    <link rel="stylesheet" href="assets/css/styles.e-commerce.css">
+    <link rel="stylesheet" href="/assets/css/styles.e-commerce.css">
 
         <!-- Revolution Slider -->
-    <link rel="stylesheet" href="unifyAssets/vendor/revolution-slider/revolution/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/revolution-slider/revolution/css/settings.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/revolution-slider/revolution/css/layers.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/revolution-slider/revolution/css/navigation.css">
-    <link rel="stylesheet" href="unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/css/typewriter.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/settings.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/layers.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/navigation.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/css/typewriter.css">
 
 
     <!-- CSS Customization -->
-    <link rel="stylesheet" href="unifyAssets/css/custom.css">
+    <link rel="stylesheet" href="/unifyAssets/css/custom.css">
   </head>
 
   <body>
@@ -244,19 +244,35 @@
                        data-dropdown-hide-on-scroll="false"
                        data-dropdown-animation-in="fadeIn"
                        data-dropdown-animation-out="fadeOut">
-                      Account
+                      @if(!auth()->check())
+                        Account
+                      @else
+                        {{auth()->user()->name}}
+                      @endif
+
                     </a>
                     <ul id="account-dropdown-2" class="list-unstyled u-shadow-v29 g-pos-abs g-bg-white g-width-160 g-pb-5 g-mt-19 g-z-index-2"
                         aria-labelledby="account-dropdown-invoker-2">
+                      @if(!auth()->check())
                       <li>
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="page-login-1.html">
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="{{route('login')}}">
                           Login
                         </a>
                       </li>
                       <li>
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="page-signup-1.html">
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="{{route('register')}}">
                           Signup
                         </a>
+                      </li>
+                      @else
+
+                      <li>
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" onclick="event.preventDefault(); getElementById('logoutForm').submit();" href="#!">
+                          Logout
+                        </a>
+                        <form id="logoutForm" style="visibility: hidden" action="{{route('logout')}}" method="POST">
+                          @csrf
+                        </form>
                       </li>
                       <li>
                         <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="page-wishlist-1.html">
@@ -268,6 +284,7 @@
                           Your Orders
                         </a>
                       </li>
+                      @endif
                     </ul>
                   </li>
                   <!-- End Account -->
@@ -276,6 +293,8 @@
               </div>
 
               <div class="col-sm-auto g-pr-15 g-pr-0--sm">
+
+                @if(auth()->check())
                 <!-- Basket -->
                 <div class="u-basket d-inline-block g-z-index-3">
                   <div class="g-py-10 g-px-6">
@@ -305,7 +324,7 @@
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="unifyAssets/img-temp/150x150/img1.jpg" alt="Image Description">
+                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img1.jpg" alt="Image Description">
                             </a>
                           </div>
 
@@ -325,7 +344,7 @@
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="unifyAssets/img-temp/150x150/img2.jpg" alt="Image Description">
+                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img2.jpg" alt="Image Description">
                             </a>
                           </div>
 
@@ -345,7 +364,7 @@
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="unifyAssets/img-temp/150x150/img3.jpg" alt="Image Description">
+                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img3.jpg" alt="Image Description">
                             </a>
                           </div>
 
@@ -365,7 +384,7 @@
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="unifyAssets/img-temp/150x150/img4.jpg" alt="Image Description">
+                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img4.jpg" alt="Image Description">
                             </a>
                           </div>
 
@@ -404,6 +423,7 @@
                   </div>
                 </div>
                 <!-- End Basket -->
+                @endif
 
                 <!-- Search -->
                 <div class="d-inline-block g-valign-middle">
@@ -458,8 +478,8 @@
               <!-- End Responsive Toggle Button -->
 
               <!-- Logo -->
-              <a class="navbar-brand" href="home-page-1.html">
-                <img src="assets/img/logo/logo-1.png" alt="Image Description">
+              <a class="navbar-brand" href="{{route('home')}}">
+                <img src="/assets/img/logo/logo-1.png" alt="Image Description">
               </a>
               <!-- End Logo -->
 
@@ -716,7 +736,11 @@
                            aria-haspopup="true"
                            aria-expanded="false"
                            aria-controls="nav-submenu--pages--account">
-                          Account
+                          @if(auth()->check()) 
+                            {{auth()->user()->name}}
+                          @else
+                            Account
+                          @endif
                         </a>
 
                         <!-- Submenu (level 2) -->
@@ -903,7 +927,7 @@
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
                           <article class="g-pos-rel">
-                            <img class="img-fluid" src="assets/img-temp/700x700/img1.jpg" alt="Image Description">
+                            <img class="img-fluid" src="/assets/img-temp/700x700/img1.jpg" alt="Image Description">
 
                             <div class="g-pos-abs g-bottom-30 g-left-30">
                               <span class="d-block g-color-gray-dark-v4 mb-2">Modern Lighting</span>
@@ -953,7 +977,7 @@
                           </div>
                         </div>
 
-                        <div class="col-md-8 g-min-height-400 g-bg-size-cover g-bg-pos-center" data-bg-img-src="assets/img-temp/700x467/img1.jpg">
+                        <div class="col-md-8 g-min-height-400 g-bg-size-cover g-bg-pos-center" data-bg-img-src="/assets/img-temp/700x467/img1.jpg">
                           <article class="g-pa-30">
                             <span class="d-block g-color-white-opacity-0_8 text-uppercase mb-2">Bestseller</span>
                             <span class="d-block h1 g-color-white">MVMTH Swiss Watch</span>
@@ -1140,7 +1164,7 @@
                       <div class="row">
                         <div class="col-md-4 g-mb-30 g-mb-0--md">
                           <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="assets/img-temp/600x400/img1.jpg">
+                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img1.jpg">
                             <div class="g-pos-rel g-z-index-1">
                               <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Blouse</span>
                               <span class="d-block h2 g-color-white mb-4">Lafayette</span>
@@ -1152,7 +1176,7 @@
 
                         <div class="col-md-4 g-mb-30 g-mb-0--md">
                           <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="assets/img-temp/600x400/img2.jpg">
+                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img2.jpg">
                             <div class="g-pos-rel g-z-index-1">
                               <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Hamburg Hats</span>
                               <span class="d-block h2 g-color-white mb-4">Beaver</span>
@@ -1164,7 +1188,7 @@
 
                         <div class="col-md-4 g-mb-30 g-mb-0--md">
                           <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="assets/img-temp/600x400/img3.jpg">
+                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img3.jpg">
                             <div class="g-pos-rel g-z-index-1">
                               <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Glasses</span>
                               <span class="d-block h2 g-color-white mb-4">RayBan</span>
