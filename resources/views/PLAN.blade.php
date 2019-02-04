@@ -7,7 +7,20 @@
 		  Create users table and all possible getters, 
 		  setters, roles, permissions, logins, socialite
 	  </li>
-	  <li>Create articles and all possible getters setters relationships with user and photos</li>
+	  <li>Create articles and all possible getters setters relationships with user and photos
+	  		<ul>
+	  			<li>Name</li>
+	  			<li>Price</li>
+	  			<li>Rating</li>
+	  			<li>Quantity</li>
+	  			<li>Description</li>
+	  			<li>Photos via Photo Eloquent model</li>
+	  			<li>Color</li>
+	  			<li>Size</li>
+	  			<li>Weight</li>
+	  			<li>Packing quantity</li>
+	  		</ul>
+	  </li>
 	  <li>Comments</li>
 	  <li>Orders</li>
 	  <li>Items</li>

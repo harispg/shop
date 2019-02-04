@@ -14,7 +14,7 @@
               <div class="row">
                   <div class='form-group col-xs-12 col-sm-6 mb-4 {{$errors->has('name')?"u-has-error-v1":""}}'>
                     <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Name:</label>
-                    <input class="form-control form-control-md {{$errors->has('name')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" name="name" type="text" value="{{old('name')}}" placeholder="John">
+                    <input class="form-control form-control-md {{$errors->has('name')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" name="name" type="text" value="{{old('name')}}" placeholder="John" required>
                     @if($errors->has('name'))
                         <small class="form-control-feedback">{{$errors->first('name')}}</small>
                     @endif
@@ -23,7 +23,7 @@
 
               <div class="form-group mb-4 {{$errors->has('email')?"u-has-error-v1":""}}">
                 <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Email:</label>
-                <input class="form-control form-control-md form-control-md {{$errors->has('email')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" name="email" type="email" value="{{old('email')}}" placeholder="johndoe@gmail.com">
+                <input class="form-control form-control-md form-control-md {{$errors->has('email')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" name="email" type="email" value="{{old('email')}}" placeholder="johndoe@gmail.com" required>
                 @if($errors->has('email'))
                     <small class="form-control-feedback">{{$errors->first('email')}}</small>
                 @endif
@@ -32,7 +32,7 @@
               <div class="row">
                 <div class="form-group col-xs-12 col-sm-6 mb-4 {{$errors->has('password')?"u-has-error-v1":""}}">
                   <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Password:</label>
-                  <input class="form-control form-control-md rounded-0{{$errors->has('password')?"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded":""}} g-py-15 g-px-15" name="password" type="password" value="{{old('password')}}" placeholder="********">
+                  <input class="form-control form-control-md rounded-0{{$errors->has('password')?"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded":""}} g-py-15 g-px-15" name="password" type="password" value="{{old('password')}}" placeholder="********" required>
                   @if($errors->has('password'))
                     <small class="form-control-feedback">{{$errors->first('password')}}</small>
                   @endif
@@ -48,7 +48,7 @@
               <div class="row justify-content-between mb-5">
                 <div class="col-8 align-self-center {{$errors->has('terms')?"u-has-error-v1":""}}">
                   <label class="form-check-inline u-check g-color-gray-dark-v5 g-font-size-13 g-pl-25">
-                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0 {{$errors->has('terms')?"form-control-feedback":""}}" name="terms" type="checkbox">
+                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0 {{$errors->has('terms')?"form-control-feedback":""}}" name="terms" type="checkbox" required>
                     <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
                       <i class="fa" data-check-icon=""></i>
                     </div>

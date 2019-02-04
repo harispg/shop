@@ -11,9 +11,8 @@ Route::get('plan', function(){
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/verify', function(){
-	return view('auth.verify');
-});
+
+Route::resource('articles', 'ArticlesController');
 
 Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('loginGoogle');
 Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');
