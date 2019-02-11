@@ -49,6 +49,9 @@
 
   <!-- CSS Customization -->
   <link rel="stylesheet" href="/unifyAssets/css/custom.css">
+
+  <!-- Sweetalert2 -->
+  <link rel="stylesheet" type="text/css" href="/css/app.css">
 </head>
 <body>
 
@@ -87,6 +90,7 @@
       </div>
     </div>
   </main>
+  <script src="/js/app.js"></script>
 
   <!-- JS Global Compulsory -->
   <script src="/backend/assets/vendor/jquery/jquery.min.js"></script>
@@ -145,10 +149,8 @@
   <script src="/unifyAssets/js/components/hs.file-attachement.js"></script>
   <script src="/unifyAssets/js/components/hs.masked-input.js"></script>
 
-  <!-- Dropzone -->
-  <script src="/js/dropzone.js"></script>
+  
 
- 
 
   <!-- JS Custom -->
   <script src="/unifyAssets/js/custom.js"></script>
@@ -207,6 +209,7 @@
 
       // initialization of forms
       $.HSCore.components.HSMaskedInput.init('[data-mask]');
+
   
     });
 

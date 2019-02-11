@@ -65,6 +65,8 @@ class ArticlesController extends Controller
 
         $article->attachPhotos($photos);
 
+        flash()->success('Article created', $article->name . "is saved in database");
+
         return redirect()->back();
 
     }

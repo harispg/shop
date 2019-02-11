@@ -26,8 +26,13 @@
 	  <li>Items</li>
 	  <li>Queue emails for verification and others</li>
 	</ul>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+
+@endsection
+
+@section('script')
+
+@include('flash')
 
 @endsection
 

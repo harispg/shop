@@ -349,6 +349,7 @@
     <div class="u-outer-spaces-helper"></div>
 
     <!-- JS Global Compulsory -->
+    <script src="/js/app.js"></script>
     <script src="/unifyAssets/vendor/jquery/jquery.min.js"></script>
     <script src="/unifyAssets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
     <script src="/unifyAssets/vendor/popper.js/popper.min.js"></script>
@@ -393,6 +394,8 @@
     <script src="/unifyAssets/js/custom.js"></script>
 
     <!-- JS Plugins Init. -->
+
+    @yield('script')
     <script>
       $(document).on('ready', function () {
         // initialization of carousel

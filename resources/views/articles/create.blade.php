@@ -102,6 +102,9 @@
 
 @endsection
 
+
 @section('script')
+
+@include('flash')
 
 @endsection

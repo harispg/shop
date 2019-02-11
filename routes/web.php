@@ -7,8 +7,12 @@ Route::get('/', function () {
     return view('home');
 });
 Route::get('plan', function(){
+	//flash()->success('Usao si u plan', 'bole te brige');
 	return view('PLAN');
 })->middleware('role:Admin');
+
+
+
 
 Auth::routes(['verify' => true]);
 
