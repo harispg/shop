@@ -77,7 +77,7 @@ return [
     ],
     'max' => [
         'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => 'The :attribute may not be greater than :max kb.',
         'string' => 'The :attribute may not be greater than :max characters.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
@@ -132,6 +132,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

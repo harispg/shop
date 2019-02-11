@@ -2,19 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Photo;
 use Illuminate\Http\Request;
 
-class ArticlesController extends Controller
+class PhotosController extends Controller
 {
-
-
-    public function __construct()
-    {
-        $this->middleware(['auth','role:Admin'])->except(['index', 'show']);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +23,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        //
     }
 
     /**
@@ -43,30 +34,7 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
-            'quantity' => 'required|integer',
-            'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
-            'photos.*' => 'required|image|max:2048',
-        ]);
-
-        $article = Article::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'quantity' => $request->quantity,
-            'price' => $request->price,
-        ]);
-        /**
-         * [$photos Array of App\Photo objects]
-         * @var [array]
-         */
-        $photos = Photo::makePhotosFromFiles($request->photos);
-
-        $article->attachPhotos($photos);
-
-        return redirect()->back();
-
+        //
     }
 
     /**
