@@ -7,9 +7,9 @@ Route::get('/', function () {
     return view('home');
 });
 Route::get('plan', function(){
-	//flash()->success('Usao si u plan', 'bole te brige');
+	flash()->success('Usao si u plan', 'bole te brige');
 	return view('PLAN');
-})->middleware('role:Admin');
+})->middleware(['auth','role:Admin']);
 
 
 

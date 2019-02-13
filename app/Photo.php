@@ -9,7 +9,7 @@ class Photo extends Model
 {
 
 	protected $baseDir = 'Images/Articles';
-	protected $fillable = ['name', 'path', 'thumbnail_path'];
+	protected $guarded = [];
 
 
 

@@ -22,7 +22,8 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::all();
+        return view('articles.index', compact(['articles']));
     }
 
     /**
@@ -43,12 +44,14 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+        $bbcode=$request->specification;
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
             'photos.*' => 'required|image|max:2048',
+            'specification' => 'required',
         ]);
 
         $article = Article::create([
@@ -56,6 +59,7 @@ class ArticlesController extends Controller
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
+            'specification' => $request->specification,
         ]);
         /**
          * [$photos Array of App\Photo objects]
@@ -74,23 +78,23 @@ class ArticlesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Article $article)
     {
-        //
+        return view('articles.show', compact(['article']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        return view('articles.edit', compact(['article']));
     }
 
     /**
@@ -100,9 +104,9 @@ class ArticlesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        dd($request->all());
     }
 
     /**

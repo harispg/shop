@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-	protected $fillable = ['name', 'description', 'price', 'quantity', ];
+	protected $guarded = [];
     public function photos()
     {
     	return $this->hasMany(Photo::class);

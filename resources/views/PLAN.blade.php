@@ -21,11 +21,16 @@
 	  			<li>Packing quantity</li>
 	  		</ul>
 	  </li>
+	  <li>Create article categories, connect them with articles, give admin abbility to create categories, and add articles to cattegories</li>
 	  <li>Comments</li>
 	  <li>Orders</li>
 	  <li>Items</li>
 	  <li>Queue emails for verification and others</li>
 	</ul>
+
+	<div>
+		{!!$bbcode!!}
+	</div>
 
 
 @endsection

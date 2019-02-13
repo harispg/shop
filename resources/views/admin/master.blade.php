@@ -46,12 +46,14 @@
 
   <!-- CSS Unify -->
   <link rel="stylesheet" href="/backend/assets/css/unify-admin.css">
+  <link rel="stylesheet" href="/backend/assets/vendor/summernote-themes/unify-lite.css">
 
   <!-- CSS Customization -->
   <link rel="stylesheet" href="/unifyAssets/css/custom.css">
 
   <!-- Sweetalert2 -->
   <link rel="stylesheet" type="text/css" href="/css/app.css">
+
 </head>
 <body>
 
@@ -130,6 +132,7 @@
   <script src="/backend/assets/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
   <script src="/unifyAssets/vendor/jquery.filer/js/jquery.filer.min.js"></script>
   <script src="/unifyAssets/vendor/jquery.maskedinput/src/jquery.maskedinput.js"></script>
+  <script src="/backend/assets/vendor/summernote/dist/summernote-bs4.min.js"></script>
 
   <!-- JS Unify -->
   <script src="/unifyAssets/js/hs.core.js"></script>
@@ -148,9 +151,7 @@
   <script src="/unifyAssets/js/helpers/hs.file-attachments.js"></script>
   <script src="/unifyAssets/js/components/hs.file-attachement.js"></script>
   <script src="/unifyAssets/js/components/hs.masked-input.js"></script>
-
-  
-
+  <script src="/backend/assets/js/components/hs.text-editor.js"></script>
 
   <!-- JS Custom -->
   <script src="/unifyAssets/js/custom.js"></script>
@@ -209,6 +210,11 @@
 
       // initialization of forms
       $.HSCore.components.HSMaskedInput.init('[data-mask]');
+  
+      // initialization of text editors
+      $.HSCore.components.HSTextEditor.init('.js-text-editor');
+
+      
 
   
     });
