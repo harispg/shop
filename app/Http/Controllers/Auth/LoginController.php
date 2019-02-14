@@ -28,7 +28,11 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {
+        return redirect()->intended();
+    }
+
 
     /**
      * Create a new controller instance.
@@ -58,7 +62,7 @@ class LoginController extends Controller
 
         $this->loginOrCreate($user, $request);
 
-        return redirect()->back();
+        return redirect()->intended();
     }
 
     /**

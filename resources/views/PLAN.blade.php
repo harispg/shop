@@ -2,35 +2,12 @@
 
 @section('content')
 	
-	<ul class="">
-	  <li>
-		  Create users table and all possible getters, 
-		  setters, roles, permissions, logins, socialite
-	  </li>
-	  <li>Create articles and all possible getters setters relationships with user and photos
-	  		<ul>
-	  			<li>Name</li>
-	  			<li>Price</li>
-	  			<li>Rating</li>
-	  			<li>Quantity</li>
-	  			<li>Description</li>
-	  			<li>Photos via Photo Eloquent model</li>
-	  			<li>Color</li>
-	  			<li>Size</li>
-	  			<li>Weight</li>
-	  			<li>Packing quantity</li>
-	  		</ul>
-	  </li>
-	  <li>Create article categories, connect them with articles, give admin abbility to create categories, and add articles to cattegories</li>
-	  <li>Comments</li>
-	  <li>Orders</li>
-	  <li>Items</li>
-	  <li>Queue emails for verification and others</li>
+	<ul>
+		<li>Create categories</li>
+		<li>Create comments</li>
+		<li>Create tags</li>
+		<li>Discounts</li>
 	</ul>
-
-	<div>
-		{!!$bbcode!!}
-	</div>
 
 
 @endsection

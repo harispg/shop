@@ -17,6 +17,7 @@
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <!-- CSS Global Compulsory -->
     <link rel="stylesheet" href="/unifyAssets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/icon-line/css/simple-line-icons.css">
 
 
     <!-- CSS Implementing Plugins -->
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/animate.css">
+
 
     <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="/assets/css/styles.e-commerce.css">
