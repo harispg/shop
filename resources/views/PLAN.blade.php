@@ -3,12 +3,11 @@
 @section('content')
 	
 	<ul>
-		<li>Create categories</li>
+		<li>Create categories</li> {{-- Name, id,  Kateogrija moze da ima vise proizvoda, a proizvod pripada više kategorija od čega je jedna glavna --}}
 		<li>Create comments</li>
 		<li>Create tags</li>
 		<li>Discounts</li>
 	</ul>
-
 
 @endsection
 

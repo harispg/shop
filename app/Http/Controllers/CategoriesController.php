@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Photo;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-class PhotosController extends Controller
+class CategoriesController extends Controller
 {
+
+	public function _construct()
+	{
+		$this->middleware(['auth', 'role:Admin']);
+	}
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +18,7 @@ class PhotosController extends Controller
      */
     public function index()
     {
-        $photos = Photo::latest()->get();
-        return view('photos.index', compact('photos'));
+        //
     }
 
     /**
@@ -25,9 +26,9 @@ class PhotosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Article $article)
+    public function create()
     {
-        
+        return view('categories.create');
     }
 
     /**
@@ -38,11 +39,7 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        $files = $request->file('photos');
-        $newPhotos = Photo::makePhotosFromFiles($files);
-        $photos = Photo::latest()->get();
-        return redirect()->route('photosUpload');
-
+        dd($request->all());
     }
 
     /**
@@ -85,11 +82,8 @@ class PhotosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Photo $photo)
+    public function destroy($id)
     {
-        $photo->delete();
-
-        return redirect()->back();
+        //
     }
-
 }

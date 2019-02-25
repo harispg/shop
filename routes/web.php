@@ -23,11 +23,18 @@ Route::resource('articles', 'ArticlesController');
 Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('loginGoogle');
 Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');
 
+Route::post('/findPhotos', 'Api\ApiPhotosController@find');
+
+Route::get('/photosUpload', 'PhotosController@index')->name('photosUpload');
+Route::post('/photos', 'PhotosController@store')->name('addingPhotos');
+Route::delete('/photos/{photo}', 'PhotosController@destroy')->name('photoDelete');
+
 Route::get('admin', function(){
 	return view('admin.master');
 });
 
 
-Route::post('/ajaxPost', function(Request $request){
-	dd($request->all());
-});
+
+Route::resource('categories', 'CategoriesController');
+
+Route::post('/file-upload', function(){});

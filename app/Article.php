@@ -9,11 +9,11 @@ class Article extends Model
 	protected $guarded = [];
     public function photos()
     {
-    	return $this->hasMany(Photo::class);
+    	return $this->belongsToMany(Photo::class);
     }
 
     public function attachPhotos($photos){
 
-    		$this->photos()->saveMany($photos);
+    		$this->photos()->sync($photos);
     }
 }

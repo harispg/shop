@@ -33,7 +33,8 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $photos = Photo::latest()->get();
+        return view('articles.create', compact('photos'));
     }
 
     /**
@@ -44,7 +45,6 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
-        $bbcode=$request->specification;
         $this->validate($request, [
             'name' => 'required',
             'description' => 'required',

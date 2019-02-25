@@ -13,15 +13,15 @@ class Photo extends Model
 
 
 
-    public function article()
+    public function articles()
     {
-    	return $this->belongsTo(Article::class);
+    	return $this->belongsToMany(Article::class);
     }
 
     /**
      * [makePhotosFromFiles makes photos from uploaded files]
      * @param  [array] $files [UploadedFile file]
-     * @return [array]        [App\Photo::class]
+     * @return [array]        [App\Photo::class->id]
      */
     public static function makePhotosFromFiles($files){
     	foreach ($files as $file) {
@@ -32,7 +32,8 @@ class Photo extends Model
 	        $file->move($photo->baseDir, $photo->name);
 
 	    	Image::make($photo->path)->fit(200)->save($photo->thumbnail_path);
-	    	$photos[] = $photo;
+            $photo->save();
+	    	$photos[] = $photo->id;
     	}
 
     	return $photos;

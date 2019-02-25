@@ -16,14 +16,27 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->unsignedInteger('price');
-            $table->unsignedInteger('qunatity');
+            $table->text('description');
+            $table->text('specification');
+            $table->float('price',8,2);
+            $table->unsignedInteger('quantity');
             // TODO $table->unsignedInteger('weight');
             // TODO $table->string or unsignedInteger or something else('size')
             // TODO $table->unsignedInteger('packing_quantity')
             // TODO $table->unsignedInteger('rating') maybe separate table is the best choice
             $table->timestamps();
+        });
+
+        Schema::create('article_photo', function (Blueprint $table) {
+            $table->unsignedInteger('article_id');
+            $table->unsignedInteger('photo_id');
+
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('photo_id')->references('id')->on('photos')->onDelete('cascade');
+
+            $table->timestamps();
+
+            $table->primary(['article_id', 'photo_id']);
         });
     }
 
@@ -35,5 +48,6 @@ class CreateArticlesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('articles');
+        Schema::dropIfExists('article_photo');
     }
 }

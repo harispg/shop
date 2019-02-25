@@ -19,6 +19,18 @@ class CreateCategoriesTable extends Migration
             $table->text('description');
             $table->timestamps();
         });
+
+        Schema::create('category_photo', function (Blueprint $table) {
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('photo_id');
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('photo_id')->references('id')->on('photos')->onDelete('cascade');
+
+            $table->timestamps();
+
+            $table->primary(['category_id', 'photo_id']);
+        });
     }
 
     /**
@@ -29,5 +41,6 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('category_photo');
     }
 }
