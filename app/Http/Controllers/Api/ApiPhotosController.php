@@ -15,4 +15,8 @@ class ApiPhotosController extends Controller
     	$photos = Photo::where('name', 'like', "%$typedIn%")->get();
     	return $photos;
     }
+
+    public function allPhotos(Request $request){
+    	return Photo::latest()->get();
+    }
 }

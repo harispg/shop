@@ -24,6 +24,7 @@ Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('logi
 Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');
 
 Route::post('/findPhotos', 'Api\ApiPhotosController@find');
+Route::post('/allPhotos', 'Api\ApiPhotosController@allPhotos');
 
 Route::get('/photosUpload', 'PhotosController@index')->name('photosUpload');
 Route::post('/photos', 'PhotosController@store')->name('addingPhotos');

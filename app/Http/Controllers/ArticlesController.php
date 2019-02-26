@@ -50,9 +50,11 @@ class ArticlesController extends Controller
             'description' => 'required',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
-            'photos.*' => 'required|image|max:2048',
+            'photos' => 'required|string',
             'specification' => 'required',
         ]);
+
+        $photoIDs = explode('_', $request->photos);
 
         $article = Article::create([
             'name' => $request->name,
@@ -61,13 +63,9 @@ class ArticlesController extends Controller
             'price' => $request->price,
             'specification' => $request->specification,
         ]);
-        /**
-         * [$photos Array of App\Photo objects]
-         * @var [array]
-         */
-        $photos = Photo::makePhotosFromFiles($request->photos);
+        
 
-        $article->attachPhotos($photos);
+        $article->photos()->sync($photoIDs);
 
         flash()->success('Article created', $article->name . "is saved in database");
 

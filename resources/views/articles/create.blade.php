@@ -27,7 +27,7 @@
 
     <div class="form-group {{$errors->has('description')?"has-error":""}}">
       <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>
-      <textarea id="description" class="form-control" type="text" name="description" value="{{old('description')}}" required> </textarea>
+      <textarea id="description" class="form-control" type="text" name="description" required>{{old('description')}}</textarea>
       @if($errors->has('description'))
       <span class="text-danger">{{$errors->first('description')}}</span>
       @endif
@@ -60,10 +60,17 @@
         @endif
       </div>
     </div>
-    
-      <button  type="button" class="btn btn-primary form-control mb-3" data-toggle="modal" data-target="#photoModal">Add some photos</button>
 
-        <button class="btn btn-primary" id="submit-all" type="submit">Save</button>
+    <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
+    
+      <button  type="button" class="btn btn-primary form-control mb-1" data-toggle="modal" data-target="#photoModal">Add some photos</button>
+      @if(!$errors->has('photos'))
+        <span id="selectedPhotosNumber" class="form-text"></span class="form-text">
+      @else
+        <span id="photosError" class="form-text text-danger">{{$errors->first('photos')}}</span>
+      @endif
+
+        <button class="btn btn-primary mt-3" type="submit">Save article</button>
 
   </form>
   </div>
@@ -82,35 +89,40 @@
             <small class="font-bold">You can do this later too, but We recomend you to do it now.</small>
         </div>
         <div class="modal-body">
+          <h2>Add new photos</h2>
+            <p>
+              Dropzone is very easy to use just drag photos in the box or simpley click the box and file browser for your PC will open
+            </p>
+            <button id="sendPhotos" type="button" class="btn btn-info mb-1">Save photos to database</button>
+            <div id="myDropzone" class="dropzone">
+
+            </div>
             <div class="col-sm-12">
               <h2>All your photos</h2>
               <p>
                   You can select photos for your article. Latest uploaded are first. You can search by the name.
               </p>
               <label class="text-muted" for="photoSearch">Search: <input class="form-control" type="text" name="photoSearch"></label>
+              <div class="form-group">
+                  <button class="btn btn-info submitPhotos" type="button">Attach selected Photos</button>
+                </div>
                 <div id="photoGrid"> 
                   @foreach($photos as $photo)
                     <div class="badge m-2 bg-dark">
                       <h3 class="text-light">{{$photo->name}}</h3>
                         <img src="/{{$photo->thumbnail_path}}"> <br />
-                        <label class="text-light mt-1 mr-15"> <input type="checkbox" class="i-checks"> Select</label>
+                        <label class="text-light mt-1 float-left"> <input type="checkbox" class="i-checks" 
+                               data-photo="{{$photo->id}}"> Select article photo</label>
                     </div>
                   @endforeach
                 </div>
 
                 <div class="form-group">
-                  <button class="btn btn-primary" type="submit">Attach Photos</button>
+                  <button class="btn btn-info submitPhotos" type="button">Attach selected Photos</button>
                 </div>
             </div>
 
-                  <h2>Add new photos</h2>
-            <p>
-              Dropzone is very easy to use just drag photos in the box or simpley click the box and file browser for your PC will open
-            </p>
-            <button id="sendPhotos" type="button" class="btn btn-primary mb-1">Save photos to database</button>
-            <div id="myDropzone" class="dropzone">
-
-            </div>
+            
         </div>
 
         <div class="modal-footer">
@@ -136,6 +148,8 @@
   Dropzone.autoDiscover=false;
 
   $(document).ready(function(){
+
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     
     //Initialization of i-checks
     $('.i-checks').iCheck({
@@ -163,19 +177,30 @@
         init: function() {
             var _this = this;
 
-            $("#sendPhotos").on('click', function(e) {
+            $("button#sendPhotos").on('click', function(e) {
               _this.processQueue();
             });
             //send all the form data along with the files:
             this.on("sendingmultiple", function(data, xhr, formData) {
                 formData.append("_token", jQuery('input[name="_token"]').val());
             });
+
+            this.on("queuecomplete", function(e, response){
+              $.ajax({
+                type: 'POST',
+                url: '/allPhotos',
+                method: 'POST',
+                data: {_token: CSRF_TOKEN},
+                success: function(photos){
+                  renderPhotos(photos);
+                }
+              });
+            });
         },
       });
 
 
       //Searching photos script
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
       $("input[name='photoSearch']").on('keyup', function() {
         var searchInput = $("input[name='photoSearch']").val();
         $.ajax({
@@ -185,11 +210,11 @@
           data: {_token: CSRF_TOKEN, searchQuery: searchInput},
           success: function(photos){
             renderPhotos(photos);
-
           }
         });
+      });
 
-        function renderPhotos(photos){
+      function renderPhotos(photos){
           var numberOfPhotos = photos.length;
           var i=0;
           $("#photoGrid").html("");
@@ -201,7 +226,7 @@
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });  
-        }
+        };
 
         function giveHtml(photo){
           
@@ -209,10 +234,28 @@
             '<div class="badge m-2 bg-dark">\
               <h3 class="text-light">'+photo.name+'</h3>\
               <img src="/'+photo.thumbnail_path+'"> <br />\
-              <label class="text-light mt-1 mr-5"><input type="checkbox" class="i-checks"> Select</label>\
+              <label class="text-light mt-1 mr-5">\
+              <input type="checkbox" class="i-checks" data-photo="'+photo.id+'"> Select</label>\
               </div>'
             );
+        };
+      //var currentInput;
+      $(".submitPhotos").on('click', function(){
+
+        console.log();
+        var photo_ids = [];
+        $(".icheckbox_square-green.checked").each(function(){
+        photo_ids.push($(this).children('input').data("photo"));
+        });
+        if($("span#photosError").length != 0){
+          var spanInQuestion = $("span#photosError");
+          spanInQuestion.removeClass('text-danger');
+          spanInQuestion.attr('id', 'selectedPhotosNumber');
         }
+        $("span#selectedPhotosNumber").text("You selected: " + photo_ids.length + " photos.");
+        $("input#photoIDs").attr("value", photo_ids.join("_"));
+        $("div.modal#photoModal").modal('toggle');
+
       });
 
           
@@ -226,3 +269,5 @@
 @include('flash')
 
 @endsection
+
+
