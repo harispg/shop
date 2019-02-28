@@ -792,6 +792,11 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   }
 }
 
+body.swal2-shown {
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+}
+
 body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
   overflow: hidden;
 }
@@ -888,6 +893,21 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   z-index: 1060;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  /* stylelint-disable-line scss/no-duplicate-dollar-variables */
 }
 
 .swal2-container.swal2-top {
@@ -936,6 +956,14 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 .swal2-container.swal2-bottom-right {
   align-items: flex-end;
   justify-content: flex-end;
+}
+
+.swal2-container.swal2-bottom > :first-child,
+.swal2-container.swal2-bottom-start > :first-child,
+.swal2-container.swal2-bottom-left > :first-child,
+.swal2-container.swal2-bottom-end > :first-child,
+.swal2-container.swal2-bottom-right > :first-child {
+  margin-top: auto;
 }
 
 .swal2-container.swal2-grow-fullscreen > .swal2-modal {
@@ -1228,6 +1256,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   transition: border-color 0.3s, box-shadow 0.3s;
   border: 1px solid #d9d9d9;
   border-radius: 0.1875em;
+  background: inherit;
   font-size: 1.125em;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
@@ -1272,6 +1301,11 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   color: #cccccc;
 }
 
+.swal2-popup .swal2-range {
+  margin: 1em auto;
+  background: inherit;
+}
+
 .swal2-popup .swal2-range input {
   width: 80%;
 }
@@ -1285,7 +1319,6 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 .swal2-popup .swal2-range input,
 .swal2-popup .swal2-range output {
   height: 2.625em;
-  margin: 1em auto;
   padding: 0;
   font-size: 1.125em;
   line-height: 2.625em;
@@ -1301,6 +1334,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 }
 
 .swal2-popup .swal2-file {
+  background: inherit;
   font-size: 1.125em;
 }
 
@@ -1313,6 +1347,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   min-width: 50%;
   max-width: 100%;
   padding: 0.375em 0.625em;
+  background: inherit;
   color: #545454;
   font-size: 1.125em;
 }
@@ -1321,6 +1356,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 .swal2-popup .swal2-checkbox {
   align-items: center;
   justify-content: center;
+  background: inherit;
 }
 
 .swal2-popup .swal2-radio label,
@@ -1537,19 +1573,20 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
           transform: rotate(-45deg);
 }
 
-.swal2-progresssteps {
+.swal2-progress-steps {
   align-items: center;
   margin: 0 0 1.25em;
   padding: 0;
+  background: inherit;
   font-weight: 600;
 }
 
-.swal2-progresssteps li {
+.swal2-progress-steps li {
   display: inline-block;
   position: relative;
 }
 
-.swal2-progresssteps .swal2-progresscircle {
+.swal2-progress-steps .swal2-progress-step {
   width: 2em;
   height: 2em;
   border-radius: 2em;
@@ -1560,27 +1597,20 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   z-index: 20;
 }
 
-.swal2-progresssteps .swal2-progresscircle:first-child {
-  margin-left: 0;
-}
-
-.swal2-progresssteps .swal2-progresscircle:last-child {
-  margin-right: 0;
-}
-
-.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep {
+.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step {
   background: #3085d6;
 }
 
-.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progresscircle {
+.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step {
+  background: #add8e6;
+  color: #fff;
+}
+
+.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step ~ .swal2-progress-step-line {
   background: #add8e6;
 }
 
-.swal2-progresssteps .swal2-progresscircle.swal2-activeprogressstep ~ .swal2-progressline {
-  background: #add8e6;
-}
-
-.swal2-progresssteps .swal2-progressline {
+.swal2-progress-steps .swal2-progress-step-line {
   width: 2.5em;
   height: 0.4em;
   margin: 0 -1px;
@@ -1667,6 +1697,11 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
 }
 
 @media print {
+  body.swal2-shown {
+    /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+    /* stylelint-disable-line scss/no-duplicate-dollar-variables */
+  }
+
   body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
     overflow-y: scroll !important;
   }

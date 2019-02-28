@@ -7,7 +7,7 @@
           type: "{!!session('flash_message.level')!!}",
           showConfirmButton: false,
           timer: 2500
-          })
+          });
     </script>
   @else
     <script type="text/javascript">
@@ -16,7 +16,7 @@
           html: "{!!session('flash_message.message')!!}",
           type: "{!!session('flash_message.level')!!}",
           confirmButtonText: 'Ok'
-          })
+          });
     </script>
   @endif
 @endif

@@ -133,16 +133,20 @@
   </div>
 </div>
 
+
+
 @endsection
 
 @section('pluginScripts')
   <script type="text/javascript" src="/inspinia/js/plugins/summernote/summernote-bs4.js"></script>
   <script src="/inspinia/js/plugins/iCheck/icheck.min.js"></script>
   <script type="text/javascript" src="/inspinia/js/plugins/dropzone/dropzone.js"></script>
+  @include('flash')
 @endsection
 
 
 @section('script')
+
 <script type="text/javascript">
 
   Dropzone.autoDiscover=false;
@@ -241,8 +245,6 @@
         };
       //var currentInput;
       $(".submitPhotos").on('click', function(){
-
-        console.log();
         var photo_ids = [];
         $(".icheckbox_square-green.checked").each(function(){
         photo_ids.push($(this).children('input').data("photo"));
@@ -258,15 +260,12 @@
 
       });
 
-          
-
-    
   });
 </script>
 
-</script>
+
 	
-@include('flash')
+
 
 @endsection
 

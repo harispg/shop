@@ -18,8 +18,10 @@
 
     <title>INSPINIA | Dashboard</title>
 
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
     <link href="/inspinia/css/bootstrap.min.css" rel="stylesheet">
     <link href="/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
 
     @yield('pluginCSS')
     <!-- Toastr style -->
@@ -60,6 +62,7 @@
     </div>
 
     <!-- Mainly scripts -->
+    <script src="/js/app.js"></script>
     <script src="/inspinia/js/jquery-3.1.1.min.js"></script>
     <script src="/inspinia/js/popper.min.js"></script>
     <script src="/inspinia/js/bootstrap.js"></script>

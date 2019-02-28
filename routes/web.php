@@ -36,6 +36,7 @@ Route::get('admin', function(){
 
 
 
-Route::resource('categories', 'CategoriesController');
+Route::get('categories/create', 'CategoriesController@create');
+Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
 
 Route::post('/file-upload', function(){});

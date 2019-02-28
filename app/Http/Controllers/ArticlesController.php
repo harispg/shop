@@ -67,7 +67,7 @@ class ArticlesController extends Controller
 
         $article->photos()->sync($photoIDs);
 
-        flash()->success('Article created', $article->name . "is saved in database");
+        flash()->success('Article created', $article->name . " is saved in database");
 
         return redirect()->back();
 
