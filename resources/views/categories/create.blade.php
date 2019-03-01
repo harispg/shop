@@ -9,14 +9,66 @@
 
 
 @section('content')
-<h1>Product categories</h1>
+<h1 class="display-4">Product categories</h1>
+
+<div class="widget style1 lazur-bg col-2 btn" data-toggle="modal" data-target="#newCategory">    
+  <h2 class="font-bold">New Category</h2>
+</div>
+
+<!-- New Category modal -->
+<div class="modal inmodal fade" 
+ id="newCategory" 
+ tabindex="-1" 
+ role="dialog"  
+ aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h1>Create new Category</h1>
+            
+        </div>
+        <div class="modal-body newCategory">
+            
+              <div class="form-group">
+                <label class="col-sm-2 col-form-label pl-0" for="name">Name:</label>
+                <input id="nameNew" class="form-control" type="text" name="name" value="" required>
+                <span id="nc-name-error" class="text-danger name"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>
+                <textarea id="descriptionNew" class="form-control" type="text" name="description" required></textarea>  
+                <span id="nc-description-error" class="text-danger"></span>
+              </div>
+
+              <div class="form-group">
+                    <label for="photo" class="col-sm-2 col-fomr-label pl-0">Choose photo...</label>
+                <div class="custom-file">
+                    <input id="photoNew" type="file" name="photo" class="custom-file-input">
+                    <label for="photo" class="custom-file-label"> </label>
+                </div>  
+                <span id="nc-photo-error" class="text-danger"></span>
+              </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary save" data-category="">Save changes</button>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- New Category modal END -->
+
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
       <div class="col-lg-12">
       <div class="ibox ">
           <div class="ibox-title">
               <h5>Basic Data Tables example with responsive plugin</h5>
-              <div class="ibox-tools">
+              {{-- <div class="ibox-tools">
                   <a class="collapse-link">
                       <i class="fa fa-chevron-up"></i>
                   </a>
@@ -32,7 +84,7 @@
                   <a class="close-link">
                       <i class="fa fa-times"></i>
                   </a>
-              </div>
+              </div> --}}
           </div>
           <div class="ibox-content">
 
@@ -79,27 +131,23 @@
                   </div>
                   <div id="{{$category->id}}" class="modal-body">
                       
-                        <div class="form-group {{$errors->has('name')?"has-error":""}}">
+                        <div class="form-group">
                           <label class="col-sm-2 col-form-label pl-0" for="name">Name:</label>
                           <input id="name" class="form-control" type="text" name="name" value="{{$category->name}}" required>
-                          @if($errors->has('name'))
-                          <span class="text-danger">{{$errors->first('name')}}</span>
-                          @endif
+                          <span id="name{{$category->id}}"class="text-danger name"></span>
                         </div>
 
-                        <div class="form-group {{$errors->has('description')?"has-error":""}}">
+                        <div class="form-group">
                           <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>
-                          <textarea id="description" class="form-control" type="text" name="description" required>{{$category->description}}</textarea>
-                          @if($errors->has('description'))
-                          <span class="text-danger">{{$errors->first('description')}}</span>
-                          @endif
+                          <textarea id="description" class="form-control" type="text" name="description" required>{{$category->description}}</textarea>  
+                          <span id="description{{$category->id}}"class="text-danger"></span>
                         </div>
 
                   </div>
 
                   <div class="modal-footer">
                       <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary save" data-category="{{$category->id}}">Save changes</button>
+                      <button type="button" class="btn btn-primary edit" data-category="{{$category->id}}">Save changes</button>
                   </div>
               </div>
             </div>
@@ -143,6 +191,12 @@
 @section('script')
 <script>
 $(document).ready(function(){
+
+  //initialization of custom-file-upload
+  $('.custom-file-input').on('change', function() {
+     let fileName = $(this).val().split('\\').pop();
+     $(this).next('.custom-file-label').addClass("selected").html(fileName);
+  }); 
   var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     $('.dataTables-example').DataTable({
         pageLength: 25,
@@ -170,19 +224,100 @@ $(document).ready(function(){
 
     $("button.btn.btn-primary.save").on('click', function(){
       var saveButton = $(this);
-      var categoryId = saveButton.data('category');
-      var name = $("div.modal-body#"+categoryId).find('input[name="name"]').val();
-      var description = $("div.modal-body#"+categoryId).find("textarea[name='description']").html();   
+      var name = $("input#nameNew").val();
+      var description = $("textarea#descriptionNew").val();
+      var photo = $("input#photoNew")[0].files[0];
+      var formData = new FormData;
+      formData.append('photo', photo);
+      formData.append('name', name );
+      formData.append('description', description);
       $.ajax({
           type: 'POST',
-          url: "/categories/"+categoryId,
+          dataType: 'JSON',
+          contentType: false,
+          cache: false,
+          processData: false,
+          url: "/api/categories",
+          method: 'POST',
+          data: formData,
+          success: function(response){
+            $("span#nc-name-error").html("");
+            $("span#nc-description-error").html("");
+            $("span#nc-photo-error").html("");
+            
+            $("#newCategory").modal('toggle');
+
+            swal.fire({
+              title: "Done",
+              html: "Sucessfully created category",
+              type: "success",
+              showConfirmButton: false,
+              timer: 1500
+              });
+          },
+          error: function(response){
+            console.log(response);
+            if(response.responseJSON.errors != null){
+            var errors=response.responseJSON.errors;
+            var nameError = errors.name;
+            var descriptionError = errors.description;
+            var photoError = errors.photo;
+            var nameErrorSpan = $("span#nc-name-error");
+            var descriptionErrorSpan = $("span#nc-description-error");
+            var photoErrorSpan = $("span#nc-photo-error");
+
+            if(nameError != null){
+              nameErrorSpan.html(nameError);
+            }else{
+              nameErrorSpan.html("");
+            }
+
+            if(descriptionError != null){
+              descriptionErrorSpan.html(descriptionError);
+            }else{
+              descriptionErrorSpan.html("");
+            }
+
+            if(photoError != null){
+              photoErrorSpan.html(photoError);
+            }else{
+              photoErrorSpan.html("");
+            }
+            }
+            
+          }
+        
+      });
+
+    });
+
+    $("button.btn.btn-primary.edit").on('click', function(){
+      var saveButton = $(this);
+      var categoryId = saveButton.data('category');
+      var name = $("div.modal-body#"+categoryId).find('input[name="name"]').val();
+      var description = $("div.modal-body#"+categoryId).find("textarea[name='description']").val();
+      $.ajax({
+          type: 'POST',
+          url: "/api/categories/"+categoryId,
           method: 'POST',
           data: {_token: CSRF_TOKEN, _method: 'PATCH', name: name, description: description},
           success: function(odgovor){
             console.log(odgovor);
           },
           error: function(response){
-            console.log(response.responseJSON.errors.name);
+            var errors = response.responseJSON.errors;
+            var nameError = errors.name;
+            var descriptionError = errors.description;
+            var nameErrorSpan = $("span#name"+categoryId);
+            var descriptionErrorSpan = $("span#description"+categoryId);
+
+            if(nameError != null){
+              nameErrorSpan.html(nameError);
+            }
+
+            if(descriptionError != null){
+              descriptionErrorSpan.html(descriptionError);
+            }
           }
         
       });

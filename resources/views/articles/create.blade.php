@@ -63,7 +63,10 @@
 
     <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
     
-      <button  type="button" class="btn btn-primary form-control mb-1" data-toggle="modal" data-target="#photoModal">Add some photos</button>
+      <button  type="button" 
+               class="btn btn-primary btn-block mb-1" 
+               data-toggle="modal" 
+               data-target="#photoModal">Add some photos</button>
       @if(!$errors->has('photos'))
         <span id="selectedPhotosNumber" class="form-text"></span class="form-text">
       @else
@@ -257,7 +260,6 @@
         $("span#selectedPhotosNumber").text("You selected: " + photo_ids.length + " photos.");
         $("input#photoIDs").attr("value", photo_ids.join("_"));
         $("div.modal#photoModal").modal('toggle');
-
       });
 
   });

@@ -17,4 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
+Route::post('categories', 'Api\ApiCategoriesController@store');
+
 
