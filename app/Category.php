@@ -12,4 +12,11 @@ class Category extends Model
     {
     	return $this->belongsToMany(Photo::class);
     }
+
+    public function getThumbnailAttribute()
+    {
+        return $this->photos()->first()->thumbnail_path;
+    }
+
+    protected $appends = ['thumbnail'];
 }

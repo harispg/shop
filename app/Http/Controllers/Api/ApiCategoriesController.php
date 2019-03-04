@@ -9,14 +9,30 @@ use Illuminate\Http\Request;
 
 class ApiCategoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','role:Admin']);
+    }
+    
     public function update(Request $request, Category $category)
     {
     	$this->validate($request, [
     		'name' => 'required|min:2',
     		'description' => 'required|min:10',
+            'photo' => 'nullable|mimes:jpg,jpeg,bmp,png',
     	]);
+        //TODO: return custom JSON response after validator fails
 
-    	return $request;
+        if($request->photo){
+            $photo = Photo::makePhotosFromFiles([$request->photo]);
+            $category->photos()->sync($photo);
+        }
+
+    	$category->name = $request->name;
+        $category->description = $request->description;
+        $category->save();
+
+        return response()->json($category);
     }
 
     public function store(Request $request)
@@ -36,10 +52,6 @@ class ApiCategoriesController extends Controller
 
         $category->photos()->attach($photo);
 
-        return response()->json([
-            'photo' => $request->photo,
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
+        return response()->json($category);
     }
 }

@@ -55,7 +55,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary save" data-category="">Save changes</button>
+            <button type="button" class="btn btn-primary save">Save changes</button>
         </div>
     </div>
   </div>
@@ -102,10 +102,10 @@
           <tbody>
             @foreach($categories as $category)
           <tr class="gradeA">
-              <td>{{$category->name}}</td>
-              <td>{{$category->description}}</td>
+              <td id="name{{$category->id}}">{{$category->name}}</td>
+              <td id="description{{$category->id}}">{{$category->description}}</td>
               <td>
-                <img src="/Images/Articles/tn-15509173068620015.jpg" width="100" height="100" />
+                <img id="photo{{$category->id}}" src="/@if($category->photos()->first()){{$category->photos()->first()->thumbnail_path}}@else{{"Images/Articles/tn-15509362488520000.jpg"}}@endif" width="100" height="100" />
               </td>
               <td class="center">
                 <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat{{$category->id}}" data-category="{{$category->id}}">Edit</button>
@@ -133,28 +133,38 @@
                       
                         <div class="form-group">
                           <label class="col-sm-2 col-form-label pl-0" for="name">Name:</label>
-                          <input id="name" class="form-control" type="text" name="name" value="{{$category->name}}" required>
-                          <span id="name{{$category->id}}"class="text-danger name"></span>
+                          <input class="form-control" type="text" name="name" value="{{$category->name}}" required>
+                          <span id="ec-name-error-{{$category->id}}"class="text-danger name"></span>
                         </div>
 
                         <div class="form-group">
                           <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>
-                          <textarea id="description" class="form-control" type="text" name="description" required>{{$category->description}}</textarea>  
-                          <span id="description{{$category->id}}"class="text-danger"></span>
+                          <textarea class="form-control" type="text" name="description" required>{{$category->description}}</textarea>  
+                          <span id="ec-description-error-{{$category->id}}"class="text-danger"></span>
+                        </div>
+
+                        <button type="button" class="btn btn-warning ec-photo-toggle" data-category="{{$category->id}}">Change photo</button>
+
+                        <div id="ec-photo-{{$category->id}}" class="form-group" hidden>
+                          <label for="photoEdit" class="col-sm-3 col-fomr-label pl-0">Choose new photo...</label>
+                          <div class="custom-file">
+                              <input type="file" name="photoEdit" class="custom-file-input ec-photo">
+                              <label for="photoEdit" class="custom-file-label text-muted">Previous photo will be deleted...</label>
+                          </div>  
+                          <span id="ec-photo-error-{{$category->id}}"class="text-danger"></span>
                         </div>
 
                   </div>
 
                   <div class="modal-footer">
                       <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary edit" data-category="{{$category->id}}">Save changes</button>
+                      <button type="button" class="btn btn-primary ec-save" data-category="{{$category->id}}">Save changes</button>
                   </div>
               </div>
             </div>
           </div>
 
           <!-- EDIT MODAL END-->
-
 
           @endforeach
           </tbody>
@@ -192,22 +202,48 @@
 <script>
 $(document).ready(function(){
 
+  //setting CSRF_TOKEN variable
+  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+  //refresh data in the table after editing
+  function refreshData(category){
+    //var category = jQuery.parseJSON(data);
+    $("td#name"+category.id).html(category.name);
+    $("td#description"+category.id).html(category.description);
+    $("img#photo"+category.id).attr('src', "/"+category.thumbnail);
+  };
+
+  //Edit category change photo toggler
+  $(".ec-photo-toggle").on('click', function(){
+    var _this = $(this);
+    var togglerId = _this.data('category');
+    var photoDiv = $("div#ec-photo-"+togglerId);
+    if(photoDiv.attr("hidden")){
+      photoDiv.attr("hidden", false);
+      _this.html("Hide");
+    }else {
+      photoDiv.attr("hidden", true);
+      _this.html("Change photo")
+    }
+
+  });
+
+
   //initialization of custom-file-upload
   $('.custom-file-input').on('change', function() {
      let fileName = $(this).val().split('\\').pop();
      $(this).next('.custom-file-label').addClass("selected").html(fileName);
   }); 
-  var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  
     $('.dataTables-example').DataTable({
         pageLength: 25,
         responsive: true,
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [
-            { extend: 'copy'},
+            {extend: 'copy'},
             {extend: 'csv'},
             {extend: 'excel', title: 'ExampleFile'},
             {extend: 'pdf', title: 'ExampleFile'},
-
             {extend: 'print',
              customize: function (win){
                     $(win.document.body).addClass('white-bg');
@@ -219,31 +255,50 @@ $(document).ready(function(){
             }
             }
         ]
-
     });
 
+
+    //Saving new category
     $("button.btn.btn-primary.save").on('click', function(){
       var saveButton = $(this);
       var name = $("input#nameNew").val();
       var description = $("textarea#descriptionNew").val();
       var photo = $("input#photoNew")[0].files[0];
+      if(photo === undefined){photo = ""}
       var formData = new FormData;
       formData.append('photo', photo);
       formData.append('name', name );
       formData.append('description', description);
+      formData.append('_token', CSRF_TOKEN);
       $.ajax({
           type: 'POST',
           dataType: 'JSON',
           contentType: false,
           cache: false,
           processData: false,
-          url: "/api/categories",
+          url: "/categories",
           method: 'POST',
           data: formData,
-          success: function(response){
+          success: function(category){//TODO: make possible to edit newly created category without refreshing
+            var newRow = '<tr class="gradeA">\
+              <td id="name"'+category.id+'>'+category.name+'</td>\
+              <td id="description"'+category.id+'>'+category.description+'</td>\
+              <td>\
+                <img id="photo"'+category.id+' src="/'+category.thumbnail+'" width="100" height="100" />\
+              </td>\
+              <td class="center">\
+                <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat"'+category.id+' data-category="'+category.id+'">Edit</button>\
+              </td>\
+              <td class="center">\
+                <button class="btn btn-outline-primary delete" data-toggle="modal" data-target="#deleteModal" data-category="'+category.id+'">Delete</button>\
+              </td>\
+          </tr>';
+
             $("span#nc-name-error").html("");
             $("span#nc-description-error").html("");
             $("span#nc-photo-error").html("");
+            $("tbody").prepend(newRow);
+
             
             $("#newCategory").modal('toggle');
 
@@ -256,7 +311,9 @@ $(document).ready(function(){
               });
           },
           error: function(response){
-            console.log(response);
+            $("span#nc-name-error").html("");
+            $("span#nc-description-error").html("");
+            $("span#nc-photo-error").html("");
             if(response.responseJSON.errors != null){
             var errors=response.responseJSON.errors;
             var nameError = errors.name;
@@ -291,32 +348,59 @@ $(document).ready(function(){
 
     });
 
-    $("button.btn.btn-primary.edit").on('click', function(){
+
+    //Editing category
+    $("button.ec-save").on('click', function(){
       var saveButton = $(this);
       var categoryId = saveButton.data('category');
       var name = $("div.modal-body#"+categoryId).find('input[name="name"]').val();
       var description = $("div.modal-body#"+categoryId).find("textarea[name='description']").val();
+      var nameErrorSpan = $("span#ec-name-error-"+categoryId);
+      var descriptionErrorSpan = $("span#ec-description-error-"+categoryId);
+      var photoErrorSpan = $("span#ec-photo-error-"+categoryId); 
+      var editPhotoDiv = $("div#ec-photo-"+categoryId);
+      var editPhotoTogglerButton = editPhotoDiv.siblings("button");
+      var photo = editPhotoDiv.find("input.ec-photo")[0].files[0];
+      if(photo === undefined){photo = ""}
+      var formData = new FormData;
+
+      formData.append('photo', photo);
+      formData.append('name', name );
+      formData.append('description', description);
+      formData.append('_token', CSRF_TOKEN);
+      formData.append('_method', 'PATCH');
+      
       $.ajax({
           type: 'POST',
-          url: "/api/categories/"+categoryId,
-          method: 'POST',
-          data: {_token: CSRF_TOKEN, _method: 'PATCH', name: name, description: description},
-          success: function(odgovor){
-            console.log(odgovor);
+          dataType: 'JSON',
+          contentType: false,
+          cache: false,
+          processData: false,
+          url: "/categories/"+categoryId,
+          data: formData,
+          success: function(category){
+            nameErrorSpan.html("");
+            descriptionErrorSpan.html("");
+            photoErrorSpan.html("");
+            $("#editModalCat"+categoryId).modal('toggle');
+            refreshData(category);
           },
           error: function(response){
             var errors = response.responseJSON.errors;
-            var nameError = errors.name;
-            var descriptionError = errors.description;
-            var nameErrorSpan = $("span#name"+categoryId);
-            var descriptionErrorSpan = $("span#description"+categoryId);
+            nameErrorSpan.html("");
+            descriptionErrorSpan.html("");
+            photoErrorSpan.html("");
 
-            if(nameError != null){
-              nameErrorSpan.html(nameError);
+            if(errors.name != null){
+              nameErrorSpan.html(errors.name);
             }
 
-            if(descriptionError != null){
-              descriptionErrorSpan.html(descriptionError);
+            if(errors.description != null){
+              descriptionErrorSpan.html(errors.description);
+            }
+
+            if(errors.photo != null){
+              photoErrorSpan.html(errors.photo);
             }
           }
         

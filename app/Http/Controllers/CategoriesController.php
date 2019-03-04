@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CategoriesController extends Controller
 {
 
-	public function _construct()
+	public function __construct()
 	{
 		$this->middleware(['auth', 'role:Admin']);
 	}
