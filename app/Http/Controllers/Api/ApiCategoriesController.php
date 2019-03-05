@@ -30,6 +30,7 @@ class ApiCategoriesController extends Controller
 
     	$category->name = $request->name;
         $category->description = $request->description;
+        $category->updated_at = now();
         $category->save();
 
         return response()->json($category);
@@ -53,5 +54,11 @@ class ApiCategoriesController extends Controller
         $category->photos()->attach($photo);
 
         return response()->json($category);
+    }
+
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return response()->json('success');
     }
 }

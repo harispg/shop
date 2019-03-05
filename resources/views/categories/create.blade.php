@@ -105,13 +105,13 @@
               <td id="name{{$category->id}}">{{$category->name}}</td>
               <td id="description{{$category->id}}">{{$category->description}}</td>
               <td>
-                <img id="photo{{$category->id}}" src="/@if($category->photos()->first()){{$category->photos()->first()->thumbnail_path}}@else{{"Images/Articles/tn-15509362488520000.jpg"}}@endif" width="100" height="100" />
+                <img id="photo{{$category->id}}" src="/{{$category->photos()->first()->thumbnail_path}}" width="100" height="100" />
               </td>
               <td class="center">
                 <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat{{$category->id}}" data-category="{{$category->id}}">Edit</button>
               </td>
               <td class="center">
-                <button class="btn btn-outline-primary delete" data-toggle="modal" data-target="#deleteModal" data-category="{{$category->id}}">Delete</button>
+                <button class="btn btn-outline-primary delete" data-category="{{$category->id}}">Delete</button>
               </td>
           </tr>
 
@@ -406,6 +406,46 @@ $(document).ready(function(){
         
       });
 
+    });
+
+
+    //Deleting category
+    $("button.delete").on('click', function(){
+      var categoryId = $(this).data('category');
+      var row = $(this).closest("tr");
+      swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              type: 'POST',
+              dataType: 'JSON',
+              url: "/categories/"+categoryId,
+              data: {_token: CSRF_TOKEN, _method: 'DELETE'},
+              success: function(response){
+                console.log('deleted sucessfully');
+                row.attr('hidden', 'true');
+              },
+              error: function(response){
+                console.log('some error occured during deleting category');
+                console.log(response);
+              }
+            
+            });
+
+            swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        });
     });
 
 });
