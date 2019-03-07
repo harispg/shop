@@ -110,7 +110,7 @@
                 <img id="photo{{$category->id}}" src="/{{$category->photos()->first()->thumbnail_path}}" width="100" height="100" />
               </td>
               <td name="edit" class="center">
-                <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat{{$category->id}}" data-category="{{$category->id}}">Edit</button>
+                <button class="btn btn-outline-primary edit" data-category="{{$category->id}}">Edit</button>
               </td>
               <td name="delete" class="center">
                 <button class="btn btn-outline-primary delete" data-category="{{$category->id}}">Delete</button>
@@ -201,7 +201,7 @@
 
 
 @section('script')
-<script type="text/javascript" src="/js/categoriesCreate.js"></script>
+<script src="/js/categoriesCreate.js"></script>
 
 
 @endsection

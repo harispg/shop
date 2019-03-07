@@ -5,15 +5,15 @@ $(document).ready(function(){
 
   //refresh data in the table after editing
   function refreshData(category){
-    //var category = jQuery.parseJSON(data);
+    //var category = jQuery.parseJSON(data);  
     $("td#name"+category.id).html(category.name);
     $("td#description"+category.id).html(category.description);
     $("img#photo"+category.id).attr('src', "/"+category.thumbnail);
     $("td#date"+category.id).html(category.updated_at);
   };
 
-  //Edit category change photo toggler
-  $(".ec-photo-toggle").on('click', function(){
+  //Edit category's change-photo toggler
+  $(".table").on('click', '.ec-photo-toggle', function(){
     var _this = $(this);
     var togglerId = _this.data('category');
     var photoDiv = $("div#ec-photo-"+togglerId);
@@ -86,23 +86,23 @@ $(document).ready(function(){
         method: 'POST',
         data: formData,
         success: function(category){//TODO: make possible to edit newly created category without refreshing
-          /*var newRow = '<tr class="gradeA">\
-          <td id="date"'+category.id+'>'+category.updated_at+'</td>\
-            <td id="name"'+category.id+'>'+category.name+'</td>\
-            <td id="description"'+category.id+'>'+category.description+'</td>\
+          var newRow = '<tr class="gradeA">\
+          <td id="date'+category.id+'">'+category.updated_at+'</td>\
+            <td id="name'+category.id+'">'+category.name+'</td>\
+            <td id="description'+category.id+'">'+category.description+'</td>\
             <td>\
-              <img id="photo"'+category.id+' src="/'+category.thumbnail+'" width="100" height="100" />\
+              <img id="photo'+category.id+'" src="/'+category.thumbnail+'" width="100" height="100" />\
             </td>\
             <td class="center">\
-              <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat"'+category.id+' data-category="'+category.id+'">Edit</button>\
+              <button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat'+category.id+'" data-category="'+category.id+'">Edit</button>\
             </td>\
             <td class="center">\
               <button class="btn btn-outline-primary delete" data-toggle="modal" data-target="#deleteModal" data-category="'+category.id+'">Delete</button>\
             </td>\
-        </tr>';*/
+        </tr>';
 
 
-          table.row.add([
+          /*table.row.add([
               category.updated_at,
               category.name,
               category.description,
@@ -110,14 +110,59 @@ $(document).ready(function(){
               '<button class="btn btn-outline-primary edit" data-toggle="modal" data-target="#editModalCat'+category.id+'" data-category="'+category.id+'">Edit</button>',
               '<button class="btn btn-outline-primary delete" data-category="'+category.id+'">Delete</button>'
               ]
-          ).draw();
+          ).draw();*/
 
           $("span#nc-name-error").html("");
           $("span#nc-description-error").html("");
           $("span#nc-photo-error").html("");
-          /*$("tbody").prepend(newRow);*/
-
           
+
+          //HTML of new modal to be added to the page
+          var newModal = '<div class="modal inmodal fade" \
+           id="editModalCat'+category.id+'"tabindex="-1" \
+           role="dialog"  \
+           aria-hidden="true">\
+            <div class="modal-dialog modal-lg">\
+              <div class="modal-content">\
+                  <div class="modal-header">\
+                      <button type="button" class="close" data-dismiss="modal">\
+                      <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>\
+                      <h4 class="modal-title">Edit '+category.name+' category</h4>\
+                      <small class="font-bold">You can edit your category name, description or chose a new photo</small>\
+                  </div>\
+                  <div id="'+category.id+'" class="modal-body">\
+                        <div class="form-group">\
+                          <label class="col-sm-2 col-form-label pl-0" for="name">Name:</label>\
+                          <input class="form-control" type="text" name="name" value="'+category.name+'" required>\
+                          <span id="ec-name-error-'+category.id+'"class="text-danger name"></span>\
+                        </div>\
+                        <div class="form-group">\
+                          <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>\
+                          <textarea class="form-control" type="text" name="description" required>'+category.description+'</textarea>  \
+                          <span id="ec-description-error-'+category.id+'"class="text-danger"></span>\
+                        </div>\
+                        <button type="button" class="btn btn-warning ec-photo-toggle" data-category="'+category.id+'">Change photo</button>\
+                        <div id="ec-photo-'+category.id+'" class="form-group" hidden>\
+                          <label for="photoEdit" class="col-sm-3 col-fomr-label pl-0">Choose new photo...</label>\
+                          <div class="custom-file">\
+                              <input type="file" name="photoEdit" class="custom-file-input ec-photo">\
+                              <label for="photoEdit" class="custom-file-label text-muted">Previous photo will be deleted...</label>\
+                          </div>  \
+                          <span id="ec-photo-error-'+category.id+'"class="text-danger"></span>\
+                        </div>\
+                  </div>\
+                  <div class="modal-footer">\
+                      <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>\
+                      <button type="button" class="btn btn-primary ec-save" data-category="'+category.id+'">Save changes</button>\
+                  </div>\
+              </div>\
+            </div>\
+          </div>';
+
+
+
+          $("tbody").append(newModal);
+          $("tbody").prepend(newRow);
           $("#newCategory").modal('toggle');
 
           swal.fire({
@@ -127,7 +172,11 @@ $(document).ready(function(){
             showConfirmButton: false,
             timer: 1500
             });
-
+          //initialization of custom-file-upload
+          $('.custom-file-input').on('change', function() {
+             let fileName = $(this).val().split('\\').pop();
+             $(this).next('.custom-file-label').addClass("selected").html(fileName);
+          }); 
         },
         error: function(response){
           $("span#nc-name-error").html("");
@@ -167,9 +216,15 @@ $(document).ready(function(){
 
   });
 
+
+  $(".table").on("click", ".edit", function(){
+    var categoryId = $(this).data('category');
+    $("#editModalCat"+categoryId).modal('show');
+  });
+
   
   //Editing category
-  $("button.ec-save").on('click', function(){
+  $(".table-responsive").on('click', '.ec-save', function(){
     var saveButton = $(this);
     var categoryId = saveButton.data('category');
     var name = $("div.modal-body#"+categoryId).find('input[name="name"]').val();
@@ -201,7 +256,7 @@ $(document).ready(function(){
           nameErrorSpan.html("");
           descriptionErrorSpan.html("");
           photoErrorSpan.html("");
-          $("#editModalCat"+categoryId).modal('toggle');
+          $("#editModalCat"+categoryId).modal('hide');
           refreshData(category);
         },
         error: function(response){
