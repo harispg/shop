@@ -17,7 +17,7 @@ class ApiCategoriesController extends Controller
     public function update(Request $request, Category $category)
     {
     	$this->validate($request, [
-    		'name' => 'required|min:2',
+    		'name' => 'required|min:3',
     		'description' => 'required|min:10',
             'photo' => 'nullable|mimes:jpg,jpeg,bmp,png',
     	]);
