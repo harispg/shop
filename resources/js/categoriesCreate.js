@@ -284,7 +284,7 @@ $(document).ready(function(){
 
 
   //Deleting category
-  $(".table").on('click','.delete', function(){
+  $(".categories-table").on('click','.delete', function(){
     var categoryId = $(this).data('category');
     var row = $(this).closest("tr");
     swal.fire({
@@ -304,7 +304,7 @@ $(document).ready(function(){
             data: {_token: CSRF_TOKEN, _method: 'DELETE'},
             success: function(response){
               console.log('deleted sucessfully');
-              row.attr('hidden', 'true');
+              table.row(row).remove().draw();
             },
             error: function(response){
               console.log('some error occured during deleting category');
