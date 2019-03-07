@@ -284,7 +284,7 @@ $(document).ready(function(){
 
 
   //Deleting category
-  $("button.delete").on('click', function(){
+  $(".table").on('click','.delete', function(){
     var categoryId = $(this).data('category');
     var row = $(this).closest("tr");
     swal.fire({
