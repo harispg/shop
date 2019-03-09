@@ -42,10 +42,32 @@ $(document).ready(function(){
       responsive: true,
       dom: '<"html5buttons"B>lTfgitp',
       buttons: [
-          {extend: 'copy'},
-          {extend: 'csv'},
-          {extend: 'excel', title: 'Articles Categories'},
-          {extend: 'pdf', title: 'Articles Categories'},
+          {
+            extend: 'copy',
+            exportOptions: {
+            columns: [1,2]
+            }
+          },
+          {
+            extend: 'csv', 
+            exportOptions: {
+            columns: [1,2]
+            }
+          },
+          {
+            extend: 'excel', 
+            title: 'Articles Categories',
+            exportOptions: {
+            columns: [1,2]
+            }
+          },
+          {
+            extend: 'pdf', 
+            title: 'Articles Categories',
+            exportOptions: {
+            columns: [1,2]
+            }
+          },
           {extend: 'print',
            customize: function (win){
                   $(win.document.body).addClass('white-bg');

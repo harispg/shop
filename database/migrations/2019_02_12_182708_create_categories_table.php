@@ -31,6 +31,18 @@ class CreateCategoriesTable extends Migration
 
             $table->primary(['category_id', 'photo_id']);
         });
+
+        Schema::create('article_category', function (Blueprint $table) {
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('article_id');
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+
+            $table->timestamps();
+
+            $table->primary(['category_id', 'article_id']);
+        });
     }
 
     /**

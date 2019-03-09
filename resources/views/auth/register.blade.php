@@ -48,7 +48,7 @@
               <div class="row justify-content-between mb-5">
                 <div class="col-8 align-self-center {{$errors->has('terms')?"u-has-error-v1":""}}">
                   <label class="form-check-inline u-check g-color-gray-dark-v5 g-font-size-13 g-pl-25">
-                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0 {{$errors->has('terms')?"form-control-feedback":""}}" name="terms" type="checkbox" required>
+                    <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0 {{$errors->has('terms')?"form-control-feedback":""}}" name="terms" type="checkbox">
                     <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
                       <i class="fa" data-check-icon=""></i>
                     </div>

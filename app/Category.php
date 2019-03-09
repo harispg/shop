@@ -8,10 +8,6 @@ class Category extends Model
 {
     protected $guarded = [];
 
-    public function photos()
-    {
-    	return $this->belongsToMany(Photo::class);
-    }
 
     public function getThumbnailAttribute()
     {
@@ -19,4 +15,14 @@ class Category extends Model
     }
 
     protected $appends = ['thumbnail'];
+
+    public function photos()
+    {
+    	return $this->belongsToMany(Photo::class);
+    }
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use App\Photo;
 use Illuminate\Http\Request;
 
@@ -34,7 +35,8 @@ class ArticlesController extends Controller
     public function create()
     {
         $photos = Photo::latest()->get();
-        return view('articles.create', compact('photos'));
+        $categories = Category::latest()->get();
+        return view('articles.create', compact(['photos', 'categories']));
     }
 
     /**
@@ -52,6 +54,7 @@ class ArticlesController extends Controller
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
             'photos' => 'required|string',
             'specification' => 'required',
+            'category' => 'required',
         ]);
 
         $photoIDs = explode('_', $request->photos);
@@ -66,6 +69,7 @@ class ArticlesController extends Controller
         
 
         $article->photos()->sync($photoIDs);
+        $article->categories()->attach($request->category);
 
         flash()->success('Article created', $article->name . " is saved in database");
 
@@ -81,7 +85,18 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles.show', compact(['article']));
+        $article->load('comments.owner');
+        $allComments = $article->comments->groupBy('parent_id');
+        if($allComments->all() != []){
+            $allComments['root'] = $allComments[""];  
+            unset($allComments[""]);
+        }else{
+        $allComments['root']=[];        
+        }
+
+
+
+        return view('articles.show', compact(['article', 'allComments']));
     }
 
     /**

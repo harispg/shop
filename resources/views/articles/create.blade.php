@@ -61,6 +61,18 @@
       </div>
     </div>
 
+    <div class="form-group pb-3 {{$errors->has('specification')?"has-error":""}}">
+      <label class="col-sm-3 col-form-label pl-0" for="category">Choose category:</label>
+      <select class="form-control" name="category" required>
+        @foreach($categories as $category)
+          <option value="{{$category->id}}"> {{$category->name}} </option>
+        @endforeach
+      </select>
+      @if($errors->has('category'))
+      <span class="text-danger">{{$errors->first('category')}}</span>
+      @endif
+    </div>
+
     <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
     
       <button  type="button" 
@@ -73,7 +85,7 @@
         <span id="photosError" class="form-text text-danger">{{$errors->first('photos')}}</span>
       @endif
 
-        <button class="btn btn-primary mt-3" type="submit">Save article</button>
+        <button class="btn btn-primary mt-5" type="submit">Save article</button>
 
   </form>
   </div>

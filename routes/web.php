@@ -7,7 +7,6 @@ Route::get('/', function () {
     return view('home');
 });
 Route::get('plan', function(){
-	flash()->success('Usao si u plan', 'bole te brige');
 	return view('PLAN');
 })->middleware(['auth','role:Admin']);
 
@@ -35,10 +34,10 @@ Route::get('admin', function(){
 });
 
 
-Route::get('categories/create', 'CategoriesController@create');
+Route::get('categories/create', 'CategoriesController@create')->name('categories');
 Route::post('categories', 'Api\ApiCategoriesController@store');
 Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
 Route::delete('categories/{category}', 'Api\ApiCategoriesController@destroy');
 
-
+Route::post('/articles/{article}/comment', 'CommentsController@store')->name('comments.store');
 Route::post('/file-upload', function(){});
