@@ -21,10 +21,9 @@ class CommentsController extends Controller
 
     	$comment->user_id = auth()->id();
     	$comment->parent_id = $request->parentId;
-    	$comment->body = $request->body;
+    	$comment->body = nl2br($request->body);
     	$article->saveComment($comment);
 	    
-
-	    return redirect()->back();
+	    return redirect(url()->previous().'#commentNo'.$comment->parent_id);
     }
 }

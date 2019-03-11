@@ -45,6 +45,8 @@
               <!-- Product Info -->
               <div class="g-mb-30">
                 <h1 class="g-font-weight-300 mb-4">{{$article->name}}</h1>
+
+                @include('ratings.rating')
                 <p>{{$article->description}}</p>
               </div>
               <!-- End Product Info -->
@@ -334,6 +336,7 @@
       <!-- End Description -->
 
       <!-- comments -->
+      
       @include('comments.comments')
 
       <!-- Products -->

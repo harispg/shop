@@ -1,5 +1,6 @@
 <!-- Review -->
 <div class="container">
+  <a name="comments"></a>
   <div class="g-brd-y g-brd-gray-light-v4 g-py-100">
     <div class="row justify-content-center">
       <div class="col-lg-9">
@@ -17,12 +18,6 @@
         <!-- Comment Form -->
         @include('comments.form')
         <!-- End Comment Form -->
-
-        
-
-        <!-- Rating -->
-        @include('ratings.rating')
-        <!-- End Rating -->
         </div>
       </div>
     </div>

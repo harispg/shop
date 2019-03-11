@@ -6,6 +6,7 @@
     <div class="media-body">
       <div class="d-flex align-items-start g-mb-15 g-mb-10--sm">
         <div class="d-block">
+          <a name="commentNo{{$comment->id}}"></a>
           <h5 class="h6">{{$comment->owner->name}}</h5>
 
           <!-- Rating -->
@@ -35,7 +36,7 @@
         </div>
       </div>
 
-      <p>{{$comment->body}}</p>
+      <p>{!!$comment->body!!}</p>
 
       <ul class="list-inline my-0">
         <li class="list-inline-item g-mr-20">

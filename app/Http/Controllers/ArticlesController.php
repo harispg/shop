@@ -85,16 +85,8 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-        $article->load('comments.owner');
-        $allComments = $article->comments->groupBy('parent_id');
-        if($allComments->all() != []){
-            $allComments['root'] = $allComments[""];  
-            unset($allComments[""]);
-        }else{
-        $allComments['root']=[];        
-        }
 
-
+        $allComments = $article->getComments();
 
         return view('articles.show', compact(['article', 'allComments']));
     }

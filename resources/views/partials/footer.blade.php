@@ -356,9 +356,9 @@
     <script src="/unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
 
     <!-- JS Implementing Plugins -->
-    <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
     <script src="/unifyAssets/vendor/slick-carousel/slick/slick.js"></script>
     <script src="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+    <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
     <script src="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/unifyAssets/vendor/appear.js"></script>
 
@@ -369,10 +369,11 @@
     <script src="/unifyAssets/js/components/hs.dropdown.js"></script>
     <script src="/unifyAssets/js/components/hs.scrollbar.js"></script>
     <script src="/unifyAssets/js/components/hs.countdown.js"></script>
-    <script src="/unifyAssets/js/components/hs.count-qty.js"></script>
     <script src="/unifyAssets/js/components/hs.carousel.js"></script>
+    <script src="/unifyAssets/js/components/hs.tabs.js"></script>
+    <script src="/unifyAssets/js/components/hs.count-qty.js"></script>
     <script src="/unifyAssets/js/components/hs.go-to.js"></script>
-    <script  src="/unifyAssets/js/components/hs.rating.js"></script>
+    <script src="/unifyAssets/js/helpers/hs.rating.js"></script>
 
     <!-- JS Revolution Slider -->
     <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
@@ -398,6 +399,8 @@
     @yield('script')
     <script>
       $(document).on('ready', function () {
+
+        
         // initialization of carousel
         $.HSCore.components.HSCarousel.init('[class*="js-carousel"]');
 
@@ -441,6 +444,17 @@
         }], true);
       });
 
+      //fill stars according to user rating of the article
+      function fillStars(rating){
+       var collection = $(".js-rating");
+       var i=0;
+       $(collection).children("li").each(function(){
+        if(i<rating){
+          $(this).addClass("g-color-primary ");
+          i++;
+        }
+       });}
+
       // initialization of header
       $.HSCore.components.HSHeader.init($('#js-header'));
       $.HSCore.helpers.HSHamburgers.init('.hamburger');
@@ -475,17 +489,50 @@
         secondsElSelector: '.js-cd-seconds'
       });
 
+       var rating = Math.round($(".js-rating").data("rating-by-user"));
+
+       $.HSCore.helpers.HSRating.init();
+       fillStars(rating);
+
+
+       $(".js-rating").on('click','li', function(){
+        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+        var rating = $(this).parent();
+        var stars = rating.children(".click").length;
+        var articleId = rating.data('article');
+        $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: "/ratings/"+articleId,
+        data: {_token: CSRF_TOKEN, rating: stars},
+        success: function(response){
+          $(".avgRating").html("Average rating: "+response[0]);
+        },
+        error: function(response){
+          /*swal.fire({
+            type: 'error',
+            title: response.responseText,
+            text: 'You need to be registered to rate articles',
+            showConfirmButton: false,
+            timer: 1500,
+          });*/
+          console.log(response);
+          $(".notAllowed").html(response.statusText);
+          $(".notAllowed").attr("hidden", false);
+        }
+       });
+
+      });
+
+
       $(window).on('load', function() {
         // initialization of HSScrollBar component
         $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
       });
+
     </script>
-    <script >
+    <script>
   $(document).ready(function () {
-    // initialization of rating
-    $.HSCore.components.HSRating.init($('.js-rating'), {
-      spacing: 4
-    });
 
     var tpj = jQuery;
 

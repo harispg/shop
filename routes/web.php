@@ -40,4 +40,5 @@ Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
 Route::delete('categories/{category}', 'Api\ApiCategoriesController@destroy');
 
 Route::post('/articles/{article}/comment', 'CommentsController@store')->name('comments.store');
+Route::post('/ratings/{article}', 'RatingsController@store');
 Route::post('/file-upload', function(){});
