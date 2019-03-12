@@ -31,6 +31,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Role::class);
     }
 
+    public function hasRole($role)
+    {
+        if(is_string($role)){
+            return $this->roles->where('name', $role)->count();
+        }
+
+        return $role->intersect($this->roles)->count();
+    }
+
     public function sendEmailVerificationNotification()
     {
         $this->notify(new Notifications\VerificationEmail);
@@ -41,9 +50,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Comment::class);
     }
 
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
+
+    public function isSupper(){
+        if($this->superAdmin){
+            return true;
+        }
+        return false;
     }
 
 }

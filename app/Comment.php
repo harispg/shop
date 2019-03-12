@@ -18,11 +18,6 @@ class Comment extends Model
     	return $this->belognsTo(Article::class);
     }
 
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');

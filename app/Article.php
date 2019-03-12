@@ -15,18 +15,38 @@ class Article extends Model
 
     public function attachPhotos($photos){
 
-    		$this->photos()->sync($photos);
+            $this->photos()->sync($photos);
     }
 
     public function categories()
     {
-    	return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
     }
+
+
+    /**
+     * [getComments -  getting all comments for the article]
+     * @return [Illuminate\Support\Collection] [Collection of comments]
+     */
+    public function getComments()
+    {
+        $allComments = $this->comments()->with('owner')->get()->groupBy('parent_id');
+
+        if(isset($allComments[""])){
+            $allComments['root'] = $allComments[""];  
+            unset($allComments[""]);
+        }else{
+        $allComments['root']=[]; 
+        }
+
+        return $allComments;
+    }
+    
 
     public function saveComment($comment)
     {
@@ -40,7 +60,7 @@ class Article extends Model
 
     public function avgRating()
     {
-        return $this->ratings()->avg('rating');
+        return number_format($this->ratings()->avg('rating'), 1);
     }
     /**
      * returns rating by $user
@@ -49,7 +69,7 @@ class Article extends Model
      */
     public function ratingByUser($user)
     {
-        if(!$user || !$this->ratings->count()){
+        if(!$user || !$this->ratings->where('user_id',$user->id)->count()){
             return 0;
             }
         return Rating::where(
@@ -59,23 +79,6 @@ class Article extends Model
             ])->first()->rating;
     }
 
-    /**
-     * [getComments -  getting all comments for the article]
-     * @return [Illuminate\Support\Collection] [Collection of comments]
-     */
-    public function getComments()
-    {
-        $allComments = $this->comments()->with('owner')->get()->groupBy('parent_id');
-
-        if(count($allComments)){
-            $allComments['root'] = $allComments[""];  
-            unset($allComments[""]);
-        }else{
-        $allComments['root']=[]; 
-        }
-
-        return $allComments;
-    }
 }
 
 

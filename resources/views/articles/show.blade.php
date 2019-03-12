@@ -583,14 +583,119 @@
 @section('script')
  <script>
    $(document).on('ready', function(){
+
+    //fill stars according to user rating of the article
+      function fillStars(rating){
+       var collection = $(".js-rating");
+       var i=0;
+       $(collection).children("li").each(function(){
+        if(i<rating){
+          $(this).addClass("g-color-primary ");
+          i++;
+        }
+       });}
+
+    //Open reply to comment form
       $(".replyToggler").on('click', function(){
         var commentId = $(this).data('comment');
-        if($(".reply#"+commentId).attr("hidden")){
-          $(".reply#"+commentId).attr("hidden", false);
+        var container= $(".reply#"+commentId);
+        var button = container.find("button");
+        if(container.attr("hidden")){
+          container.attr("hidden", false);
+          container.find("textarea").focus();
+          button.removeClass("g-py-15 g-px-25");
+          button.html("Reply");
         }else{
           $(".reply#"+commentId).attr("hidden", true);
         }
       });
+
+      //Users rating of the article
+      var rating = $(".js-rating").data("rating-by-user");
+      //ratings plugin initialization
+      $.HSCore.helpers.HSRating.init();
+      //draw stars acording to users rating
+      fillStars(rating);
+
+      //rating ajax
+      $(".js-rating").on('click','li', function(){
+        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+        var rating = $(this).parent();
+        var stars = rating.children(".click").length;
+        var articleId = rating.data('article');
+        $.ajax({
+          type: 'POST',
+          dataType: 'JSON',
+          url: "/ratings/"+articleId,
+          data: {_token: CSRF_TOKEN, rating: stars},
+          success: function(response){
+            $(".avgRating").html("Average rating: "+response[0]);
+          },
+          error: function(response){
+            /*swal.fire({
+              type: 'error',
+              title: response.responseText,
+              text: 'You need to be registered to rate articles',
+              showConfirmButton: false,
+              timer: 1500,
+            });*/
+            console.log(response);
+            $(".notAllowed").html(response.statusText);
+            $(".notAllowed").attr("hidden", false);
+          }
+        });
+
+      });
+      //deleting comments
+      $(".delete").on('click', function(e){
+        e.preventDefault();
+        var commentId = $(this).data('comment');
+        var _this = $(this);
+
+        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+        swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          $.ajax({
+          type: 'POST',
+          method: 'DELETE',
+          url: "/comments/"+commentId,
+          data: {_token: CSRF_TOKEN, _method: 'DELETE'},
+          success: function(response){
+            _this.closest("li").attr("hidden", true);
+          },
+          error: function(response){
+            /*swal.fire({
+              type: 'error',
+              title: response.responseText,
+              text: 'You need to be registered to rate articles',
+              showConfirmButton: false,
+              timer: 1500,
+            });*/
+            $(".delete-warning").attr("hidden", false);
+            $(".delete-warning").html(response.statusText);
+          }
+        });
+
+          swal.fire({
+            title:'Deleted!',
+            text: 'Your category has been deleted.',
+            type:'success',
+            showConfirmButton:false,
+            'timer': 850
+          })
+        }
+      });
+        
+      });
    });
+
  </script>
 @endsection

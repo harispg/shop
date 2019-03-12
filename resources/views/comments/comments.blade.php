@@ -13,11 +13,11 @@
           @include('comments.list',['collection' => $allComments['root']])
 
 
-        <h2 class="h4 mb-5">Add a comment</h2>
+          <h2 class="h4 mb-5">Add a comment</h2>
 
-        <!-- Comment Form -->
-        @include('comments.form')
-        <!-- End Comment Form -->
+          <!-- Comment Form -->
+          @include('comments.form')
+          <!-- End Comment Form -->
         </div>
       </div>
     </div>

@@ -335,11 +335,13 @@ $(document).ready(function(){
           
           });
 
-          swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success',
-          )
+          swal.fire({
+            title:'Deleted!',
+            text: 'Your category has been deleted.',
+            type:'success',
+            showConfirmButton:false,
+            'timout': 1000
+          })
         }
       });
   });

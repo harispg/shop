@@ -13,7 +13,10 @@
                         <li><a class="dropdown-item" href="/inspinia/contacts.html">Contacts</a></li>
                         <li><a class="dropdown-item" href="/inspinia/mailbox.html">Mailbox</a></li>
                         <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/inspinia/login.html">Logout</a></li>
+                        <li><a class="dropdown-item logout" onclick="event.preventDefault(); getElementById('logout').submit();" href="#">Logout</a></li>
+                        <form id="logout" hidden="true" method="post" action="{{route('logout')}}">
+                            @csrf
+                        </form>
                     </ul>
                 </div>
                 <div class="logo-element">

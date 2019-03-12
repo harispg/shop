@@ -8,35 +8,18 @@
         <div class="d-block">
           <a name="commentNo{{$comment->id}}"></a>
           <h5 class="h6">{{$comment->owner->name}}</h5>
-
-          <!-- Rating -->
-          <ul class="js-rating u-rating-v1 g-font-size-13 g-color-gray-light-v3 mb-0" data-hover-classes="g-color-primary">
-            <li class="g-color-primary g-line-height-1_4">
-              <i class="fa fa-star"></i>
-            </li>
-            <li class="g-color-primary g-line-height-1_4">
-              <i class="fa fa-star"></i>
-            </li>
-            <li class="g-color-primary g-line-height-1_4">
-              <i class="fa fa-star"></i>
-            </li>
-            <li class="g-color-primary g-line-height-1_4">
-              <i class="fa fa-star"></i>
-            </li>
-            <li class="g-color-primary g-line-height-1_4">
-              <i class="fa fa-star"></i>
-            </li>
-          </ul>
-          <!-- End Rating -->
-
-          <span class="d-block g-color-gray-dark-v5 g-font-size-11">{{$comment->created_at}}</span>
+          <span class="d-block g-color-gray-dark-v5 g-font-size-11">{{$comment->created_at->diffForHumans()}}</span>
         </div>
         <div class="ml-auto">
+          @if(auth()->check() && auth()->user()->isSupper())
+          <a class="u-link-v5 g-color-black g-color-primary--hover g-font-size-12 mr-5 delete" href="#!" data-comment="{{$comment->id}}">DELETE</a>
+          @endif
           <a class="u-link-v5 g-color-black g-color-primary--hover g-font-size-12 text-uppercase replyToggler" href="#!" data-comment="{{$comment->id}}">Reply</a>
+          <p class="text-danger delete-warning" hidden="true">Delete unsuccessful</p>
         </div>
       </div>
 
-      <p>{!!$comment->body!!}</p>
+      <p>{{$comment->body}}</p>
 
       <ul class="list-inline my-0">
         <li class="list-inline-item g-mr-20">

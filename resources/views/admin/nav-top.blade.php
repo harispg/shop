@@ -117,10 +117,13 @@
 
 
         <li>
-            <a href="/inspinia/login.html">
-                <i class="fa fa-sign-out"></i> Log out
+            <a class=".logoutTop" onclick="event.preventDefault(); getElementById('logoutTop').submit();" href="#">
+                <i class="fa fa-sign-out"></i>Logout
             </a>
         </li>
+        <form id="logoutTop" hidden="true" method="post" action="{{route('logout')}}">
+            @csrf
+        </form>
         <li>
             <a class="right-sidebar-toggle">
                 <i class="fa fa-tasks"></i>

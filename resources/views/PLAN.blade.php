@@ -4,6 +4,7 @@
 	<div class="row">
 	<div class="col col-md-6 offset-1">
 		<h3>Tasks:</h3>
+		<p><strike>Figure out parts of frontend html</strike></p>
 		<p>Implement permissions</p>
 		<p>Implement custom thumbnail creation</p>
 		<p>Article pictures should be clickable</p>
@@ -14,9 +15,12 @@
 	</div>
 	<div class="col col-md-5">
 		<h3>In Progress:</h3>
-		<p>Implementing permission system</p>
-		<p>Figure out all changes and permissions</p>
+		<p>Implement permissions:</p>
+		@can('articles.create', App\Article::class)
+			<p class="text-danger">You can Create Article</p>
+		@endcan
 	</div>
+	
 
 </div>
 
