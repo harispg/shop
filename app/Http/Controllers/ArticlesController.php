@@ -23,7 +23,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(8);
+        $articles = Article::with('photos')->paginate(8);
         return view('articles.index', compact(['articles']));
     }
 

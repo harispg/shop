@@ -6,6 +6,7 @@ use App\Article;
 use App\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 
 class PhotosController extends Controller
 {
@@ -41,7 +42,7 @@ class PhotosController extends Controller
         $files = $request->file('photos');
         $newPhotos = Photo::makePhotosFromFiles($files);
         $photos = Photo::latest()->get();
-        return redirect()->route('photosUpload');
+        return redirect()->route('photos.index');
 
     }
 
@@ -87,8 +88,9 @@ class PhotosController extends Controller
      */
     public function destroy(Photo $photo)
     {
+        File::delete($photo->path);
+        File::delete($photo->thumbnail_path);
         $photo->delete();
-
         return redirect()->back();
     }
 

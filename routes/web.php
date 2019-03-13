@@ -25,9 +25,10 @@ Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');
 Route::post('/findPhotos', 'Api\ApiPhotosController@find');
 Route::post('/allPhotos', 'Api\ApiPhotosController@allPhotos');
 
-Route::get('/photosUpload', 'PhotosController@index')->name('photosUpload');
+Route::get('/photos', 'PhotosController@index')->name('photos.index');
 Route::post('/photos', 'PhotosController@store')->name('addingPhotos');
 Route::delete('/photos/{photo}', 'PhotosController@destroy')->name('photoDelete');
+Route::delete('photosDelete', 'Api\ApiPhotosController@delete');
 
 Route::get('admin', function(){
 	return view('admin.master');

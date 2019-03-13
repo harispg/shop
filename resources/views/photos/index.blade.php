@@ -9,21 +9,33 @@
 @csrf
 <div class="row">
 <div class="col-lg-12">
-<div class="ibox ">
+<div class="ibox">
 
     <div class="ibox-content">
     	<div class="row">
-    		<div class="col-sm-9">
+    		<div class="col-sm-12">
+            	<h2>Add new photos</h2>
+            	<p>
+            		Dropzone is very easy to use just drag photos in the box or simpley click the box and file browser for your PC will open
+            	</p>
+            	<button id="sendPhotos" type="button" class="btn btn-primary mb-1">Save photos to database</button>
+	            <div id="myDropzone" class="dropzone">
+
+	            </div>
+            </div>
+    	</div>
+    	<div class="row">
+    		<div class="col-sm-12">
 	            <h2>All your photos</h2>
-	            <p>
-	                You can select photos for your article. Latest uploaded are first. You can search by the name.
-	            </p>
-	        	<form>
+	            <hr>
+	            <label class="text-muted" for="photoSearch"><h3>Search through your photos by name: </h3><input class="form-control" type="text" name="photoSearch"></label>
+	            <button type="button" id="selectAll" class="btn btn-primary ml-5">Select All</button>
+	            <button type="button" id="deleteSelected" class="btn btn-primary ml-5">Delete Selected</button>
 	            <div class="lightBoxGallery">
 	            	@foreach($photos as $photo)
-	            	<div class="badge m-2 bg-dark">
-		            	<h3 class="text-light">{{$photo->name}}</h3>
-		                <a href="{{$photo->path}}" title="{{$photo->name}}" data-gallery=""><img src="{{$photo->thumbnail_path}}"></a> <br />
+	            	<div class="badge m-2 bg-transparent border border-info">
+		            	
+		                <a href="{{$photo->path}}" title="{{$photo->name}}" data-photo="{{$photo->id}}" data-gallery=""><img src="{{$photo->thumbnail_path}}"></a> <br />
 		                <label class="text-light mt-1 mr-5"> <input type="checkbox" class="i-checks"> Select</label>
 		                <button type="button" data-photo="{{$photo->id}}" class="btn btn-primary deletePhoto">Delete</button>
 
@@ -52,22 +64,8 @@
 
 	            </div>
 
-	            <div class="form-group">
-	            	<button class="btn btn-primary" type="submit">Attach Photos</button>
-	            </div>
-
-	            </form>
             </div>
-            <div class="col-sm-3">
-            	<h2>Add new photos</h2>
-            	<p>
-            		Dropzone is very easy to use just drag photos in the box or simpley click the box and file browser for your PC will open
-            	</p>
-            	<button id="sendPhotos" type="button" class="btn btn-primary mb-1">Save photos to database</button>
-	            <div id="myDropzone" class="dropzone">
-
-	            </div>
-            </div>
+            
         </div>
 
     </div>
@@ -89,15 +87,14 @@
 	Dropzone.autoDiscover=false;
 
 	$(document).ready(function(){
+		var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
 		$('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
 
-		$('button.deletePhoto').on('click', function(){
-			console.log('click');
-			var photoId = $(this).data('photo');
-			
+		$('.lightBoxGallery').on('click','button.deletePhoto', function(){
+			var photoId = $(this).data('photo');			
 			$("form.deleteForm[data-photo="+photoId+"]").submit();
 		});
 
@@ -121,9 +118,96 @@
 	          this.on("sendingmultiple", function(data, xhr, formData) {
 	              formData.append("_token", jQuery('input[name="_token"]').val());
 	          });
+
+	          this.on("queuecomplete", function(e, response){
+	          		//AJAX request for fetching new photos array and rendering on frontend
+	          		//bellow are helper functions renderPhotos and giveHtml
+	              	$.ajax({     
+		                type: 'POST',
+		                url: '/allPhotos',
+		                method: 'POST',
+		                data: {_token: CSRF_TOKEN},
+		                success: function(photos){
+		                  renderPhotos(photos);
+		                }
+	              	});
+
+	              	//window.location.href = "http://127.0.0.1:8000/photos"
+            	});
 	      },
 
 	    });
+
+		//AJAX RENDERING PHOTOS WITH NEW PHOTOS
+	    function renderPhotos(photos){
+          var numberOfPhotos = photos.length;
+          var i=0;
+          $(".lightBoxGallery").html("");
+          for(i; i<numberOfPhotos; i++){
+            giveHtml(photos[i]); 
+          }
+          //need to run initialization of i-checks after rendering so checkbox can remain pretty
+          $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });  
+        };
+
+        function giveHtml(photo){
+          
+          $(".lightBoxGallery").append(
+            '<div class="badge m-2 bg-transparent border border-info">\
+                <a href="'+photo.path+'" title="'+photo.name+'" data-photo="'+photo.id+'" data-gallery=""><img src="'+photo.thumbnail_path+'"></a> <br />\
+                <label class="text-light mt-1 mr-5"> <input type="checkbox" class="i-checks"> Select</label>\
+                <button type="button" data-photo="'+photo.id+'" class="btn btn-primary deletePhoto">Delete</button>\
+                <form class="deleteForm" data-photo="'+photo.id+'" visibility="hidden" method="POST" action="/photos/'+photo.id+'">\
+                	  <input hidden name="_token" value="'+CSRF_TOKEN+'">\
+                	  <input hidden name="_method" value="DELETE">\
+                </form>\
+            </div>'
+            );
+        };
+
+        // ---END--- AJAX RENDERING PHOTOS WITH NEW PHOTOS
+        
+
+        //Searching photos script
+      $("input[name='photoSearch']").on('keyup', function() {
+        var searchInput = $("input[name='photoSearch']").val();
+        $.ajax({
+          type: 'POST',
+          url: '/findPhotos',
+          method: 'POST',
+          data: {_token: CSRF_TOKEN, searchQuery: searchInput},
+          success: function(photos){
+            renderPhotos(photos);
+          }
+        });
+      });
+
+
+      $("#selectAll").on('click', function(){
+      	$(".icheckbox_square-green").addClass("checked");
+      });
+
+      $("#deleteSelected").on('click', function(){
+      	var photoIds = [];
+        $(".icheckbox_square-green.checked").each(function(){
+        photoIds.push($(this).parent().siblings("a").data("photo"));
+        });
+
+        console.log(photoIds);
+
+        $.ajax({
+        	type:"POST",
+        	url: '/photosDelete',
+        	method: 'DELETE',
+        	data: {_token:CSRF_TOKEN, _method:"DELETE", photos: photoIds},
+        	success: function(photos){
+            renderPhotos(photos);
+          	}
+        });
+      });
 
 		
 	});
