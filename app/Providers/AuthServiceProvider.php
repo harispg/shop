@@ -26,6 +26,27 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::resource('articles', ArticlePolicy::class);
+        Gate::before(function($user, $ability){
+            if($user->isSuper()){
+                return true;
+            }
+        });
+
+        Gate::define('articles.create', 'App\Policies\ArticlePolicy@create');
+        Gate::define('articles.modify', 'App\Policies\ArticlePolicy@modify');
+        Gate::define('categories.create', 'App\Policies\CategoryPolicy@create');
+        Gate::define('categories.modify', 'App\Policies\CategoryPolicy@modify');
+        Gate::define('comments.delete', 'App\Policies\CommentPolicy@delete');
+        Gate::define('users.work', 'App\Policies\UserPolicy@work');
+        Gate::define('roles.work', 'App\Policies\RolePolicy@work');
+        Gate::define('permissions.work', 'App\Policies\PermissionPolicy@work');
+        Gate::define('photos.work', 'App\Policies\PhotoPolicy@work');
+        Gate::define('editAperance', function($user){
+            $permission = Permission::fetchPermissionTo('editApearance');
+            return $user->hasRole($permission->roles);
+        });
+        
+
+
     }
 }

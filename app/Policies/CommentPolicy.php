@@ -6,7 +6,7 @@ use App\User;
 use App\Permission;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ArticlePolicy
+class CommentPolicy
 {
     use HandlesAuthorization;
 
@@ -20,16 +20,9 @@ class ArticlePolicy
         //
     }
 
-    public function create(User $user)
+    public function delete(User $user)
     {
-        $permission = Permission::getPermissionTo('articles.create');
+        $permission = Permission::getPermissionTo('comments.delete');
         return $user->hasRole($permission->roles);
     }
-
-    public function modify(User $user)
-    {
-        $permission = Permission::getPermissionTo('articles.modify');
-        return $user->hasRole($permission->roles);
-    }
-
 }

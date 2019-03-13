@@ -6,7 +6,7 @@ use App\User;
 use App\Permission;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ArticlePolicy
+class CategoryPolicy
 {
     use HandlesAuthorization;
 
@@ -22,14 +22,13 @@ class ArticlePolicy
 
     public function create(User $user)
     {
-        $permission = Permission::getPermissionTo('articles.create');
+        $permission = Permission::getPermissionTo('categories.create');
         return $user->hasRole($permission->roles);
     }
-
+    
     public function modify(User $user)
     {
-        $permission = Permission::getPermissionTo('articles.modify');
+        $permission = Permission::getPermissionTo('categories.modify');
         return $user->hasRole($permission->roles);
     }
-
 }

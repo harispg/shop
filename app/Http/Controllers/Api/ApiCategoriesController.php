@@ -11,7 +11,8 @@ class ApiCategoriesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','role:Admin']);
+        $this->middleware(['auth', 'can:categories.modify']);
+        $this->middleware('can:categories.create')->only('store');
     }
     
     public function update(Request $request, Category $category)

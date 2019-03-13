@@ -10,4 +10,9 @@ class Permission extends Model
     {
     	return $this->belongsToMany(Role::class);
     }
+
+    public static function getPermissionTo($permission)
+    {
+    	return static::where('name', $permission)->first();
+    }
 }

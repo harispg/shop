@@ -16,9 +16,8 @@
 	<div class="col col-md-5">
 		<h3>In Progress:</h3>
 		<p>Implement permissions:</p>
-		@can('articles.create', App\Article::class)
-			<p class="text-danger">You can Create Article</p>
-		@endcan
+		<p>articles.create, articles.modify, categories.create, categories.modify, workWithRoles,
+		workWithPermissions, editApearance, workWithUsers, comments.delete, workWithPhotos.</p>
 	</div>
 	
 

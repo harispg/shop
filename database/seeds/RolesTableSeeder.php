@@ -2,6 +2,7 @@
 
 use App\Role;
 use Carbon\Carbon;
+use App\Permission;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,9 +15,11 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
+        $role = Role::create([
         	'name' => 'Admin'
-        ])->save();
+        ]);
+        $role->save();
+        $role->permissions()->sync(Permission::all()->pluck('id')->toArray());
         DB::table('role_user')->insert([
         	'role_id' => 1,
         	'user_id' => 1,
@@ -30,9 +33,17 @@ class RolesTableSeeder extends Seeder
         ]);
 
 
-        Role::create([
+        $role = Role::create([
         	'name' => 'Editor'
-        ])->save();
+        ]);
+        $role->save();
+        $role->givePermissions([
+            'articles.modify', 
+            'categories.modify', 
+            'comments.delete', 
+            'photos.work',
+            'editApearance'
+        ]);
 
         Role::create([
         	'name' => 'Customer'

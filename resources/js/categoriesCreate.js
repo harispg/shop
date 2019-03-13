@@ -107,7 +107,7 @@ $(document).ready(function(){
         url: "/categories",
         method: 'POST',
         data: formData,
-        success: function(category){//TODO: make possible to edit newly created category without refreshing
+        success: function(category){
           var newRow = '<tr class="gradeA">\
           <td id="date'+category.id+'">'+category.updated_at+'</td>\
             <td id="name'+category.id+'">'+category.name+'</td>\
@@ -340,7 +340,7 @@ $(document).ready(function(){
             text: 'Your category has been deleted.',
             type:'success',
             showConfirmButton:false,
-            'timout': 1000
+            timer: 800
           })
         }
       });

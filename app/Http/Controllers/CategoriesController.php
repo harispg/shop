@@ -10,7 +10,8 @@ class CategoriesController extends Controller
 
 	public function __construct()
 	{
-		$this->middleware(['auth', 'role:Admin']);
+		$this->middleware(['auth', 'can:categories.modify']);
+        $this->middleware('can:categories.create')->only('store');
 	}
     /**
      * Display a listing of the resource.
