@@ -12,7 +12,7 @@ class ApiPhotosController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware(['auth','can:photos.work']);
+		$this->middleware(['auth','can:api|photos.work']);
 	}
     public function find(Request $request)
     {
@@ -30,11 +30,23 @@ class ApiPhotosController extends Controller
     {
         foreach ($request->photos as $id) {
             $photo = Photo::find($id);
+            if(strpos($photo->path, 'dummyPics') !== false){
+                return Photo::latest()->get();
+            }
             File::delete($photo->path);
             File::delete($photo->thumbnail_path);
             $photo->delete();
         }
 
         return Photo::latest()->get();
+    }
+
+    public function store(Request $request)
+    {
+        $files = $request->file('photos');
+        $newPhotos = Photo::makePhotosFromFiles($files);
+        $photos = Photo::latest()->get();
+        return $photos;
+
     }
 }

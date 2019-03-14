@@ -123,9 +123,9 @@
                 </div>
                 <div id="photoGrid"> 
                   @foreach($photos as $photo)
-                    <div class="badge m-2 bg-dark">
-                      <h3 class="text-light">{{$photo->name}}</h3>
-                        <img src="/{{$photo->thumbnail_path}}"> <br />
+                    <div class="col col-md-3 m-md-3  pt-2 d-md-inline-block bg-transparent border border-info">
+                      {{-- <h3 class="text-light">{{$photo->name}}</h3> --}}
+                        <img class="img-fluid" src="/{{$photo->thumbnail_path}}"> <br />
                         <label class="text-light mt-1 float-left"> <input type="checkbox" class="i-checks" 
                                data-photo="{{$photo->id}}"> Select article photo</label>
                     </div>
@@ -169,6 +169,7 @@
   $(document).ready(function(){
 
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+    var API_TOKEN = $("meta[name='api-token']").attr("content");
     
     //Initialization of i-checks
     $('.i-checks').iCheck({
@@ -184,12 +185,12 @@
 
     //Initialization and customization of dropzone
     $('#myDropzone').dropzone({
-        url: '/photos',
+        url: '/api/photos',
         paramName: 'photos',
         autoProcessQueue: false,
-          uploadMultiple: true,
-          parallelUploads: 25,
-          maxFiles: 25,
+        uploadMultiple: true,
+        parallelUploads: 25,
+        maxFiles: 25,
         maxFilesize: 2,
         acceptedFiles: 'image/*',
         addRemoveLinks: true,
@@ -202,14 +203,15 @@
             //send all the form data along with the files:
             this.on("sendingmultiple", function(data, xhr, formData) {
                 formData.append("_token", jQuery('input[name="_token"]').val());
+                formData.append("api_token", API_TOKEN);
             });
 
             this.on("queuecomplete", function(e, response){
               $.ajax({
                 type: 'POST',
-                url: '/allPhotos',
+                url: '/api/allPhotos',
                 method: 'POST',
-                data: {_token: CSRF_TOKEN},
+                data: {_token: CSRF_TOKEN, api_token: API_TOKEN},
                 success: function(photos){
                   renderPhotos(photos);
                 }
@@ -224,9 +226,9 @@
         var searchInput = $("input[name='photoSearch']").val();
         $.ajax({
           type: 'POST',
-          url: '/findPhotos',
+          url: '/api/findPhotos',
           method: 'POST',
-          data: {_token: CSRF_TOKEN, searchQuery: searchInput},
+          data: {_token: CSRF_TOKEN, api_token: API_TOKEN, searchQuery: searchInput},
           success: function(photos){
             renderPhotos(photos);
           }

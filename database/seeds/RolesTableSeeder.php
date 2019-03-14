@@ -26,12 +26,6 @@ class RolesTableSeeder extends Seeder
         	'created_at' => Carbon::now()
         ]);
 
-        DB::table('role_user')->insert([
-        	'role_id' => 1,
-        	'user_id' => 2,
-        	'created_at' => Carbon::now()
-        ]);
-
 
         $role = Role::create([
         	'name' => 'Editor'

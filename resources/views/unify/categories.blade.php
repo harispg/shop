@@ -1,41 +1,21 @@
-      <!-- Categories -->
-      <div class="container g-pt-100 g-pb-70">
-        <div class="row g-mx-minus-10">
-          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
-            <article class="u-block-hover">
-              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img1.jpg" alt="Image Description">
-              <div class="g-pos-abs g-bottom-30 g-left-30">
-                <span class="d-block g-color-black">Collections</span>
-                <h2 class="h1 mb-0">Women</h2>
-              </div>
-              <a class="u-link-v2" href="#!"></a>
-            </article>
-          </div>
-
-          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
-            <article class="u-block-hover">
-              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img2.jpg" alt="Image Description">
-              <div class="g-pos-abs g-bottom-30 g-left-30">
-                <span class="d-block g-color-black">Collections</span>
-                <h2 class="h1 mb-0">Children</h2>
-              </div>
-              <a class="u-link-v2" href="#!"></a>
-            </article>
-          </div>
-
-          <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
-            <article class="u-block-hover">
-              <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="assets/img-temp/650x850/img3.jpg" alt="Image Description">
-              <div class="g-pos-abs g-bottom-30 g-left-30">
-                <span class="d-block g-color-black">Collections</span>
-                <h2 class="h1 mb-0">Men</h2>
-              </div>
-              <a class="u-link-v2" href="#!"></a>
-            </article>
-          </div>
+<!-- Categories -->
+<div class="container g-pt-100 g-pb-70">
+  <div class="row g-mx-minus-10">
+    @foreach($categories as $category)
+    <div class="col-sm-6 col-md-4 g-px-10 g-mb-30">
+      <article class="u-block-hover">
+        <img class="w-100 u-block-hover__main--zoom-v1 g-mb-minus-8" src="/{{$category->photos->first()->thumbnail_path}}" alt="Image Description">
+        <div class="g-pos-abs g-bottom-30 g-left-30">
+          <span class="d-block g-color-black">Categories</span>
+          <h2 class="h1 mb-0">{{$category->name}}</h2>
         </div>
-      </div>
-      <!-- End Categories -->
+        <a class="u-link-v2" href="{{route('categoryArticles', ['category' => $category->id])}}"></a>
+      </article>
+    </div>
+    @endforeach
+  </div>
+</div>
+<!-- End Categories -->
 
 
 
@@ -44,7 +24,7 @@
 
 
 
-     {{--  <!-- Categories -->
+      {{-- <!-- Categories -->
       <div class="container-fluid px-0">
         <div class="row align-items-center no-gutters">
           <div class="col-md-7 col-lg-8 u-block-hover g-bg-size-cover g-min-height-500 g-flex-centered" data-bg-img-src="assets/img-temp/1200x800/img1.jpg">

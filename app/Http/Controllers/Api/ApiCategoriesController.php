@@ -12,7 +12,7 @@ class ApiCategoriesController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'can:categories.modify']);
-        $this->middleware('can:categories.create')->only('store');
+        $this->middleware('can:api|categories.create')->only('store');
     }
     
     public function update(Request $request, Category $category)
@@ -21,11 +21,12 @@ class ApiCategoriesController extends Controller
     		'name' => 'required|min:3',
     		'description' => 'required|min:10',
             'photo' => 'nullable|mimes:jpg,jpeg,bmp,png',
+            'dymType' => 'alpha',
     	]);
         //TODO: return custom JSON response after validator fails
 
         if($request->photo){
-            $photo = Photo::makePhotosFromFiles([$request->photo]);
+            $photo = Photo::makePhotosFromFiles([$request->photo], $request->dimType);
             $category->photos()->sync($photo);
         }
 
@@ -45,7 +46,7 @@ class ApiCategoriesController extends Controller
             'photo' => 'required|mimes:jpg,jpeg,bmp,png',
         ]);
 
-        $photo = Photo::makePhotosFromFiles([$request->photo]);
+        $photo = Photo::makePhotosFromFiles([$request->photo], $request->dimType);
 
         $category = Category::create([
             'name' => $request->name,

@@ -22,8 +22,8 @@ class PermissionPolicy
 
     public function work(User $user)
     {
-        $permission = Permission::getPermissionTo('permission.work');
+        $permission = Permission::getPermissionTo('permissions.work');
         return $user->hasRole($permission->roles);
     }
-}
+
 }

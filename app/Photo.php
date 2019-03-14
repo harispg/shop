@@ -24,6 +24,7 @@ class Photo extends Model
      * @return [array]        [App\Photo::class->id]
      */
     public static function makePhotosFromFiles($files){
+
     	foreach ($files as $file) {
             $photo = new Photo;
     		$photo->name=time() . $file->getClientOriginalName();
@@ -31,7 +32,7 @@ class Photo extends Model
 	        $photo->thumbnail_path = $photo->baseDir . '/tn-' . $photo->name;
 	        $file->move($photo->baseDir, $photo->name);
 
-	    	Image::make($photo->path)->fit(200)->save($photo->thumbnail_path);
+	    	Image::make($photo->path)->fit(200,200)->save($photo->thumbnail_path);
             $photo->save();
 	    	$photos[] = $photo->id;
     	}

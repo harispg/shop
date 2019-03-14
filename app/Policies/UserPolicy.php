@@ -22,7 +22,7 @@ class UserPolicy
 
     public function work(User $user)
     {
-        $permission = Permission::getPermissionTo('user.work');
+        $permission = Permission::getPermissionTo('users.work');
         return $user->hasRole($permission->roles);
     }
 }

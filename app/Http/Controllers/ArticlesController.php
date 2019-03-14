@@ -21,7 +21,7 @@ class ArticlesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $articles = Article::with('photos')->paginate(8);
         return view('articles.index', compact(['articles']));

@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\File;
 
 class PhotosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth', 'can:photos.work']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,10 +44,10 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        $files = $request->file('photos');
+        /*$files = $request->file('photos');
         $newPhotos = Photo::makePhotosFromFiles($files);
         $photos = Photo::latest()->get();
-        return redirect()->route('photos.index');
+        return redirect()->route('photos.index');*/
 
     }
 

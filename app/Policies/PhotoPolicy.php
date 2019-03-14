@@ -22,8 +22,8 @@ class PhotoPolicy
 
     public function work(User $user)
     {
-        $permission = Permission::getPermissionTo('photo.work');
+        $permission = Permission::getPermissionTo('photos.work');
         return $user->hasRole($permission->roles);
     }
-}
+
 }

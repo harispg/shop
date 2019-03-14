@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
-  //setting CSRF_TOKEN variable
+  //geting csrf token _token
   var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  //Getting api_token
+  var API_TOKEN = $('meta[name="api-token"]').attr('content');
 
   //refresh data in the table after editing
   function refreshData(category){
@@ -13,7 +15,7 @@ $(document).ready(function(){
   };
 
   //Edit category's change-photo toggler
-  $(".table").on('click', '.ec-photo-toggle', function(){
+  $(".table-responsive").on('click', '.ec-photo-toggle', function(){
     var _this = $(this);
     var togglerId = _this.data('category');
     var photoDiv = $("div#ec-photo-"+togglerId);
@@ -98,13 +100,14 @@ $(document).ready(function(){
     formData.append('name', name );
     formData.append('description', description);
     formData.append('_token', CSRF_TOKEN);
+    formData.append('api_token', API_TOKEN);
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
         contentType: false,
         cache: false,
         processData: false,
-        url: "/categories",
+        url: "/api/categories",
         method: 'POST',
         data: formData,
         success: function(category){
@@ -265,6 +268,7 @@ $(document).ready(function(){
     formData.append('description', description);
     formData.append('_token', CSRF_TOKEN);
     formData.append('_method', 'PATCH');
+    formData.append('api_token', API_TOKEN);
     
     $.ajax({
         type: 'POST',
@@ -272,7 +276,7 @@ $(document).ready(function(){
         contentType: false,
         cache: false,
         processData: false,
-        url: "/categories/"+categoryId,
+        url: "/api/categories/"+categoryId,
         data: formData,
         success: function(category){
           nameErrorSpan.html("");
@@ -322,8 +326,8 @@ $(document).ready(function(){
           $.ajax({
             type: 'POST',
             dataType: 'JSON',
-            url: "/categories/"+categoryId,
-            data: {_token: CSRF_TOKEN, _method: 'DELETE'},
+            url: "/api/categories/"+categoryId,
+            data: {_token: CSRF_TOKEN, _method: 'DELETE', api_token: API_TOKEN},
             success: function(response){
               console.log('deleted sucessfully');
               table.row(row).remove().draw();

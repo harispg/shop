@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         	'name'=>'Haris Vodopic',
         	'email' => 'haris@example.com',
         	'password' => bcrypt('password'),
+            'api_token' => str_random(60),
         	'superAdmin' => true,
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
@@ -26,7 +27,8 @@ class UsersTableSeeder extends Seeder
         	'name'=>'Haris Vodopic',
         	'email' => 'haris.vodopic@gmail.com',
         	'password' => bcrypt('password'),
-        	'superAdmin' => true,
+            'api_token' => str_random(60),
+        	'superAdmin' => false,
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
         ])->save();
@@ -36,7 +38,8 @@ class UsersTableSeeder extends Seeder
         	'name'=>'Ivana Vodopic',
         	'email' => 'ivana@example.com',
         	'password' => bcrypt('password'),
-        	'superAdmin' => true,
+            'api_token' => str_random(60),
+        	'superAdmin' => false,
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
         ])->save();

@@ -180,8 +180,6 @@
   </div>
   </div>
 </div>
-
-
 @endsection
 
 
@@ -195,7 +193,5 @@
 
 @section('script')
 <script src="/js/categoriesCreate.js"></script>
-
-
 @endsection
 
