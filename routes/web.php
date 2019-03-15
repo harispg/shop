@@ -5,9 +5,9 @@ use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
-	$categories = Category::latest()->get();
+	$categories = Category::has('articles')->get();
     return view('home', compact('categories'));
-});
+})->name('home');
 Route::get('plan', function(){
 	return view('PLAN');
 })->middleware(['auth']);//,role:admin
@@ -17,11 +17,11 @@ Route::get('plan', function(){
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('admin', function(){
 	return view('admin.master');
 })->middleware(['auth', 'can:articles.modify']);
+
+Route::get('/admin/articles', 'ArticlesController@adminIndex')->middleware('can:articles.edit')->name('admin.articles.index');
 
 Route::resource('articles', 'ArticlesController');
 

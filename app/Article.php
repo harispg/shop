@@ -28,6 +28,11 @@ class Article extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
 
     /**
      * [getComments -  getting all comments for the article]

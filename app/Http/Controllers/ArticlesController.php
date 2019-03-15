@@ -27,6 +27,12 @@ class ArticlesController extends Controller
         return view('articles.index', compact(['articles']));
     }
 
+    public function adminIndex(Request $request)
+    {
+        $articles = Article::with('photos')->get();
+        return view('admin.articles.index', compact('articles'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -49,6 +55,7 @@ class ArticlesController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'sku' => 'required|integer|min:100000|max:999999|unique:articles',
             'description' => 'required',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
@@ -61,6 +68,7 @@ class ArticlesController extends Controller
 
         $article = Article::create([
             'name' => $request->name,
+            'sku' => $request->sku,
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
@@ -99,7 +107,9 @@ class ArticlesController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit', compact(['article']));
+        $categories = Category::all();
+        $photos = Photo::latest()->get();
+        return view('admin.articles.edit', compact(['article', 'categories', 'photos']));
     }
 
     /**
@@ -111,7 +121,33 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        dd($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'quantity' => 'required|integer',
+            'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
+            'photos' => 'nullable|string',
+            'specification' => 'required',
+            'category' => 'required',
+        ]);
+
+        $article->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+            'specification' => $request->specification,
+        ]);
+
+        if($request->photos){
+            $photoIDs = explode('_', $request->photos);
+            $article->photos()->sync($photoIDs);
+            $article->categories()->sync($request->category);
+        }
+
+        flash()->success('Article updated', 'You have successfully updated your article');
+
+        return redirect()->route('admin.articles.index');
     }
 
     /**

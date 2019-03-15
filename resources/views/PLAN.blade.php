@@ -6,8 +6,8 @@
 		<h3>Tasks:</h3>
 		<p><strike>Figure out parts of frontend html</strike></p>
 		<p><strike>Implement permissions</strike></p>
-		<p>Implement custom thumbnail creation</p>
-		<p>Article pictures should be clickable</p>
+		<p><strike>Implement custom thumbnail creation</strike> <strong>On hold</strong></p>
+		<p><strike>Article pictures should be clickable</strike></p>
 		<p>Implement tag system</p>
 		<p>Make front end messages dynamic</p>
 		<p>Implement Discounts API</p>
@@ -15,14 +15,11 @@
 	</div>
 	<div class="col col-md-5">
 		<h3>In Progress:</h3>
-		<p>Implement custom thumbnail creation. I need to have the ability to choose thumbnail dimmension needed for website.</p>
-		<ul>Thumbnails needed:
-			<li>Article portrait for articles index page and also for featured products</li>
-			<li>Category portrait for categories on home page</li>
-			<li>Big photo for homepages carusel</li>
-			<li>Medium big photo for special offers</li>
-			<li>Avatars</li>
-			<li>Cart icons small</li>
+		<p>
+			Issues with summernote, text floats up on page scrolling. <br />
+			Show photos somewere when editing article. <br />
+			
+		</p>
 		</ul>
 		
 	</div>

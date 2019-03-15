@@ -9,5 +9,6 @@ $factory->define('App\Article', function (Faker $faker) {
         'specification' => $faker->text,
         'price' => 0.99,
         'quantity' => 99,
+        'sku' => rand(100000, 999999)
     ];
 });

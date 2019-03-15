@@ -11,16 +11,17 @@
 
   <div class="col-md-8 offset-2">
 
-    <h1>Create new article</h1>
+    <h1>Edit article {{$article->name}}</h1>
 
-  <form class="form" enctype="multipart/form-data" method="POST" action="{{route('articles.store')}}">
+  <form class="form" enctype="multipart/form-data" method="POST" action="{{route('articles.update', ['article'=>$article->id])}}">
 
     @csrf
+    @method('PATCH')
 
     <div class="row">
       <div class="form-group col-sm-6 {{$errors->has('name')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">Name:</label>
-        <input id="name" class="form-control" type="text" name="name" placeholder="Multimeter UT33D" value="{{old('name')}}" required>
+        <input id="name" class="form-control" type="text" name="name" placeholder="Multimeter UT33D" value="{{old('name')??$article->name}}" required>
         @if($errors->has('name'))
         <span class="text-danger">{{$errors->first('name')}}</span>
         @endif
@@ -28,7 +29,7 @@
 
       <div class="form-group col-sm-6 {{$errors->has('sku')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">SKU:</label>
-        <input id="sku" class="form-control" type="text" name="sku" placeholder="280939" value="{{old('sku')}}" required>
+        <input id="sku" class="form-control" type="text" name="sku" value="{{$article->sku}}" disabled>
         @if($errors->has('sku'))
         <span class="text-danger">{{$errors->first('sku')}}</span>
         @endif
@@ -37,7 +38,7 @@
 
     <div class="form-group {{$errors->has('description')?"has-error":""}}">
       <label class="col-sm-2 col-form-label pl-0" for="description">Description:</label>
-      <textarea id="description" class="form-control" type="text" name="description" required>{{old('description')}}</textarea>
+      <textarea id="description" class="form-control" type="text" name="description" required>{{old('description')??$article->description}}</textarea>
       @if($errors->has('description'))
       <span class="text-danger">{{$errors->first('description')}}</span>
       @endif
@@ -46,7 +47,7 @@
     <div class="form-group {{$errors->has('specification')?"has-error":""}}">
       <label class="col-sm-2 col-form-label pl-0" for="specification">Specification:</label>
       <textarea id="summernote" class="form-control" type="text" name="specification" required>
-        {{old('specification')}}
+        {{old('specification')??$article->specification}}
       </textarea>
       @if($errors->has('specification'))
       <span class="text-danger">{{$errors->first('specification')}}</span>
@@ -56,7 +57,8 @@
     <div class="row">
       <div class="form-group col-sm-6 {{$errors->has('price')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">Price:</label>
-        <input id="price" class="form-control" type="text" name="price" placeholder="1759.35" value="{{old('price')}}" required>
+        <input id="price" class="form-control" type="text" name="price" placeholder="1759.35" 
+          value="{{old('price')??$article->price}}" required>
         @if($errors->has('price'))
         <span class="text-danger">{{$errors->first('price')}}</span>
         @endif
@@ -64,7 +66,8 @@
 
       <div class="form-group col-sm-6 {{$errors->has('quantity')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">Quantity:</label>
-        <input id="quantity" class="form-control" type="text" name="quantity" placeholder="99" value="{{old('quantity')}}" required>
+        <input id="quantity" class="form-control" type="text" name="quantity" placeholder="99" 
+          value="{{old('quantity')??$article->quantity}}" required>
         @if($errors->has('quantity'))
         <span class="text-danger">{{$errors->first('quantity')}}</span>
         @endif
@@ -95,7 +98,7 @@
         <span id="photosError" class="form-text text-danger">{{$errors->first('photos')}}</span>
       @endif
 
-        <button class="btn btn-primary mt-5" type="submit">Save article</button>
+        <button class="btn btn-primary mt-5" type="submit">Save changes</button>
 
   </form>
   </div>
@@ -288,11 +291,6 @@
 
   });
 </script>
-
-
-	
-
-
 @endsection
 
 

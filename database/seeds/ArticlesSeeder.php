@@ -11,7 +11,7 @@ class ArticlesSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Article', 20)->create();
+        factory('App\Article', 150)->create();
 
         $photos = App\Photo::all();
         $categories = App\Category::all();

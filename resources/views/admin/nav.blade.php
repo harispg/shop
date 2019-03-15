@@ -27,6 +27,9 @@
                 <a href="/plan"><i class="fa fa-bars"></i> <span class="nav-label">PLAN</span></a>
             </li>
             <li>
+                <a href="{{route('admin.articles.index')}}"><i class="fa fa-bars"></i> <span class="nav-label">Articles</span></a>
+            </li>
+            <li>
                 <a href="{{route('categories')}}"><i class="fa fa-bars"></i> <span class="nav-label">Categories</span></a>
             </li>
             <li class="active">

@@ -28,6 +28,8 @@ Route::post('categories', 'Api\ApiCategoriesController@store');
 Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
 Route::delete('categories/{category}', 'Api\ApiCategoriesController@destroy');
 
+Route::delete('articles/{article}','Api\ApiArticlesController@destroy')->middleware('auth:api', 'can:api|articles.create');
+
 });
     //
 

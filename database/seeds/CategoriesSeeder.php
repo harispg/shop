@@ -11,7 +11,7 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Category', 20)->create();
+        factory('App\Category', 5)->create();
 
         $photos = App\Photo::all();
 
