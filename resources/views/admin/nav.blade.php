@@ -32,9 +32,9 @@
             <li>
                 <a href="{{route('categories')}}"><i class="fa fa-bars"></i> <span class="nav-label">Categories</span></a>
             </li>
-            <li class="active">
+            <li>
                 <a href="/inspinia/index.html"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboards</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level">
+                <ul class="nav nav-second-level collapse">
                     <li class="active"><a href="index.html">Dashboard v.1</a></li>
                     <li><a href="/inspinia/dashboard_2.html">Dashboard v.2</a></li>
                     <li><a href="/inspinia/dashboard_3.html">Dashboard v.3</a></li>

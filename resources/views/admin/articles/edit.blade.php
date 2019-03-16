@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('pluginCSS')
-<link rel="stylesheet" type="text/css" href="/inspinia/css/plugins/summernote/summernote-bs4.css">
+<link href="/inspinia/css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
 <link href="/inspinia/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/inspinia/css/plugins/dropzone/dropzone.css">
@@ -46,7 +46,7 @@
     
     <div class="form-group {{$errors->has('specification')?"has-error":""}}">
       <label class="col-sm-2 col-form-label pl-0" for="specification">Specification:</label>
-      <textarea id="summernote" class="form-control" type="text" name="specification" required>
+      <textarea id="summernote" name="specification" required>
         {{old('specification')??$article->specification}}
       </textarea>
       @if($errors->has('specification'))
@@ -74,7 +74,7 @@
       </div>
     </div>
 
-    <div class="form-group pb-3 {{$errors->has('specification')?"has-error":""}}">
+    <div class="form-group pb-3 {{$errors->has('category')?"has-error":""}}">
       <label class="col-sm-3 col-form-label pl-0" for="category">Choose category:</label>
       <select class="form-control" name="category" required>
         @foreach($categories as $category)

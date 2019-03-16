@@ -7,7 +7,7 @@
 -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
@@ -20,8 +20,20 @@
     <title>INSPINIA | Dashboard</title>
 
     <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <link href="/inspinia/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+
     <link href="/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
     @yield('pluginCSS')
@@ -29,7 +41,7 @@
     {{-- <link href="/inspinia/css/plugins/toastr/toastr.min.css" rel="stylesheet"> --}}
 
     <!-- Gritter -->
-    <!-- <link href="/inspinia/js/plugins/gritter/jquery.gritter.css" rel="stylesheet"> -->
+    {{-- <link href="/inspinia/js/plugins/gritter/jquery.gritter.css" rel="stylesheet"> --}}
 
     <link href="/inspinia/css/animate.css" rel="stylesheet">
     <link href="/inspinia/css/style.css" rel="stylesheet">
@@ -64,9 +76,6 @@
 
     <!-- Mainly scripts -->
     <script src="/js/app.js"></script>
-    <script src="/inspinia/js/jquery-3.1.1.min.js"></script>
-    <script src="/inspinia/js/popper.min.js"></script>
-    <script src="/inspinia/js/bootstrap.js"></script>
     <script src="/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     @yield('mainlyScripts')
@@ -84,10 +93,10 @@
 
     <!-- Custom and plugin javascript -->
     <script src="/inspinia/js/inspinia.js"></script>
-    <script src="/inspinia/js/plugins/pace/pace.min.js"></script>
+    {{-- <script src="/inspinia/js/plugins/pace/pace.min.js"></script> --}}
 
-    <!-- jQuery UI -->
-    <script src="/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!--jQuery UI -->
+    {{-- <script src="/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script> --}}
 
     @yield('pluginScripts')
 

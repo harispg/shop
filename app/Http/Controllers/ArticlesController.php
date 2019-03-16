@@ -54,9 +54,9 @@ class ArticlesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|min:3',
             'sku' => 'required|integer|min:100000|max:999999|unique:articles',
-            'description' => 'required',
+            'description' => 'required|min:10',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
             'photos' => 'required|string',
@@ -122,8 +122,8 @@ class ArticlesController extends Controller
     public function update(Request $request, Article $article)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|min:3',
+            'description' => 'required|min:10',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
             'photos' => 'nullable|string',
