@@ -147,7 +147,7 @@ class ArticlesController extends Controller
 
         flash()->success('Article updated', 'You have successfully updated your article');
 
-        return redirect()->route('admin.articles.index');
+        return redirect()->back();
     }
 
     /**

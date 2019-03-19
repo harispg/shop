@@ -6,11 +6,29 @@
 
 
 @section('content')
-<h1>Manage articles</h1>
-<div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Articles index</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Admin</a>
+            </li>
+            <li class="breadcrumb-item">
+                <strong>Articles</strong>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="{{route('articles.create')}}">Create new Article</a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="row wrapper wrapper-content animated fadeInRight">
+
+          <h1 class="pl-3">Manage articles</h1>
           <div class="col-lg-12">
-            <div class="ibox ">
+            <div class="ibox">
               <div class="ibox-title">
                   <h5>Basic Data Tables example with responsive plugin</h5>
                   <div class="ibox-tools">
@@ -94,8 +112,9 @@
               </div>
           </div>
       </div>
-      </div>
-        </div>
+
+  </div>
+
 
 @endsection
 

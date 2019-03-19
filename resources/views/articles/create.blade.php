@@ -7,9 +7,24 @@
 @endsection
 @section('content')
 
-<div class="container">
-
-  <div class="col-md-8 offset-2">
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-9">
+      <h2>Create article</h2>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="/admin">Admin</a>
+          </li>
+          <li class="breadcrumb-item">
+              <a href="{{route('admin.articles.index')}}">Articles index</a>
+          </li>
+          <li class="breadcrumb-item active">
+              <strong>Create article</strong>
+          </li>
+      </ol>
+  </div>
+</div>
+  <div class="row">
+  <div class="col-md-6">
 
     <h1>Create new article</h1>
 
@@ -20,7 +35,7 @@
     <div class="row">
       <div class="form-group col-sm-6 {{$errors->has('name')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">Name:</label>
-        <input id="name" class="form-control" type="text" name="name" placeholder="Multimeter UT33D" value="{{old('name')}}" required>
+        <input id="name" class="form-control" type="text" name="name" placeholder="Eneter Product name" value="{{old('name')}}" required>
         @if($errors->has('name'))
         <span class="text-danger">{{$errors->first('name')}}</span>
         @endif
@@ -28,7 +43,7 @@
 
       <div class="form-group col-sm-6 {{$errors->has('sku')?"has-error":""}}">
         <label class="col-sm-2 col-form-label pl-0">SKU:</label>
-        <input id="sku" class="form-control" type="text" name="sku" placeholder="280939" value="{{old('sku')}}" required>
+        <input id="sku" class="form-control" type="text" name="sku" placeholder="Enter product SKU" value="{{old('sku')}}" required>
         @if($errors->has('sku'))
         <span class="text-danger">{{$errors->first('sku')}}</span>
         @endif
@@ -99,7 +114,14 @@
 
   </form>
   </div>
-</div>
+  <div class="col col-md-6 article-photos">
+    
+    <h2>Selected Photos:</h2>
+    <div class="selected-photos-content">  
+    <!-- Java Script will render content here after user selects them-->
+    </div>
+  </div>
+  </div>
 
 <div class="modal inmodal fade" 
            id="photoModal" 
@@ -133,12 +155,9 @@
                 </div>
                 <div id="photoGrid"> 
                   @foreach($photos as $photo)
-                    <div class="col col-md-3 m-md-3  pt-2 d-md-inline-block bg-transparent border border-info">
-                      {{-- <h3 class="text-light">{{$photo->name}}</h3> --}}
-                        <img class="img-fluid" src="/{{$photo->thumbnail_path}}"> <br />
-                        <label class="text-light mt-1 float-left"> <input type="checkbox" class="i-checks" 
-                               data-photo="{{$photo->id}}"> Select article photo</label>
-                    </div>
+                    
+                        <img class="img mr-4 mb-4" src="/{{$photo->thumbnail_path}}" data-photo="{{$photo->id}}">
+                      
                   @endforeach
                 </div>
 
@@ -181,11 +200,6 @@
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var API_TOKEN = $("meta[name='api-token']").attr("content");
     
-    //Initialization of i-checks
-    $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
 
     //Initialization of summernote
     $('#summernote').summernote({
@@ -252,29 +266,20 @@
           for(i; i<numberOfPhotos; i++){
             giveHtml(photos[i]); 
           }
-          //need to run initialization of i-checks after rendering so checkbox can remain pretty
-          $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });  
         };
 
         function giveHtml(photo){
           
           $("#photoGrid").append(
-            '<div class="badge m-2 bg-dark">\
-              <h3 class="text-light">'+photo.name+'</h3>\
-              <img src="/'+photo.thumbnail_path+'"> <br />\
-              <label class="text-light mt-1 mr-5">\
-              <input type="checkbox" class="i-checks" data-photo="'+photo.id+'"> Select</label>\
-              </div>'
+            '<img src="/'+photo.thumbnail_path+'" class="img mr-4 mb-4" data-photo="'+photo.id+'">'
             );
         };
-      //var currentInput;
+
+      //Handeling clicked photos
       $(".submitPhotos").on('click', function(){
         var photo_ids = [];
-        $(".icheckbox_square-green.checked").each(function(){
-        photo_ids.push($(this).children('input').data("photo"));
+        $("img.img-clicked").each(function(){
+        photo_ids.push($(this).data("photo"));
         });
         if($("span#photosError").length != 0){
           var spanInQuestion = $("span#photosError");
@@ -283,7 +288,31 @@
         }
         $("span#selectedPhotosNumber").text("You selected: " + photo_ids.length + " photos.");
         $("input#photoIDs").attr("value", photo_ids.join("_"));
+        if(photo_ids.length > 0){
+          $.ajax({
+            url: '/api/allPhotos',
+            type: 'POST',
+            method: 'POST',
+            data:{_token: CSRF_TOKEN, api_token: API_TOKEN, photoIds: photo_ids},
+            success: function(photos){
+              $(".selected-photos-content").html("");
+              //$(".article-photos").append("<h2 class='newlySelectedPhotos'>New photos:</h2>");
+              var i = 0;
+              for(i;i<photos.length;i++){
+                $(".selected-photos-content").append('<img src="/'+photos[i].thumbnail_path+'" class="img mr-4 mb-4" photo-data="'+photos[i].id+'">');
+              }
+              photo_ids = [];
+            }
+          });
+        }else{
+          $(".selected-photos-content").html("");
+        }
         $("div.modal#photoModal").modal('toggle');
+      });
+
+      //on img click
+      $(".modal").on('click', '.img', function(){
+        $(this).toggleClass("img-clicked");
       });
 
   });

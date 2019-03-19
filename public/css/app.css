@@ -2065,5 +2065,12 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   }
 }
 
+.img-clicked {
+  border: 3px solid #18a689;
+}
 
+.article-photos {
+  height: 45rem;
+  overflow-y: auto;
+}
 

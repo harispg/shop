@@ -7,11 +7,26 @@
 @endsection
 @section('content')
 
-<div class="container">
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-9">
+      <h2>Edit Article</h2>
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+              <a href="/admin">Admin</a>
+          </li>
+          <li class="breadcrumb-item">
+              <a href="{{route('admin.articles.index')}}">Articles index</a>
+          </li>
+          <li class="breadcrumb-item active">
+              <strong>Edit</strong>
+          </li>
+      </ol>
+  </div>
+</div>
+  <div class="row">
+  <div class="col-md-6">
 
-  <div class="col-md-8 offset-2">
-
-    <h1>Edit article {{$article->name}}</h1>
+    <h1>Edit article: <span class="font-weight-bold">{{$article->name}}</span></h1>
 
   <form class="form" enctype="multipart/form-data" method="POST" action="{{route('articles.update', ['article'=>$article->id])}}">
 
@@ -91,7 +106,7 @@
       <button  type="button" 
                class="btn btn-primary btn-block mb-1" 
                data-toggle="modal" 
-               data-target="#photoModal">Add some photos</button>
+               data-target="#photoModal">Change photos</button>
       @if(!$errors->has('photos'))
         <span id="selectedPhotosNumber" class="form-text"></span class="form-text">
       @else
@@ -102,7 +117,20 @@
 
   </form>
   </div>
-</div>
+  <div class="col col-md-6 article-photos">
+    <div>
+    <h2>Current photos</h2>
+    @foreach($article->photos as $photo)
+    <img class="img mr-4 mb-4" src="/{{$photo->thumbnail_path}}">
+    @endforeach
+    </div>
+    <h2 class="new-photos" hidden="true">New Photos</h2>
+    <div class="selected-photos-content">
+      <!-- Java script will render pictures here after user selects them.-->
+    </div>
+  </div>
+  </div>
+
 
 <div class="modal inmodal fade" 
            id="photoModal" 
@@ -114,7 +142,6 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <h4 class="modal-title">Choose some photos or add new ones for your article</h4>
-            <small class="font-bold">You can do this later too, but We recomend you to do it now.</small>
         </div>
         <div class="modal-body">
           <h2>Add new photos</h2>
@@ -136,12 +163,7 @@
                 </div>
                 <div id="photoGrid"> 
                   @foreach($photos as $photo)
-                    <div class="col col-md-3 m-md-3  pt-2 d-md-inline-block bg-transparent border border-info">
-                      {{-- <h3 class="text-light">{{$photo->name}}</h3> --}}
-                        <img class="img-fluid" src="/{{$photo->thumbnail_path}}"> <br />
-                        <label class="text-light mt-1 float-left"> <input type="checkbox" class="i-checks" 
-                               data-photo="{{$photo->id}}"> Select article photo</label>
-                    </div>
+                        <img class="img mr-4 mb-4" src="/{{$photo->thumbnail_path}}" data-photo="{{$photo->id}}">
                   @endforeach
                 </div>
 
@@ -183,16 +205,17 @@
 
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
     var API_TOKEN = $("meta[name='api-token']").attr("content");
+
     
     //Initialization of i-checks
-    $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
+    // $('.i-checks').iCheck({
+    //             checkboxClass: 'icheckbox_square-green',
+    //             radioClass: 'iradio_square-green',
+    //         });
 
     //Initialization of summernote
     $('#summernote').summernote({
-      height: 300,
+      height: 200,
       files: false,
     });
 
@@ -256,28 +279,24 @@
             giveHtml(photos[i]); 
           }
           //need to run initialization of i-checks after rendering so checkbox can remain pretty
-          $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });  
+          // $('.i-checks').iCheck({
+          //       checkboxClass: 'icheckbox_square-green',
+          //       radioClass: 'iradio_square-green',
+          //   });  
         };
 
         function giveHtml(photo){
           
           $("#photoGrid").append(
-            '<div class="badge m-2 bg-dark">\
-              <h3 class="text-light">'+photo.name+'</h3>\
-              <img src="/'+photo.thumbnail_path+'"> <br />\
-              <label class="text-light mt-1 mr-5">\
-              <input type="checkbox" class="i-checks" data-photo="'+photo.id+'"> Select</label>\
-              </div>'
+            '<img src="/'+photo.thumbnail_path+'" class="img mr-4 mb-4" data-photo="'+photo.id+'">'
             );
         };
-      //var currentInput;
+
+      //Handeling clicked photos
       $(".submitPhotos").on('click', function(){
         var photo_ids = [];
-        $(".icheckbox_square-green.checked").each(function(){
-        photo_ids.push($(this).children('input').data("photo"));
+        $("img.img-clicked").each(function(){
+        photo_ids.push($(this).data("photo"));
         });
         if($("span#photosError").length != 0){
           var spanInQuestion = $("span#photosError");
@@ -286,7 +305,31 @@
         }
         $("span#selectedPhotosNumber").text("You selected: " + photo_ids.length + " photos.");
         $("input#photoIDs").attr("value", photo_ids.join("_"));
+        if(photo_ids.length > 0){
+          $.ajax({
+            url: '/api/allPhotos',
+            type: 'POST',
+            method: 'POST',
+            data:{_token: CSRF_TOKEN, api_token: API_TOKEN, photoIds: photo_ids},
+            success: function(photos){
+              $("h2.new-photos").attr("hidden", false);  
+              $(".selected-photos-content").html("");      
+              var i = 0;
+              for(i;i<photos.length;i++){
+                $(".selected-photos-content").append('<img src="/'+photos[i].thumbnail_path+'" class="img mr-4 mb-4" photo-data="'+photos[i].id+'">'); 
+              }
+              photo_ids = [];
+            }
+          });
+        }else{
+          $(".selected-photos-content").html("");
+        }
         $("div.modal#photoModal").modal('toggle');
+      });
+
+      //on img click
+      $(".modal").on('click', '.img', function(){
+        $(this).toggleClass("img-clicked");
       });
 
   });

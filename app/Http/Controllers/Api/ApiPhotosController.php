@@ -23,6 +23,10 @@ class ApiPhotosController extends Controller
 
     public function allPhotos(Request $request)
     {
+        if(isset($request->photoIds)){
+
+            return Photo::find($request->photoIds)->sortByDesc('updated_at')->values()->all();
+        }
     	return Photo::latest()->get();
     }
 

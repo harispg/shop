@@ -2,3 +2,12 @@
 @import '~normalize.css/normalize.css';
 // Sweetalert2
 @import '~sweetalert2/src/sweetalert2.scss';
+
+.img-clicked {
+	border : 3px solid #18a689;
+}
+
+.article-photos {
+	height : 45rem;
+	overflow-y: auto;
+}
