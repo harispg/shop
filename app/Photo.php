@@ -26,17 +26,23 @@ class Photo extends Model
     public static function makePhotosFromFiles($files){
 
     	foreach ($files as $file) {
-            $photo = new Photo;
-    		$photo->name=time() . $file->getClientOriginalName();
-	        $photo->path = $photo->baseDir . '/' . $photo->name;
-	        $photo->thumbnail_path = $photo->baseDir . '/tn-' . $photo->name;
-	        $file->move($photo->baseDir, $photo->name);
-
-	    	Image::make($photo->path)->fit(200,200)->save($photo->thumbnail_path);
-            $photo->save();
-	    	$photos[] = $photo->id;
+            $photo = static::savePhoto($file);
+            $photos[] = $photo->id;
     	}
 
     	return $photos;
+    }
+
+    public static function savePhoto($file){
+
+        $photo = new Photo;
+        $photo->name=time() . $file->getClientOriginalName();
+        $photo->path = $photo->baseDir . '/' . $photo->name;
+        $photo->thumbnail_path = $photo->baseDir . '/tn-' . $photo->name;
+        $file->move($photo->baseDir, $photo->name);
+
+        Image::make($photo->path)->fit(200,200)->save($photo->thumbnail_path);
+        $photo->save();
+        return $photo;
     }
 }

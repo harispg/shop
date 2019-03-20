@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Photo;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -52,6 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'photo' => ['required', 'mimes:jpg,jpeg,bmp,png'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'terms' => ['accepted'],
         ]);
@@ -65,9 +67,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $photo = Photo::savePhoto($data['photo']);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'avatar' => $photo->thumbnail_path,
             'password' => Hash::make($data['password']),
             'api_token' => str_random(60)
         ]);

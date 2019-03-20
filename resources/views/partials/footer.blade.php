@@ -361,6 +361,7 @@
     <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
     <script src="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="/unifyAssets/vendor/appear.js"></script>
+    <script  src="/unifyAssets/vendor/jquery.filer/js/jquery.filer.min.js"></script>
 
     <!-- JS Unify -->
     <script src="/unifyAssets/js/hs.core.js"></script>
@@ -374,6 +375,8 @@
     <script src="/unifyAssets/js/components/hs.count-qty.js"></script>
     <script src="/unifyAssets/js/components/hs.go-to.js"></script>
     <script src="/unifyAssets/js/helpers/hs.rating.js"></script>
+    <script  src="/unifyAssets/js/helpers/hs.focus-state.js"></script>
+    <script  src="/unifyAssets/js/components/hs.file-attachement.js"></script>
 
     <!-- JS Revolution Slider -->
     <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
@@ -401,6 +404,11 @@
     @yield('script')
     <script>
       $(document).on('ready', function () {
+
+        // initialization of forms
+        //$.HSCore.components.HSFileAttachment.init('.js-file-attachment');
+        $.HSCore.helpers.HSFocusState.init();
+
 
         
         // initialization of carousel

@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $role->intersect($this->roles)->count();
     }
 
+    public function getRole()
+    {
+        return $this->roles()->first();
+    }
+
     /**
      * Gives role to a user
      * @param  [string] $role

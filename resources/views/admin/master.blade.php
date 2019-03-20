@@ -20,7 +20,7 @@
     <title>INSPINIA | Dashboard</title>
 
     <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    {{-- <link rel="stylesheet" type="text/css" href="/css/reset.css"> --}}
 
     <link href="/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -45,6 +45,7 @@
 
     <link href="/inspinia/css/animate.css" rel="stylesheet">
     <link href="/inspinia/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css">
 
 </head>
 
@@ -91,14 +92,19 @@
     {{-- <script src="/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
     <script src="/inspinia/js/demo/peity-demo.js"></script> --}}
 
+    <script src="/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/metismenu"></script> --}}
+
     <!-- Custom and plugin javascript -->
     <script src="/inspinia/js/inspinia.js"></script>
-    {{-- <script src="/inspinia/js/plugins/pace/pace.min.js"></script> --}}
+    <script src="/inspinia/js/plugins/pace/pace.min.js"></script>
+
 
     <!--jQuery UI -->
     {{-- <script src="/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script> --}}
 
     @yield('pluginScripts')
+    <script src="/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- GITTER -->
     {{-- <script src="/inspinia/js/plugins/gritter/jquery.gritter.min.js"></script> --}}
@@ -114,7 +120,6 @@
 
     <!-- Toastr -->
     {{-- <script src="/inspinia/js/plugins/toastr/toastr.min.js"></script> --}}
-
 
     @yield('script')
 
