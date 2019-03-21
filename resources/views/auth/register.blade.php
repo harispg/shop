@@ -46,24 +46,16 @@
               </div>
 
               <div class="form-group mb-4 {{$errors->has('photo')?"u-has-error-v1":""}}">
+                <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Upload your photo:</label> <br />
                 <label class="u-file-attach-v2 g-color-gray-dark-v5 mb-0">
                   <input id="fileAttachment" class="form-control form-control-md {{$errors->has('photo')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}}" name="photo" type="file">
                   <i class="icon-cloud-upload g-font-size-16 g-pos-rel g-top-2 g-mr-5"></i>
-                  <span class="file-name">Attach file</span>
+                  <span class="file-name">Attach photo</span>
                 </label>
                 @if($errors->has('photo'))
                     <small class="form-control-feedback">{{$errors->first('photo')}}</small>
                 @endif
               </div>
-
-              {{-- <div class="form-group mb-4 {{$errors->has('photo')?"u-has-error-v1":""}}">
-                <label class="custom-file g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">
-                <input class="form-control form-control-md {{$errors->has('photo')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" id="file" name="photo" type="file" value="{{old('photo')}}" placeholder="johndoe@gmail.com" required>
-                <span class="custom-file-label rounded-0"></span></label>
-                @if($errors->has('photo'))
-                    <small class="form-control-feedback">{{$errors->first('photo')}}</small>
-                @endif
-              </div> --}}
 
               <div class="row justify-content-between mb-5">
                 <div class="col-8 align-self-center {{$errors->has('terms')?"u-has-error-v1":""}}">

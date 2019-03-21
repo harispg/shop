@@ -50,7 +50,15 @@
                 <p>{{$article->description}}</p>
               </div>
               <!-- End Product Info -->
-
+              <!-- TAGS  -->
+                <ul class="u-list-inline">
+                  @foreach($article->tags as $tag) 
+                  <li class="list-inline-item g-mb-10">
+                    <a class="u-tags-v1 g-color-purple g-brd-around g-brd-purple g-bg-purple--hover g-color-white--hover g-py-4 g-px-10" href="{{route('tags.articles', ['tag' => $tag->id])}}">{{$tag->name}}</a>
+                  </li>
+                  @endforeach
+                </ul>
+              <!-- END TAGS -->
               <!-- Price -->
               <div class="g-mb-30">
                 <h2 class="g-color-gray-dark-v5 g-font-weight-400 g-font-size-12 text-uppercase mb-2">Price</h2>

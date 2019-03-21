@@ -98,8 +98,14 @@
       @endif
     </div>
 
+    <div class="form-group pb-3">
+      <label for="tags">Add some tags:</label> <br>
+      <input class="form-control" type="text" name="tags" data-role="tagsinput">
+    </div>
+
     <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
-    
+    <div class="row mb-5">
+      <div class="col col-md-6">
       <button  type="button" 
                class="btn btn-primary btn-block mb-1" 
                data-toggle="modal" 
@@ -109,9 +115,11 @@
       @else
         <span id="photosError" class="form-text text-danger">{{$errors->first('photos')}}</span>
       @endif
-
-        <button class="btn btn-primary mt-5" type="submit">Save article</button>
-
+      </div>
+      <div class="col col-md-6">
+        <button class="btn btn-primary float-right" type="submit">Save article</button>
+      </div>
+    </div>
   </form>
   </div>
   <div class="col col-md-6 article-photos">
@@ -203,7 +211,7 @@
 
     //Initialization of summernote
     $('#summernote').summernote({
-      height: 300,
+      height: 150,
       files: false,
     });
 

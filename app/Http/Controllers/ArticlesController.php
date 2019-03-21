@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\Photo;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class ArticlesController extends Controller
@@ -62,6 +63,7 @@ class ArticlesController extends Controller
             'photos' => 'required|string',
             'specification' => 'required',
             'category' => 'required',
+            'tags' => 'nullable|string',
         ]);
 
         $photoIDs = explode('_', $request->photos);
@@ -78,6 +80,12 @@ class ArticlesController extends Controller
 
         $article->photos()->sync($photoIDs);
         $article->categories()->attach($request->category);
+
+        if($request->tags){
+            $tags = Tag::makeTagsFrom($request->tags);
+            $article->tags()->sync($tags);
+        }
+
 
         flash()->success('Article created', $article->name . " is saved in database");
 
@@ -143,6 +151,11 @@ class ArticlesController extends Controller
             $photoIDs = explode('_', $request->photos);
             $article->photos()->sync($photoIDs);
             $article->categories()->sync($request->category);
+        }
+
+        if($request->tags){
+            $tags = Tag::makeTagsFrom($request->tags);
+            $article->tags()->sync($tags);
         }
 
         flash()->success('Article updated', 'You have successfully updated your article');

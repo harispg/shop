@@ -401,7 +401,7 @@
     <!-- JS Plugins Init. -->
 
 
-    @yield('script')
+    
     <script>
       $(document).on('ready', function () {
 
@@ -588,5 +588,7 @@
       });
   });
 </script>
+
+@yield('script')
   </body>
 </html>

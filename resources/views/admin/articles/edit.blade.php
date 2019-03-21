@@ -101,6 +101,14 @@
       @endif
     </div>
 
+    <div class="form-group pb-3">
+      <label for="tags">Add some tags:</label> <br>
+      <input class="form-control" type="text" name="tags" data-role="tagsinput"
+      value="@foreach($article->tags as $tag){{$tag->name}},@endforeach">
+    </div>
+
+    <div class="row mb-5">
+    <div class="col">
     <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
     
       <button  type="button" 
@@ -112,9 +120,11 @@
       @else
         <span id="photosError" class="form-text text-danger">{{$errors->first('photos')}}</span>
       @endif
-
-        <button class="btn btn-primary mt-5" type="submit">Save changes</button>
-
+      </div>
+      <div class="col">
+        <button class="btn btn-primary float-right" type="submit">Save changes</button>
+      </div>
+    </div>
   </form>
   </div>
   <div class="col col-md-6 article-photos">

@@ -35,6 +35,10 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+
+
+
 
     @yield('pluginCSS')
     <!-- Toastr style -->
@@ -55,21 +59,21 @@
 
         <div id="page-wrapper" class="gray-bg dashbard-1">
 
-        <div class="row border-bottom">
-        @include('admin.nav-top')
-        </div>
-
-        @yield('content')
-
-
-        <div class="footer">
-            <div class="float-right">
-                10GB of <strong>250GB</strong> Free.
+            <div class="row border-bottom">
+            @include('admin.nav-top')
             </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2018
+
+            @yield('content')
+
+
+            <div class="footer">
+                <div class="float-right">
+                    10GB of <strong>250GB</strong> Free.
+                </div>
+                <div>
+                    <strong>Copyright</strong> Example Company &copy; 2014-2018
+                </div>
             </div>
-        </div>
         </div>
         
 
@@ -105,6 +109,8 @@
 
     @yield('pluginScripts')
     <script src="/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 
     <!-- GITTER -->
     {{-- <script src="/inspinia/js/plugins/gritter/jquery.gritter.min.js"></script> --}}

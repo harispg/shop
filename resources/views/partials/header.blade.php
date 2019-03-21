@@ -14,7 +14,8 @@
     <link rel="shortcut icon" href="../favicon.ico">
 
     <!-- Google Fonts -->
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900">
+    
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <!-- CSS Global Compulsory -->
     <link rel="stylesheet" href="/unifyAssets/vendor/bootstrap/bootstrap.min.css">

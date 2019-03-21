@@ -8,6 +8,7 @@ Route::get('/', function () {
 	$categories = Category::has('articles')->get();
     return view('home', compact('categories'));
 })->name('home');
+Route::redirect('/home', '/');
 Route::get('plan', function(){
 	return view('PLAN');
 })->middleware(['auth']);//,role:admin
@@ -40,4 +41,6 @@ Route::get('categories/{category}', 'CategoriesController@show')->name('category
 Route::post('/comments/{article}', 'CommentsController@store')->name('comments.store');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
 Route::post('/ratings/{article}', 'RatingsController@store');
-Route::post('/file-upload', function(){});
+
+
+Route::get('/tags/{tag}/articles', 'TagsController@show')->name('tags.articles');
