@@ -85,7 +85,7 @@
                     {{$article->name}}
                   </a>
                 </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Man</a>
+                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">{{$article->categories->first()->name}}</a>
                 <span class="d-block g-color-black g-font-size-17">{{$article->price}}</span>
               </div>
               <!-- End Product Info -->

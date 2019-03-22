@@ -15,13 +15,18 @@ class ArticlesSeeder extends Seeder
 
         $photos = App\Photo::all();
         $categories = App\Category::all();
+        $tags = App\Tag::all();
 
-        App\Article::all()->each(function($article) use ($photos, $categories) {
+        App\Article::all()->each(function($article) use ($photos, $categories, $tags) {
         	$article->photos()->attach(
         		$photos->random(rand(3,1))->pluck('id')->toArray()
         	);
+
             $article->categories()->attach($categories->random(1)->pluck('id'));
-            // TODO: think about number of categories a shop can have. A lot :)
+            
+            $article->tags()->attach(
+                $tags->random(rand(3,1))->pluck('id')->toArray()
+            );
         });
     }
 }

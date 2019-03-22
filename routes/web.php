@@ -1,12 +1,14 @@
 <?php
 
+use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
 	$categories = Category::has('articles')->get();
-    return view('home', compact('categories'));
+	$articles = Article::where('featured', true)->get();
+    return view('home', compact('categories', 'articles'));
 })->name('home');
 Route::redirect('/home', '/');
 Route::get('plan', function(){
@@ -24,7 +26,14 @@ Route::get('admin', function(){
 
 Route::get('/admin/articles', 'ArticlesController@adminIndex')->middleware('can:articles.edit')->name('admin.articles.index');
 
+Route::get('articles/new', function(){
+	$articles = Article::where('new', true)->paginate(8);
+	return view('articles.index', compact('articles'));
+})->name('articles.new');
 Route::resource('articles', 'ArticlesController');
+
+
+
 
 Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('loginGoogle');
 Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');

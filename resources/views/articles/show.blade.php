@@ -54,7 +54,7 @@
                 <ul class="u-list-inline">
                   @foreach($article->tags as $tag) 
                   <li class="list-inline-item g-mb-10">
-                    <a class="u-tags-v1 g-color-purple g-brd-around g-brd-purple g-bg-purple--hover g-color-white--hover g-py-4 g-px-10" href="{{route('tags.articles', ['tag' => $tag->id])}}">{{$tag->name}}</a>
+                    <a class="u-tags-v1 g-color-purple g-brd-around g-brd-purple g-bg-purple--hover g-color-white--hover g-py-4 g-px-10" href="{{route('tags.articles', ['tag' => $tag->name])}}">{{$tag->name}}</a>
                   </li>
                   @endforeach
                 </ul>

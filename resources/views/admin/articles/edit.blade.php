@@ -89,6 +89,27 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="form-group col-sm-6 {{$errors->has('discount')?"has-error":""}}">
+        <label class="col-sm-2 col-form-label pl-0">Discount:</label>
+        <input id="discount" class="form-control" type="text" name="discount" placeholder="Eneter discount" 
+          value="{{old('discount')??$article->discount}}" required>
+        @if($errors->has('discount'))
+        <span class="text-danger">{{$errors->first('discount')}}</span>
+        @endif
+      </div>
+
+      <div class="form-group col-sm-3">
+        <label class="col-sm-2 col-form-label pl-0">NEW:</label>
+        <input id="newArticle" class="form-control" type="checkbox" name="new" {{$article->new?"checked":""}}>
+      </div>
+
+      <div class="form-group col-sm-3">
+        <label class="col-sm-2 col-form-label pl-0">FETURED:</label>
+        <input id="featuredArticle" class="form-control" type="checkbox" name="featured" {{$article->featured?"checked":""}}>
+      </div>
+    </div>
+
     <div class="form-group pb-3 {{$errors->has('category')?"has-error":""}}">
       <label class="col-sm-3 col-form-label pl-0" for="category">Choose category:</label>
       <select class="form-control" name="category" required>

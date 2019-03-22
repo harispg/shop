@@ -29,5 +29,10 @@ class Tag extends Model
         return $colors[array_rand($colors)];
     }
 
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
     
 }

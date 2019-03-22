@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('unify.revolutionSlider')
+{{-- @include('unify.revolutionSlider') --}}
 
 @include('unify.categories')
 

@@ -59,6 +59,7 @@ class ArticlesController extends Controller
             'sku' => 'required|integer|min:100000|max:999999|unique:articles',
             'description' => 'required|min:10',
             'quantity' => 'required|integer',
+            'discount' => 'integer|min:0|max:99',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
             'photos' => 'required|string',
             'specification' => 'required',
@@ -74,12 +75,24 @@ class ArticlesController extends Controller
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
+            'discount' => $request->discount,
             'specification' => $request->specification,
         ]);
+
+        if($request->has('new')){
+            $article->new = true;
+            $article->save();
+        }
         
+        if($request->has('featured')){
+            $article->featured = true;
+            $article->save();
+        }
 
         $article->photos()->sync($photoIDs);
         $article->categories()->attach($request->category);
+
+
 
         if($request->tags){
             $tags = Tag::makeTagsFrom($request->tags);
@@ -134,6 +147,7 @@ class ArticlesController extends Controller
             'description' => 'required|min:10',
             'quantity' => 'required|integer',
             'price' => "required|numeric", //regex:/^\d*(\.\d{1,2})?$/
+            'discount' => 'integer|min:0|max:99',
             'photos' => 'nullable|string',
             'specification' => 'required',
             'category' => 'required',
@@ -144,6 +158,7 @@ class ArticlesController extends Controller
             'description' => $request->description,
             'quantity' => $request->quantity,
             'price' => $request->price,
+            'discount' => $request->discount,
             'specification' => $request->specification,
         ]);
 
@@ -156,6 +171,16 @@ class ArticlesController extends Controller
         if($request->tags){
             $tags = Tag::makeTagsFrom($request->tags);
             $article->tags()->sync($tags);
+        }
+
+        if($request->has('new')){
+            $article->new = true;
+            $article->save();
+        }
+        
+        if($request->has('featured')){
+            $article->featured = true;
+            $article->save();
         }
 
         flash()->success('Article updated', 'You have successfully updated your article');

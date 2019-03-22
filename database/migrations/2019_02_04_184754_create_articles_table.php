@@ -20,6 +20,9 @@ class CreateArticlesTable extends Migration
             $table->text('specification');
             $table->unsignedInteger('sku')->unique();
             $table->float('price',8,2);
+            $table->integer('discount')->default(0);
+            $table->boolean('new')->default(false);
+            $table->boolean('featured')->default(false);
             $table->unsignedInteger('quantity');
             // TODO $table->unsignedInteger('weight');
             // TODO $table->string or unsignedInteger or something else('size')
