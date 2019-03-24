@@ -31,7 +31,8 @@ class ArticlesController extends Controller
     public function adminIndex(Request $request)
     {
         $articles = Article::with('photos')->get();
-        return view('admin.articles.index', compact('articles'));
+        $categories = Category::all();
+        return view('admin.articles.index', compact('articles', 'categories'));
     }
 
     /**

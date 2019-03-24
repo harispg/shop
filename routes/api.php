@@ -28,7 +28,9 @@ Route::post('categories', 'Api\ApiCategoriesController@store');
 Route::PATCH('categories/{category}', 'Api\ApiCategoriesController@update');
 Route::delete('categories/{category}', 'Api\ApiCategoriesController@destroy');
 
-Route::delete('articles/{article}','Api\ApiArticlesController@destroy')->middleware('auth:api', 'can:api|articles.create');
+Route::delete('articles/{article}','Api\ApiArticlesController@destroy')->middleware('can:api|articles.create');
+Route::post('articles/{article}/new', 'Api\ApiArticlesController@changeNewAttribute')->middleware('auth:api', 'can:api|articles.modify');
+Route::post('articles/{article}/featured', 'Api\ApiArticlesController@changeFeaturedAttribute')->middleware('can:api|articles.modify');
 
 });
     //

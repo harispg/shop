@@ -64,6 +64,9 @@
                         <th>Avg. discount</th>
                         <th>Status</th>
                         <th>Popularity</th>
+                        <th>Category</th>
+                        <th>New</th>
+                        <th>Featured</th>
                         <th>Edit</th>
                     	  <th>Delete</th>
                     </tr>
@@ -80,6 +83,13 @@
                         <td>17%</td>
                         <td>{{$article->quantity>0?$article->quantity . ' pcs available':'not available'}}</td>
                         <td>Popularity</td>
+                        <td><select multiple="multiple">
+                          @foreach($categories as $category)
+                            <option value="{{$category->name}}" {{$article->belongsToCategory($category)?"selected":""}}>{{$category->name}}
+                          @endforeach
+                        </select></td>
+                        <td><input class="article-new" type="checkbox" name="new" data-new="{{$article->id}}" {{$article->new?"checked":""}}></td>
+                        <td><input class="article-featured" type="checkbox" name="featured" data-featured="{{$article->id}}" {{$article->featured?"checked":""}}></td>
                         <td class="center"><a
                           class="btn btn-outline-info edit text-info"
                           href="{{route('articles.edit', ['article'=>$article->id])}}" 
@@ -187,12 +197,6 @@
       var row = _this.closest("tr");
       var articleId = _this.data('article');
 
-
-
-
-
-
-
       swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -226,6 +230,33 @@
         }
       });
 
+    });
+
+
+    $(".articles-table").on('click', '.article-new', function(){
+      var checked = this.checked;
+      if(checked){checked=1}
+      if(!checked){checked=0}
+      var articleId = $(this).data('new');
+
+      $.ajax({
+        url: '/api/articles/'+articleId+'/new',
+        type:'POST',
+        data: {_token: CSRF_TOKEN, api_token: API_TOKEN, article: articleId, new: checked}
+      });
+    });
+
+    $(".articles-table").on('click', '.article-featured', function(){
+      var checked = this.checked;
+      if(checked){checked=1}
+      if(!checked){checked=0}
+      var articleId = $(this).data('featured');
+
+      $.ajax({
+        url: '/api/articles/'+articleId+'/featured',
+        type:'POST',
+        data: {_token: CSRF_TOKEN, api_token: API_TOKEN, article: articleId, featured: checked}
+      });
     });
     
   });

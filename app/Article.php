@@ -84,6 +84,11 @@ class Article extends Model
             ])->first()->rating;
     }
 
+    public function belongsToCategory(Category $category)
+    {
+        return in_array($category->name, $this->categories->pluck('name')->all());
+    }
+
 }
 
 
