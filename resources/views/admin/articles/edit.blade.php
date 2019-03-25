@@ -100,13 +100,13 @@
       </div>
 
       <div class="form-group col-sm-3">
-        <label class="col-sm-2 col-form-label pl-0">NEW:</label>
-        <input id="newArticle" class="form-control" type="checkbox" name="new" {{$article->new?"checked":""}}>
+        <label class="col-sm-2 col-form-label pl-0">NEW:</label><br>
+        <input id="newArticle" type="checkbox" name="new" style="height: 1.5rem; width: 1.5rem;" {{$article->new?"checked":""}}>
       </div>
 
       <div class="form-group col-sm-3">
-        <label class="col-sm-2 col-form-label pl-0">FETURED:</label>
-        <input id="featuredArticle" class="form-control" type="checkbox" name="featured" {{$article->featured?"checked":""}}>
+        <label class="col-sm-2 col-form-label pl-0">FETURED:</label><br>
+        <input id="featuredArticle" type="checkbox" name="featured" style="height: 1.5rem; width: 1.5rem;" {{$article->featured?"checked":""}}>
       </div>
     </div>
 

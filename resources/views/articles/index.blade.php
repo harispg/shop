@@ -70,11 +70,12 @@
           <div class="col-6 col-lg-3 g-mb-30">
             <!-- Product -->
             <figure class="g-pos-rel g-mb-20">
-              <a href="{{route('articles.show', ['article'=>$article->id])}}"><img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description"></a>  
-
+              <a href="{{route('articles.show', ['article'=>$article->id])}}"><img class="img-fluid" src="/{{$article->photos->first()->thumbnail_path}}" alt="Image Description"></a>  
+              @if($article->new)
               <figcaption class="w-100 g-bg-primary g-bg-black--hover text-center g-pos-abs g-bottom-0 g-transition-0_2 g-py-5">
                 <a class="g-color-white g-font-size-11 text-uppercase g-letter-spacing-1 g-text-underline--none--hover" href="#!">New Arrival</a>
               </figcaption>
+              @endif
             </figure>
 
             <div class="media">
@@ -85,7 +86,7 @@
                     {{$article->name}}
                   </a>
                 </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">{{$article->categories->first()->name}}</a>
+                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="{{route('categoryArticles', ['category'=>$article->categories->first()->name])}}">{{$article->categories->first()->name}}</a>
                 <span class="d-block g-color-black g-font-size-17">{{$article->price}}</span>
               </div>
               <!-- End Product Info -->

@@ -13,7 +13,7 @@
           <span class="d-block g-color-black">Categories</span>
           <h2 class="h1 mb-0">{{$category->name}}</h2>
         </div>
-        <a class="u-link-v2" href="{{route('categoryArticles', ['category' => $category->id])}}"></a>
+        <a class="u-link-v2" href="{{route('categoryArticles', ['category' => $category->name])}}"></a>
       </article>
     </div>
     @endforeach

@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         	'password' => bcrypt('password'),
             'api_token' => str_random(60),
         	'superAdmin' => true,
-            'avatar' => '/Images/dummyPics/avatar.svg',
+            'avatar' => 'Images/dummyPics/avatar.svg',
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
         ])->save();
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         	'password' => bcrypt('password'),
             'api_token' => str_random(60),
         	'superAdmin' => false,
-            'avatar' => '/Images/dummyPics/avatar.svg',
+            'avatar' => 'Images/dummyPics/avatar.svg',
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
         ])->save();
@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
         	'password' => bcrypt('password'),
             'api_token' => str_random(60),
         	'superAdmin' => false,
-            'avatar' => '/Images/dummyPics/avatar.svg',
+            'avatar' => 'Images/dummyPics/avatar.svg',
         	'created_at' => Carbon::now(),
         	'email_verified_at' => Carbon::now()
         ])->save();

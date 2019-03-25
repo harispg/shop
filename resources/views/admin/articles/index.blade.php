@@ -2,6 +2,8 @@
 
 @section('pluginCSS')
 <link href="/inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/inspinia/css/plugins/select2/select2.min.css" rel="stylesheet">
+
 @endsection
 
 
@@ -64,7 +66,7 @@
                         <th>Avg. discount</th>
                         <th>Status</th>
                         <th>Popularity</th>
-                        <th>Category</th>
+                        {{-- <th>Category</th> --}}
                         <th>New</th>
                         <th>Featured</th>
                         <th>Edit</th>
@@ -83,11 +85,11 @@
                         <td>17%</td>
                         <td>{{$article->quantity>0?$article->quantity . ' pcs available':'not available'}}</td>
                         <td>Popularity</td>
-                        <td><select multiple="multiple">
+            {{--             <td><select data-placeholder="Choose a Country..." class="category-select" multiple style="width:350px"tabindex="4">
                           @foreach($categories as $category)
                             <option value="{{$category->name}}" {{$article->belongsToCategory($category)?"selected":""}}>{{$category->name}}
                           @endforeach
-                        </select></td>
+                        </select></td> --}}
                         <td><input class="article-new" type="checkbox" name="new" data-new="{{$article->id}}" {{$article->new?"checked":""}}></td>
                         <td><input class="article-featured" type="checkbox" name="featured" data-featured="{{$article->id}}" {{$article->featured?"checked":""}}></td>
                         <td class="center"><a
@@ -131,6 +133,10 @@
 @section('pluginScripts')
 <script src="/inspinia/js/plugins/dataTables/datatables.min.js"></script>
 <script src="/inspinia/js/plugins/dataTables/dataTables.bootstrap4.min.js"></script>
+<script href="/backend/assets/vendor/bsMultiSelect.js" rel="stylesheet"></script>
+<script src="/inspinia/js/plugins/select2/select2.full.min.js"></script>
+
+
 @endsection
 
 @section('script')
@@ -139,6 +145,9 @@
   $(document).ready(function(){
     var CSRF_TOKEN = $("meta[name='csrf-token']").attr("content");
     var API_TOKEN = $("meta[name='api-token']").attr("content");
+
+    $(".category-select").select2();
+
 
     //Initialization and customization of data tables
     var table = $('.articles-table').DataTable({

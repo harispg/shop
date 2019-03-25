@@ -52,4 +52,8 @@ Route::delete('/comments/{comment}', 'CommentsController@destroy');
 Route::post('/ratings/{article}', 'RatingsController@store');
 
 
-Route::get('/tags/{tag}/articles', 'TagsController@show')->name('tags.articles');
+Route::get('/tags/{tag}', 'TagsController@show')->name('tags.articles');
+
+Route::get('users/index', 'UsersController@index');
+Route::get('users/{user}', 'UsersController@show')->name('admin.users.show');
+

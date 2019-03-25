@@ -4,11 +4,11 @@ use Faker\Generator as Faker;
 
 $factory->define('App\Article', function (Faker $faker) {
     return [
-        'name' => $faker->colorName,
+        'name' => $faker->unique()->word,
         'description' => $faker->paragraph,
         'specification' => $faker->text,
-        'price' => 0.99,
-        'quantity' => 99,
+        'price' => rand(10, 9999)/100,
+        'quantity' => rand(10, 500),
         'sku' => rand(100000, 999999)
     ];
 });

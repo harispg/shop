@@ -18,7 +18,7 @@
             <div class="g-px-10">
               <!-- Product -->
               <figure class="g-pos-rel g-mb-20">
-                <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
+                <img class="img-fluid" src="/{{$article->photos->first()->thumbnail_path}}" alt="Image Description">
 
                 @if($article->discount > 0)
                 <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-primary g-font-size-13 text-center text-uppercase g-rounded-50x g-top-10 g-right-minus-10 g-px-2 g-py-10">-{{$article->discount}}%</span>
@@ -43,7 +43,7 @@
                   </h4>
                   <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" 
                       href="{{route('categoryArticles', ['category'=>$article->categories->first()->id ])}}">{{$article->categories->first()->name}}</a>
-                  <span class="d-block g-color-black g-font-size-17">$11.00</span>
+                  <span class="d-block g-color-black g-font-size-17">${{$article->price}}</span>
                 </div>
                 <!-- End Product Info -->
 

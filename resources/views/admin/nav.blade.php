@@ -3,7 +3,7 @@
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <img alt="image" class="rounded-circle" src="{{auth()->user()->avatar}}"/>
+                    <img alt="image" class="rounded-circle" src="/{{auth()->user()->avatar}}"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="block m-t-xs font-bold">{{auth()->user()->name}}</span>
                         <span class="text-muted text-xs block">{{auth()->user()->getRole()->name}}<b class="caret"></b></span>
