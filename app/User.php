@@ -96,4 +96,16 @@ class User extends Authenticatable implements MustVerifyEmail
         return false;
     }
 
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+
+    public function makeOrder()
+    {
+        return $this->orders()->create(['order_status_id'=>1]);
+    }
+
 }
