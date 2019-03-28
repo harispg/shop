@@ -128,8 +128,9 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'quantities.*' => [
+            'integer' => 'Quantities must be integer',
+            'min' => 'Quantities cannot be negative'
         ],
     ],
 

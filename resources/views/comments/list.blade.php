@@ -11,7 +11,7 @@
           <span class="d-block g-color-gray-dark-v5 g-font-size-11">{{$comment->created_at->diffForHumans()}}</span>
         </div>
         <div class="ml-auto">
-          @if(auth()->check() && auth()->user()->isSupper())
+          @if(auth()->check() && auth()->user()->isSuper())
           <a class="u-link-v5 g-color-black g-color-primary--hover g-font-size-12 mr-5 delete" href="#!" data-comment="{{$comment->id}}">DELETE</a>
           @endif
           <a class="u-link-v5 g-color-black g-color-primary--hover g-font-size-12 text-uppercase replyToggler" href="#!" data-comment="{{$comment->id}}">Reply</a>

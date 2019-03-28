@@ -86,6 +86,27 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="form-group col-sm-6 {{$errors->has('discount')?"has-error":""}}">
+        <label class="col-sm-2 col-form-label pl-0">Discount:</label>
+        <input id="discount" class="form-control" type="text" name="discount" placeholder="Eneter discount" 
+          value="{{old('discount')}}" required>
+        @if($errors->has('discount'))
+        <span class="text-danger">{{$errors->first('discount')}}</span>
+        @endif
+      </div>
+
+      <div class="form-group col-sm-3">
+        <label class="col-sm-2 col-form-label pl-0">NEW:</label><br>
+        <input id="newArticle" type="checkbox" name="new" style="height: 1.5rem; width: 1.5rem;">
+      </div>
+
+      <div class="form-group col-sm-3">
+        <label class="col-sm-2 col-form-label pl-0">FETURED:</label><br>
+        <input id="featuredArticle" type="checkbox" name="featured" style="height: 1.5rem; width: 1.5rem;">
+      </div>
+    </div>
+
     <div class="form-group pb-3 {{$errors->has('specification')?"has-error":""}}">
       <label class="col-sm-3 col-form-label pl-0" for="category">Choose category:</label>
       <select class="form-control" name="category" required>
@@ -100,7 +121,7 @@
 
     <div class="form-group pb-3">
       <label for="tags">Add some tags:</label> <br>
-      <input class="form-control" type="text" name="tags" data-role="tagsinput">
+      <input class="form-control" type="text" name="tags" value="{{old('tags')}}" data-role="tagsinput">
     </div>
 
     <input id="photoIDs" type="text" name="photos" hidden value="{{old('photos')}}">
@@ -164,7 +185,7 @@
                 <div id="photoGrid"> 
                   @foreach($photos as $photo)
                     
-                        <img class="img mr-4 mb-4" src="/{{$photo->thumbnail_path}}" data-photo="{{$photo->id}}">
+                        <img class="img mr-4 mb-4" src="/{{$photo->thumbnail_small}}" data-photo="{{$photo->id}}">
                       
                   @endforeach
                 </div>
@@ -211,7 +232,7 @@
 
     //Initialization of summernote
     $('#summernote').summernote({
-      height: 150,
+      height: 300,
       files: false,
     });
 
@@ -279,7 +300,7 @@
         function giveHtml(photo){
           
           $("#photoGrid").append(
-            '<img src="/'+photo.thumbnail_path+'" class="img mr-4 mb-4" data-photo="'+photo.id+'">'
+            '<img src="/'+photo.thumbnail_small+'" class="img mr-4 mb-4" data-photo="'+photo.id+'">'
             );
         };
 
@@ -307,7 +328,7 @@
               //$(".article-photos").append("<h2 class='newlySelectedPhotos'>New photos:</h2>");
               var i = 0;
               for(i;i<photos.length;i++){
-                $(".selected-photos-content").append('<img src="/'+photos[i].thumbnail_path+'" class="img mr-4 mb-4" photo-data="'+photos[i].id+'">');
+                $(".selected-photos-content").append('<img src="/'+photos[i].thumbnail_small+'" class="img mr-4 mb-4" photo-data="'+photos[i].id+'">');
               }
               photo_ids = [];
             }

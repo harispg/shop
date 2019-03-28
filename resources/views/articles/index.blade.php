@@ -67,7 +67,7 @@
         <!-- Products -->
         <div class="row g-pt-30 g-mb-50">
         @foreach($articles as $article)
-          <div class="col-6 col-lg-3 g-mb-30">
+          <div class="article col-6 col-lg-3 g-mb-30">
             <!-- Product -->
             <figure class="g-pos-rel g-mb-20">
               <a href="{{route('articles.show', ['article'=>$article->id])}}"><img class="img-fluid" src="/{{$article->photos->first()->thumbnail_path}}" alt="Image Description"></a>  
@@ -91,14 +91,16 @@
               </div>
               <!-- End Product Info -->
 
-              <!-- Products Icons -->
+              @if(auth()->check())
               <ul class="list-inline media-body text-right">
                 <li class="list-inline-item align-middle mx-0">
                   <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
                      data-toggle="tooltip"
                      data-placement="top"
                      title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
+                    <i class="addToCart icon-finance-100 u-line-icon-pro" 
+                       data-article="{{$article->id}}" 
+                       data-order="{{auth()->user()->activeOrder()->id}}"></i>
                   </a>
                 </li>
                 <li class="list-inline-item align-middle mx-0">
@@ -111,332 +113,73 @@
                 </li>
               </ul>
               <!-- End Products Icons -->
+              @endif
             </div>
             <!-- End Product -->
           </div>
           @endforeach
-          {{-- <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img2.jpg" alt="Image Description">
-
-              <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-primary g-font-size-13 text-center text-uppercase g-rounded-50x g-top-10 g-right-minus-10 g-px-2 g-py-10">-40%</span>
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Stylish shirt
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Woman</a>
-                <span class="d-block g-color-black g-font-size-17">$99.00</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img3.jpg" alt="Image Description">
-
-              <figcaption class="w-100 g-bg-lightred text-center g-pos-abs g-bottom-0 g-transition-0_2 g-py-5">
-                <span class="g-color-white g-font-size-11 text-uppercase g-letter-spacing-1">Sold Out</a>
-              </figcaption>
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Classic jacket
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Man</a>
-                <span class="d-block g-color-black g-font-size-17">$49.99</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img4.jpg" alt="Image Description">
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Wool lined parka
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Woman</a>
-                <span class="d-block g-color-black g-font-size-17">$82.37</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img5.jpg" alt="Image Description">
-
-              <figcaption class="w-100 g-bg-lightred text-center g-pos-abs g-bottom-0 g-transition-0_2 g-py-5">
-                <span class="g-color-white g-font-size-11 text-uppercase g-letter-spacing-1">Sold Out</a>
-              </figcaption>
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Hooded jeans
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Man</a>
-                <span class="d-block g-color-black g-font-size-17">$35.99</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img6.jpg" alt="Image Description">
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Waterproof jacket
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Woman</a>
-                <span class="d-block g-color-black g-font-size-17">$105.99</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img7.jpg" alt="Image Description">
-
-              <span class="u-ribbon-v1 g-width-40 g-height-40 g-color-white g-bg-primary g-font-size-13 text-center text-uppercase g-rounded-50x g-top-10 g-right-minus-10 g-px-2 g-py-10">-40%</span>
-
-              <figcaption class="w-100 g-bg-primary g-bg-black--hover text-center g-pos-abs g-bottom-0 g-transition-0_2 g-py-5">
-                <a class="g-color-white g-font-size-11 text-uppercase g-letter-spacing-1 g-text-underline--none--hover" href="#!">New Arrival</a>
-              </figcaption>
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Classic T-shirt
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Man</a>
-                <span class="d-block g-color-black g-font-size-17">$11.00</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div>
-
-          <div class="col-6 col-lg-3 g-mb-30">
-            <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
-              <img class="img-fluid" src="assets/img-temp/480x700/img8.jpg" alt="Image Description">
-            </figure>
-
-            <div class="media">
-              <!-- Product Info -->
-              <div class="d-flex flex-column">
-                <h4 class="h6 g-color-black mb-1">
-                  <a class="u-link-v5 g-color-black g-color-primary--hover" href="#!">
-                    Blue skirt
-                  </a>
-                </h4>
-                <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="#!">Woman</a>
-                <span class="d-block g-color-black g-font-size-17">$34.00</span>
-              </div>
-              <!-- End Product Info -->
-
-              <!-- Products Icons -->
-              <ul class="list-inline media-body text-right">
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Cart">
-                    <i class="icon-finance-100 u-line-icon-pro"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item align-middle mx-0">
-                  <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-                     data-toggle="tooltip"
-                     data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
-                  </a>
-                </li>
-              </ul>
-              <!-- End Products Icons -->
-            </div>
-            <!-- End Product -->
-          </div> --}}
         </div>
-        <!-- End Products -->
 
         <hr class="g-mb-60">
         {{$articles->links()}}
       </div>
       <!-- End Products -->
 
+@endsection
+
+@section('script')
+<script>
+
+  $(document).on('ready', function(){
+      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+      var API_TOKEN = $("meta[name='api-token']").attr("content");
+    $(".article").on('click', '.addToCart', function(){
+      var orderId = $(this).data('order');
+      var articleId = $(this).data('article');
+
+      function renderArticles(item){
+        $(".js-scrollbar.g-height-200").append('\
+              <div class="u-basket__product g-brd-none g-px-20">\
+                <div class="row no-gutters g-pb-5">\
+                  <div class="col-4 pr-3">\
+                    <a class="u-basket__product-img" href="#!">\
+                      <img class="img-fluid" src="/'+item.article.photos[0].thumbnail_path+'" alt="Image Description">\
+                    </a>\
+                  </div>\
+                  <div class="col-8">\
+                    <h6 class="g-font-weight-400 g-font-size-default">\
+                      <a class="g-color-black g-color-primary--hover\ g-text-underline--none--hover" href="/articles/'+item.article.id+'">'+item.article.name+'</a>\
+                    </h6>\
+                    <small class="g-color-primary g-font-size-12">'+item.quantity+' x $'+item.article.price+'</small>\
+                  </div>\
+                </div>\
+                <button type="button" class="u-basket__product-remove">&times;</button>\
+              </div>');
+      }
+
+      $.ajax({
+        url: '/api/orders/'+orderId+'/addArticle/'+articleId,
+        type: 'POST',
+        data:{_token: CSRF_TOKEN, api_token: API_TOKEN},
+        success: function(items){
+          /*$(".basketNumberOfArticles").html(items.length);
+          $(".js-scrollbar.g-height-200").html("");
+          i=0;
+          
+          for(i; i<items.length; i++){
+            renderArticles(items[i]);
+          }*/
+          location.reload();
+        },
+        error: function(response){
+
+        }
+
+      });
+      
+    });
+
+    
+  });
+</script>
 @endsection

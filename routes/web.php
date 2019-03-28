@@ -57,3 +57,7 @@ Route::get('/tags/{tag}', 'TagsController@show')->name('tags.articles');
 Route::get('admin/users/index', 'UsersController@index')->middleware('can:users.work')->name('admin.users.index');
 Route::get('admin/users/{user}', 'UsersController@show')->middleware('can:users.work')->name('admin.users.show');
 
+
+Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
+Route::post('orders/{order}/update', 'OrdersController@update')->name('orders.update');
+Route::post('orders/{order}/payment', 'OrdersController@payment')->name('orders.payment');

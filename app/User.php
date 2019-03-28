@@ -108,4 +108,22 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->orders()->create(['order_status_id'=>1]);
     }
 
+    public function activeOrder()
+    {   
+        if(Order::with('items.article')->where([['user_id', $this->id], ['order_status_id',1]])->count() == 0)
+        {
+            return null;
+        }
+        return Order::with('items.article')->where([['user_id', $this->id], ['order_status_id',1]])->firstOrFail();
+    }
+
+    public function itemsOrdered()
+    {
+        if($this->activeOrder() != null)
+        {
+            return $this->activeOrder()->items->count();
+        }
+        return 0;
+    }
+
 }

@@ -89,6 +89,11 @@ class Article extends Model
         return in_array($category->name, $this->categories->pluck('name')->all());
     }
 
+    public function getPriceAttribute($price)
+    {
+        return round($price,2);
+    }
+
 }
 
 

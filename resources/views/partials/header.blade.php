@@ -9,6 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{csrf_token()}}">
+    @if(auth()->check())
+    <meta name="api-token" content="{{auth()->user()->api_token}}">
+    @endif
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="../favicon.ico">
@@ -27,21 +30,16 @@
     <link rel="stylesheet" href="/unifyAssets/vendor/icon-line-pro/style.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/slick-carousel/slick/slick.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/icon-hs/style.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/chosen/chosen.css">
+    <link rel="stylesheet" href="/unifyAssets/vendor/animate.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/hamburgers/hamburgers.min.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.css">
     <link rel="stylesheet" href="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/animate.css">
 
 
     <!-- CSS Unify Theme -->
     <link rel="stylesheet" href="/assets/css/styles.e-commerce.css">
 
-        <!-- Revolution Slider -->
-    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/settings.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/layers.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution/css/navigation.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/css/typewriter.css">
 
 
     <!-- CSS Customization -->
@@ -299,7 +297,7 @@
 
               <div class="col-sm-auto g-pr-15 g-pr-0--sm">
 
-                @if(auth()->check())
+                @if(auth()->check() && auth()->user()->activeOrder()!= null)
                 <!-- Basket -->
                 <div class="u-basket d-inline-block g-z-index-3">
                   <div class="g-py-10 g-px-6">
@@ -313,7 +311,7 @@
                        data-dropdown-hide-on-scroll="false"
                        data-dropdown-animation-in="fadeIn"
                        data-dropdown-animation-out="fadeOut">
-                      <span class="u-badge-v1--sm g-color-white g-bg-primary g-font-size-11 g-line-height-1_4 g-rounded-50x g-pa-4" style="top: 6px !important; right: 4px !important;">4</span>
+                      <span class="basketNumberOfArticles u-badge-v1--sm g-color-white g-bg-primary g-font-size-11 g-line-height-1_4 g-rounded-50x g-pa-4" style="top: 6px !important; right: 4px !important;">{{auth()->user()->itemsOrdered()}}</span>
                       <i class="icon-hotel-restaurant-105 u-line-icon-pro"></i>
                     </a>
                   </div>
@@ -324,85 +322,30 @@
                       <span class="d-block h6 text-center text-uppercase mb-0">Shopping Cart</span>
                     </div>
                     <div class="js-scrollbar g-height-200">
-                      <!-- Product -->
-                      <div class="u-basket__product g-brd-none g-px-20">
-                        <div class="row no-gutters g-pb-5">
-                          <div class="col-4 pr-3">
-                            <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img1.jpg" alt="Image Description">
-                            </a>
-                          </div>
-
-                          <div class="col-8">
-                            <h6 class="g-font-weight-400 g-font-size-default">
-                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="#!">Black Glasses</a>
-                            </h6>
-                            <small class="g-color-primary g-font-size-12">1 x $22.00</small>
-                          </div>
-                        </div>
-                        <button type="button" class="u-basket__product-remove">&times;</button>
-                      </div>
-                      <!-- End Product -->
+                      @if(auth()->user()->itemsOrdered() !=0)
+                      @foreach(auth()->user()->activeOrder()->items as $item)
 
                       <!-- Product -->
                       <div class="u-basket__product g-brd-none g-px-20">
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img2.jpg" alt="Image Description">
+                              <img class="img-fluid" src="/{{$item->article->photos->first()->thumbnail_path}}" alt="Image Description">
                             </a>
                           </div>
 
                           <div class="col-8">
                             <h6 class="g-font-weight-400 g-font-size-default">
-                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="#!">Gloves</a>
+                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="{{route('articles.show', ['article' => $item->article->id])}}">{{$item->article->name}}</a>
                             </h6>
-                            <small class="g-color-primary g-font-size-12">2 x $55.00</small>
+                            <small class="g-color-primary g-font-size-12">{{$item->quantity}} x ${{$item->article->price}}</small>
                           </div>
                         </div>
-                        <button type="button" class="u-basket__product-remove">&times;</button>
+                        <button type="button" class="u-basket__product-remove" data-item="{{$item->id}}">&times;</button>
                       </div>
                       <!-- End Product -->
-
-                      <!-- Product -->
-                      <div class="u-basket__product g-brd-none g-px-20">
-                        <div class="row no-gutters g-pb-5">
-                          <div class="col-4 pr-3">
-                            <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img3.jpg" alt="Image Description">
-                            </a>
-                          </div>
-
-                          <div class="col-8">
-                            <h6 class="g-font-weight-400 g-font-size-default">
-                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="#!">Chukka Shoes</a>
-                            </h6>
-                            <small class="g-color-primary g-font-size-12">1 x $199.00</small>
-                          </div>
-                        </div>
-                        <button type="button" class="u-basket__product-remove">&times;</button>
-                      </div>
-                      <!-- End Product -->
-
-                      <!-- Product -->
-                      <div class="u-basket__product g-brd-none g-px-20">
-                        <div class="row no-gutters g-pb-5">
-                          <div class="col-4 pr-3">
-                            <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="/unifyAssets/img-temp/150x150/img4.jpg" alt="Image Description">
-                            </a>
-                          </div>
-
-                          <div class="col-8">
-                            <h6 class="g-font-weight-400 g-font-size-default">
-                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="#!">Desk Clock</a>
-                            </h6>
-                            <small class="g-color-primary g-font-size-12">1 x $12.00</small>
-                          </div>
-                        </div>
-                        <button type="button" class="u-basket__product-remove">&times;</button>
-                      </div>
-                      <!-- End Product -->
+                      @endforeach
+                      @endif
                     </div>
 
                     <div class="clearfix g-px-15">
@@ -411,19 +354,18 @@
                           <strong class="d-block g-py-10 text-uppercase g-color-main g-font-weight-500 g-py-10">Total</strong>
                         </div>
                         <div class="col">
-                          <strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10">$433.00</strong>
+                          <strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10">${{auth()->user()->activeOrder()->orderTotal()}}</strong>
                         </div>
                       </div>
                     </div>
 
                     <div class="g-pa-20">
                       <div class="text-center g-mb-15">
-                        <a class="text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover" href="page-checkout-1.html">
+                        <a class="text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover" href="{{route('orders.show', ['order'=> auth()->user()->activeOrder()])}}">
                           View Cart
                           <i class="ml-2 icon-finance-100 u-line-icon-pro"></i>
                         </a>
                       </div>
-                      <a class="btn btn-block u-btn-black g-brd-primary--hover g-bg-primary--hover g-font-size-12 text-uppercase rounded g-py-10" href="page-checkout-1.html">Proceed to Checkout</a>
                     </div>
                   </div>
                 </div>

@@ -39,9 +39,11 @@ class Photo extends Model
         $photo->name=time() . $file->getClientOriginalName();
         $photo->path = $photo->baseDir . '/' . $photo->name;
         $photo->thumbnail_path = $photo->baseDir . '/tn-' . $photo->name;
+        $photo->thumbnail_small = $photo->baseDir . '/sm-' . $photo->name;
         $file->move($photo->baseDir, $photo->name);
 
-        Image::make($photo->path)->fit(200,200)->save($photo->thumbnail_path);
+        Image::make($photo->path)->fit(200,200)->save($photo->thumbnail_small);
+        Image::make($photo->path)->fit(480,700)->save($photo->thumbnail_path);
         $photo->save();
         return $photo;
     }

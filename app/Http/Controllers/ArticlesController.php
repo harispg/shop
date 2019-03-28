@@ -117,8 +117,9 @@ class ArticlesController extends Controller
     {
 
         $allComments = $article->getComments();
+        $articles = Article::where('featured',true);
 
-        return view('articles.show', compact(['article', 'allComments']));
+        return view('articles.show', compact(['article', 'allComments', 'articles']));
     }
 
     /**

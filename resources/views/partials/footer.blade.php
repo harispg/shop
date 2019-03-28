@@ -356,10 +356,14 @@
     <script src="/unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
 
     <!-- JS Implementing Plugins -->
-    <script src="/unifyAssets/vendor/slick-carousel/slick/slick.js"></script>
     <script src="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
-    <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
     <script src="/unifyAssets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/unifyAssets/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/unifyAssets/vendor/chosen/chosen.jquery.js"></script>
+    <script src="/unifyAssets/vendor/image-select/src/ImageSelect.jquery.js"></script>
+    <script src="/unifyAssets/vendor/jquery.countdown.min.js"></script>
+    <script src="/unifyAssets/vendor/slick-carousel/slick/slick.js"></script>
+
     <script src="/unifyAssets/vendor/appear.js"></script>
     <script  src="/unifyAssets/vendor/jquery.filer/js/jquery.filer.min.js"></script>
 
@@ -370,29 +374,15 @@
     <script src="/unifyAssets/js/components/hs.dropdown.js"></script>
     <script src="/unifyAssets/js/components/hs.scrollbar.js"></script>
     <script src="/unifyAssets/js/components/hs.countdown.js"></script>
-    <script src="/unifyAssets/js/components/hs.carousel.js"></script>
-    <script src="/unifyAssets/js/components/hs.tabs.js"></script>
     <script src="/unifyAssets/js/components/hs.count-qty.js"></script>
+    <script src="/unifyAssets/js/components/hs.carousel.js"></script>
+    <script src="/unifyAssets/js/components/hs.step-form.js"></script>
+    <script src="/unifyAssets/js/components/hs.validation.js"></script>
     <script src="/unifyAssets/js/components/hs.go-to.js"></script>
+    <script src="/unifyAssets/js/components/hs.tabs.js"></script>
+    <script src="/unifyAssets/js/components/hs.select.js"></script>
     <script src="/unifyAssets/js/helpers/hs.rating.js"></script>
     <script  src="/unifyAssets/js/helpers/hs.focus-state.js"></script>
-    <script  src="/unifyAssets/js/components/hs.file-attachement.js"></script>
-
-    <!-- JS Revolution Slider -->
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.tools.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/jquery.themepunch.revolution.min.js"></script>
-
-    <script src="/unifyAssets/vendor/revolution-slider/revolution-addons/typewriter/js/revolution.addon.typewriter.min.js"></script>
-
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.migration.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-    <script src="/unifyAssets/vendor/revolution-slider/revolution/js/extensions/revolution.extension.video.min.js"></script>
 
     <!-- JS Customization -->
 
@@ -404,14 +394,10 @@
     
     <script>
       $(document).on('ready', function () {
+      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+      var API_TOKEN = $("meta[name='api-token']").attr("content");
 
-        // initialization of forms
-        //$.HSCore.components.HSFileAttachment.init('.js-file-attachment');
-        $.HSCore.helpers.HSFocusState.init();
-
-
-        
-        // initialization of carousel
+       // initialization of carousel
         $.HSCore.components.HSCarousel.init('[class*="js-carousel"]');
 
         $('#carouselCus1').slick('setOption', 'responsive', [{
@@ -431,31 +417,6 @@
           }
         }], true);
 
-        $('#carouselCus2').slick('setOption', 'responsive', [{
-          breakpoint: 1200,
-          settings: {
-            slidesToShow: 3
-          }
-        }, {
-          breakpoint: 992,
-          settings: {
-            slidesToShow: 2
-          }
-        }, {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: 1
-          }
-        }, {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1
-          }
-        }], true);
-      });
-
-      
-
       // initialization of header
       $.HSCore.components.HSHeader.init($('#js-header'));
       $.HSCore.helpers.HSHamburgers.init('.hamburger');
@@ -466,7 +427,6 @@
         pageContainer: $('.container'),
         breakpoint: 991
       });
-
       // initialization of HSDropdown component
       $.HSCore.components.HSDropdown.init($('[data-dropdown-target]'), {
         afterOpen: function () {
@@ -474,11 +434,64 @@
         }
       });
 
-      // initialization of go to
-      $.HSCore.components.HSGoTo.init('.js-go-to');
+        // initialization of HSScrollBar component
+        $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
+        // initialization of go to
+        $.HSCore.components.HSGoTo.init('.js-go-to');
 
+        // initialization of form validation
+        $.HSCore.components.HSValidation.init('.js-validate');
+        // initialization of custom select
+        $.HSCore.components.HSSelect.init('.js-custom-select');
+
+        $.HSCore.helpers.HSFocusState.init();
       // initialization of quantity counter
       $.HSCore.components.HSCountQty.init('.js-quantity');
+      // initialization of step form
+      $.HSCore.components.HSStepForm.init('.js-step-form');
+
+        
+
+        //removing products from basket
+        $(".u-basket__product-remove").on('click', function(){
+          var itemId = $(this).data('item');
+            swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.value) {
+              $.ajax({
+                type: 'POST',
+                dataType: 'JSON',
+                url: "/api/items/"+itemId,
+                data: {_token: CSRF_TOKEN, _method: 'DELETE', api_token: API_TOKEN},
+                success: function(response){
+                  console.log('deleted sucessfully');
+                },
+                error: function(response){
+                  console.log('some error occured during deleting category');
+                  console.log(response);
+                }
+              
+              });
+              swal.fire({
+                title:'Deleted!',
+                text: 'Your category has been deleted.',
+                type:'success',
+                showConfirmButton:false,
+                timer: 1500
+              })
+
+              location.reload();
+            }
+          });
+        });
+      });  
 
       // initialization of countdowns
       var countdowns = $.HSCore.components.HSCountdown.init('.js-countdown', {
@@ -490,104 +503,9 @@
         secondsElSelector: '.js-cd-seconds'
       });
 
-      $(window).on('load', function() {
-        // initialization of HSScrollBar component
-        $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
-      });
 
     </script>
-    <script>
-  $(document).ready(function () {
 
-    var tpj = jQuery;
-
-      var revapi1014;
-      tpj(document).ready(function () {
-        if (tpj("#rev_slider_1014_1").revolution == undefined) {
-          revslider_showDoubleJqueryError("#rev_slider_1014_1");
-        } else {
-          revapi1014 = tpj("#rev_slider_1014_1").show().revolution({
-            sliderType: "standard",
-            jsFileLocation: "revolution/js/",
-            sliderLayout: "fullscreen",
-            dottedOverlay: "none",
-            delay: 9000,
-            navigation: {
-              keyboardNavigation: "off",
-              keyboard_direction: "horizontal",
-              mouseScrollNavigation: "off",
-              mouseScrollReverse: "default",
-              onHoverStop: "off",
-              touch: {
-                touchenabled: "on",
-                swipe_threshold: 75,
-                swipe_min_touches: 1,
-                swipe_direction: "horizontal",
-                drag_block_vertical: false
-              }
-              ,
-              arrows: {
-                style: "uranus",
-                enable: true,
-                hide_onmobile: true,
-                hide_under: 768,
-                hide_onleave: false,
-                tmp: '',
-                left: {
-                  h_align: "left",
-                  v_align: "center",
-                  h_offset: 20,
-                  v_offset: 0
-                },
-                right: {
-                  h_align: "right",
-                  v_align: "center",
-                  h_offset: 20,
-                  v_offset: 0
-                }
-              }
-            },
-            parallax: {
-              type: "mouse",
-              origo: "slidercenter",
-              speed: 2000,
-              levels: [2, 3, 4, 5, 6, 7, 12, 16, 10, 50],
-              disable_onmobile: "on"
-            },
-            responsiveLevels: [1240, 1024, 778, 480],
-            visibilityLevels: [1240, 1024, 778, 480],
-            gridwidth: [1240, 1024, 778, 480],
-            gridheight: [868, 768, 960, 600],
-            lazyType: "none",
-            shadow: 0,
-            spinner: "off",
-            stopLoop: "on",
-            stopAfterLoops: 0,
-            stopAtSlide: 1,
-            shuffle: "off",
-            autoHeight: "off",
-            fullScreenAutoWidth: "off",
-            fullScreenAlignForce: "off",
-            fullScreenOffsetContainer: "#js-header",
-            fullScreenOffset: "",
-            disableProgressBar: "on",
-            hideThumbsOnMobile: "off",
-            hideSliderAtLimit: 0,
-            hideCaptionAtLimit: 0,
-            hideAllCaptionAtLilmit: 0,
-            debugMode: false,
-            fallbacks: {
-              simplifyAll: "off",
-              nextSlideOnWindowFocus: "off",
-              disableFocusListener: false
-            }
-          });
-        }
-
-        RsTypewriterAddOn(tpj, revapi1014);
-      });
-  });
-</script>
 
 @yield('script')
   </body>
