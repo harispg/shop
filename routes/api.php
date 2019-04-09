@@ -37,6 +37,8 @@ Route::post('orders/{order}/addArticle/{article}', 'Api\ApiOrdersController@addA
 Route::post('items/{item}', 'Api\ApiItemsController@add');
 Route::delete('items/{item}', 'Api\ApiItemsController@destroy');
 
+Route::post('users/{user}/role/{role}', 'Api\ApiUsersController@changeRole')->middleware('can:api|users.work');
+
 });
     //
 

@@ -9,6 +9,7 @@
 
 @section('content')
 
+
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-9">
         <h2>Users index</h2>
@@ -60,7 +61,7 @@
                         <th>Email</th>
                         <th>Super Admin</th>
                         <th>Role</th>
-                        <th>Number of logins</th>
+                        <th>Times logedin</th>
                         <th>Email verified</th>
                         <th>Number of orders</th>
                         <th>Last purchase date orderlink</th>
@@ -77,7 +78,17 @@
                         <td class="centar">{{$user->name}}</td>
                         <td class="centar">{{$user->email}}</td>
                         <td><input class="user-superAdmin" type="checkbox" name="superAdmin" data-superAdmin="{{$user->superAdmin}}" {{$user->superAdmin?"checked":""}}></td>
-                        <td class="centar">{{$user->roles->count()?$user->roles->first()->name:"no role"}}</td>
+                        <td class="centar">
+                          <select class="roles" data-user="{{$user->id}}">
+                            <option value="No role">No role</option>
+                            @foreach($roles as $role)
+                            <option value="{{$role->name}}" 
+                              @if($user->hasRole($role->name))
+                               selected="selected"
+                              @endif>{{$role->name}}</option>
+                            @endforeach
+                          </select>
+                        </td>
                         <td>{{$user->numberOfLogins}}</td>
                         <td>{{$user->email_verified_at}}</td>
                         <td>11</td>
@@ -99,7 +110,7 @@
                         <th>Email</th>
                         <th>Super Admin</th>
                         <th>Role</th>
-                        <th>Number of logins</th>
+                        <th>Times logedin</th>
                         <th>Email verified</th>
                         <th>Number of orders</th>
                         <th>Last purchase date orderlink</th>
@@ -114,12 +125,9 @@
               </div>
           </div>
       </div>
-
   </div>
 
-  <div id="banModal" class="modal" hidden>
-    
-  </div>
+
 
 
 @endsection
@@ -192,6 +200,33 @@
       ]
     });
     //---END--- of Initialization and customization of data tables
+    
+
+    //Changing roles
+    $("select.roles").focus(function(){
+      this.oldIndex = this.selectedIndex;
+      
+    });
+    $("select.roles").change(function(){
+      var userId = $(this).data('user');
+      var roleName = $(this).val();
+      if(!confirm('Are you sure?')){
+        this.selectedIndex=this.oldIndex;
+      }else{
+        $.ajax({
+          url:'/api/users/'+userId+'/role/'+roleName,
+          method: 'POST',
+          data: {_token:CSRF_TOKEN, api_token: API_TOKEN, user:userId, role:roleName},
+          success: function(response){
+            console.log(['success', response]);
+          },
+          error: function(response){
+            console.log(['error', response]);
+          }
+        })
+      }
+    });
+    //---END--- Changing roles
     
   });
 </script>

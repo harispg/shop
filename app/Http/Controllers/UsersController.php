@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class UsersController extends Controller
     public function index()
     {
     	$users = User::with('roles')->get();
-    	return view('admin.users.index', compact('users'));
+        $roles = Role::all();
+    	return view('admin.users.index', compact('users', 'roles'));
     }
 
     public function show(User $user){

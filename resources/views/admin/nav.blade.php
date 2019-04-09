@@ -6,7 +6,13 @@
                     <img alt="image" class="rounded-circle" src="/{{auth()->user()->avatar}}"/>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="block m-t-xs font-bold">{{auth()->user()->name}}</span>
-                        <span class="text-muted text-xs block">{{auth()->user()->getRole()->name}}<b class="caret"></b></span>
+                        <span class="text-muted text-xs block">
+                            @if(auth()->user()->getRole())
+                                {{auth()->user()->getRole()->name}}
+                            @else
+                                {{"No role"}}
+                            @endif
+                        <b class="caret"></b></span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a class="dropdown-item logout" onclick="event.preventDefault(); getElementById('logout').submit();" href="#">Logout</a></li>

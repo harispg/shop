@@ -47,7 +47,16 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getRole()
     {
-        return $this->roles()->first();
+        return $this->roles->first();
+    }
+
+    public function getRoleName()
+    {
+        if($this->roles->count()>0){
+            return $this->getRole()->name;
+        }else{
+            return "no role";
+        } 
     }
 
     /**
@@ -59,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
         if(!is_string($role)){abort(422,'Role must be a string');}
         if($this->hasRole($role)){abort(422, 'Already have this role');}
         $roleId = Role::where('name', $role)->first()->id;
-        $this->roles()->attach($roleId);
+        $this->roles()->sync($roleId);
     }
 
     /**
