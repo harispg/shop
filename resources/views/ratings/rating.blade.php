@@ -21,5 +21,13 @@
     </li>
   </ul>
   <p class="avgRating mb-0">{{$article->ratings->count()?"Average rating: ".$article->avgRating():"Not rated"}}</p>
+  @if($count = $article->ratings->count())
+    @if($count == 1)
+      <p class="usersRatings mb-0">Rated by: 1 person</p>
+    @else
+      <p class="usersRatings mb-0">Rated by: {{$count}} people</p>
+    @endif
+
+  @endif
   <span class="notAllowed text-danger pt-0 mt-0" hidden="true"></span>
 </div>

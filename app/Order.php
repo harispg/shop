@@ -10,7 +10,7 @@ class Order extends Model
 
     public function items()
     {
-    	return $this->hasMany(OrderItem::class);
+    	return $this->hasMany(OrderItem::class, 'order_id');
     }
 
     public function status()
@@ -38,8 +38,23 @@ class Order extends Model
         return  round($total,2);
     }
 
+    public function discount(){
+        if($this->subTotal()<100){
+            return 0;
+        }elseif($this->subTotal()>=100 && $this->subtotal()<300){
+            return 10;
+        }elseif($this->subTotal()>=300 && $this->subtotal()<500){
+            return 15;
+        }elseif($this->subTotal()>=500 && $this->subtotal()<1000){
+            return 20;
+        }elseif($this->subTotal()>=1000){
+            return 25;
+        }
+    }
+
     public function orderTotal()
     {   
+        $this->discount = $this->discount();
         if($this->discount === 0){
             return $this->subTotal();
         }
@@ -49,7 +64,7 @@ class Order extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class,'user_id', 'id');
     }
 
 
@@ -72,7 +87,7 @@ class Order extends Model
             );
         }else{
             $item = $this->itemOfArticle($article);
-            $quantity ? $item->quantity=$quantity : $item->quantity += 1;
+            ($quantity!=null) ? $item->quantity=$quantity : $item->quantity += 1;
             $item->save();
         }
     }

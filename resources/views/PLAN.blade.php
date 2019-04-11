@@ -8,7 +8,7 @@
 		<p><strike>Implement permissions</strike></p>
 		<p><strike>Implement custom thumbnail creation</strike> <strong>On hold</strong></p>
 		<p><strike>Article pictures should be clickable</strike></p>
-		<p>Make admin page for users</p>
+		<p><strike>Make admin page for users</strike></p>
 		<p><strike>Implement tag system</strike></p>
 		<p>Make front end messages dynamic</p>
 		<p>Implement Discounts system</p>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="col col-md-5">
 		<h3>In Progress:</h3>
-		<p>Implement tag system <br />
+		<p>Discounts system<br />
 			
 
 		{{-- Making admin page for users:<br />
@@ -26,7 +26,6 @@
 			Functionality:
 			Give and take away roles,
 			Give or take superAdmin ability,
-			Ban user,
 			Give discount
 			check orders
 			check total spent

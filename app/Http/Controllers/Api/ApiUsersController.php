@@ -21,4 +21,21 @@ class ApiUsersController extends Controller
     		$user->roles()->detach();
     	}
     }
+
+    public function toggleSupperAdmin(Request $request, User $user){
+
+        if(auth()->id() === $user->id){
+            return 'You realy do not need to take away superAdmin ability from yourself';
+        }
+        
+        if($user->superAdmin){
+            $user->superAdmin = false;
+            $user->save();
+            return 'Not super any more';
+        }else{
+            $user->superAdmin = true;
+            $user->save();
+            return 'Is super now';
+        }
+    }
 }

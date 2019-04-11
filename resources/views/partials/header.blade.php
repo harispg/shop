@@ -283,7 +283,7 @@
                         </a>
                       </li>
                       <li>
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="page-orders-1.html">
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="{{route('user.orders.index', ['user' => auth()->id()])}}">
                           Your Orders
                         </a>
                       </li>
@@ -345,7 +345,15 @@
                       </div>
                       <!-- End Product -->
                       @endforeach
-                      @endif
+                      @else
+
+                        <div class="container text-center">
+                          <div class="mb-5">
+                            <h4 class="mt-5">Your Cart is Currently Empty</h4>
+                          </div>
+                          <a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" href="#!">Start Shopping</a>
+                        </div>
+                        @endif
                     </div>
 
                     <div class="clearfix g-px-15">

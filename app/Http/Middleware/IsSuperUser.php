@@ -2,11 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Order;
-use App\User;
 use Closure;
 
-class ownsOrder
+class IsSuperUser
 {
     /**
      * Handle an incoming request.
@@ -17,10 +15,10 @@ class ownsOrder
      */
     public function handle($request, Closure $next)
     {   
-            if($request->user()->id != $request->order->id){
+        if(! $request->user()->superAdmin)
+        {
             return response(view('shop.401'));
-            }
-             return $next($request);
-       
+        }
+        return $next($request);
     }
 }

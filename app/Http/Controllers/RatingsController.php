@@ -34,6 +34,6 @@ class RatingsController extends Controller
     	);
 
 
-    	return [$article->avgRating(), $article->ratingByUser(auth()->user())];
+    	return [$article->avgRating(), $article->ratingByUser(auth()->user()), $article->ratings->count()];
     }
 }

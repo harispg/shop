@@ -92,12 +92,16 @@
               <div class="row g-mx-minus-5 g-mb-20 g-mt-50">
                 <div class="col g-px-5 g-mb-10">
                   <button id="addToCart" class="btn btn-block u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-25" type="button" @if(auth()->check()) data-order="{{auth()->user()->activeOrder()->id}}"@endif data-article="{{$article->id}}">
-                    Add to Cart <i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
+                    Add to cart<i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
                   </button>
                 </div>
                 <div class="col g-px-5 g-mb-10">
-                  <button class="btn btn-block u-btn-outline-black g-brd-gray-dark-v5 g-brd-black--hover g-color-gray-dark-v4 g-color-white--hover g-font-size-12 text-uppercase g-py-15 g-px-25" type="button">
-                    Add to Wishlist <i class="align-middle ml-2 icon-medical-022 u-line-icon-pro"></i>
+                  <button id="addToWishlist" class="btn btn-block btn-outline-{{$article->isWished()?"danger":"secondary"}} g-color-gray-dark-v4 g-color-white--hover g-font-size-12 text-uppercase g-py-15" data-article="{{$article->id}}" type="button">
+                    <span>{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}</span> <i
+                    class="align-middle
+                     ml-2 fa
+                     {{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}}
+                      g-font-size-15"></i>
                   </button>
                 </div>
               </div>
@@ -361,16 +365,13 @@
           data: {_token: CSRF_TOKEN, rating: stars},
           success: function(response){
             $(".avgRating").html("Average rating: "+response[0]);
+            if(response[2]==1){
+              $(".usersRatings").html("Rated by: 1 person");
+            }else{
+              $(".usersRatings").html("Rated by: "+response[2]+" people");
+            }
           },
           error: function(response){
-            /*swal.fire({
-              type: 'error',
-              title: response.responseText,
-              text: 'You need to be registered to rate articles',
-              showConfirmButton: false,
-              timer: 1500,
-            });*/
-            console.log(response);
             $(".notAllowed").html(response.statusText);
             $(".notAllowed").attr("hidden", false);
           }
@@ -438,9 +439,50 @@
         $.ajax({
           url: '/api/orders/'+orderId+'/addArticle/'+articleId,
           type:'POST',
-          data:{_token:CSRF_TOKEN, api_token: API_TOKEN, quantity: quantity, order: orderId, article: articleId}
+          data:{_token:CSRF_TOKEN, api_token: API_TOKEN, quantity: quantity, order: orderId, article: articleId},
+          success: function(response){
+            console.log(response);
+            location.reload();
+          }
         });
-      })
+      });
+      //---END--- Add to cart
+      
+      //Add to wishlist
+      function toggleWishlist(articleId){
+        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+        var API_TOKEN = $("meta[name='api-token']").attr('content');
+        $.ajax({
+            url:'/api/wishlist/'+articleId,
+            method: 'post',
+            data: {_token:CSRF_TOKEN, api_token:API_TOKEN}
+          });
+      }
+      $("#addToWishlist").click(function(){
+        var button = $(this);
+        var iconElement = button.find("i.fa");
+        var spanElement = button.find("span");
+        var classes = iconElement.attr("class");
+        var articleId = button.data('article');
+        if(classes.indexOf("fa-heart-o")>=0){
+          button.removeClass("btn-outline-secondary");
+          button.addClass("btn-outline-danger");
+          spanElement.text("Remove from whishlist");
+          iconElement.removeClass("fa-heart-o");
+          iconElement.addClass("fa-heart");
+          iconElement.addClass("text-danger");
+          toggleWishlist(articleId);
+          
+        }else{
+          button.removeClass("btn-outline-danger");
+          button.addClass("btn-outline-secondary");
+          spanElement.text("Add to wishlist");
+          iconElement.removeClass("fa-heart");
+          iconElement.addClass("fa-heart-o");
+          iconElement.removeClass("text-danger");
+          toggleWishlist(articleId);
+        }
+      });
    });
 
  </script>

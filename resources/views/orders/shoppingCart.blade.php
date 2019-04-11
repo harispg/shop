@@ -130,7 +130,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                       <span class="g-color-black">Discount</span>
-                      <span class="total g-color-black g-font-weight-300">$ {{$order->discount}}</span>
+                      <span class="total g-color-black g-font-weight-300">% {{$order->discount()}}</span>
                     </div>
                     <div class="d-flex justify-content-between">
                       <span class="g-color-black">Order Total</span>

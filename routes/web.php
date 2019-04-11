@@ -61,3 +61,7 @@ Route::get('admin/users/{user}', 'UsersController@show')->middleware('can:users.
 Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');
 Route::post('orders/{order}/update', 'OrdersController@update')->name('orders.update');
 Route::post('orders/{order}/payment', 'OrdersController@payment')->name('orders.payment');
+Route::get('orders/{user}/index', 'OrdersController@usersOrders')->name('user.orders.index');
+
+Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
+

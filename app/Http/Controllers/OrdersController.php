@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderItem;
+use App\User;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -14,7 +15,9 @@ class OrdersController extends Controller
     }
     public function show(Order $order)
     {
-
+        if($order->items->count() == 0){
+            return view('shop.emptyCart');
+        }
     	$items = $order->items;
     	return view('orders.shoppingCart', compact('items', 'order'));
     }
@@ -37,6 +40,15 @@ class OrdersController extends Controller
 
     public function payment(Request $request, Order $order)
     {
-        dd($order);
+        $order->order_status_id = 2;
+        $order->save();
+        auth()->user()->makeOrder();
+        flash()->success('Well done', 'You have purchased this');
+        return view('orders.orderCompleted');
+    }
+
+    public function usersOrders(Request $request, User $user)
+    {
+        return view('orders.usersOrders', compact('user'));
     }
 }

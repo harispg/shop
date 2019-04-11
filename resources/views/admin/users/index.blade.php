@@ -77,9 +77,9 @@
                         <td><img src="/{{$user->avatar}}" style="height: 6em; width: 6em"></td>
                         <td class="centar">{{$user->name}}</td>
                         <td class="centar">{{$user->email}}</td>
-                        <td><input class="user-superAdmin" type="checkbox" name="superAdmin" data-superAdmin="{{$user->superAdmin}}" {{$user->superAdmin?"checked":""}}></td>
+                        <td><input class="user-superAdmin" type="checkbox" {{($user->id==auth()->id())?"disabled":""}} name="superAdmin" data-user="{{$user->id}}" data-superAdmin="{{$user->superAdmin}}" {{$user->superAdmin?"checked":""}}></td>
                         <td class="centar">
-                          <select class="roles" data-user="{{$user->id}}">
+                          <select class="custom-select-sm roles" data-user="{{$user->id}}">
                             <option value="No role">No role</option>
                             @foreach($roles as $role)
                             <option value="{{$role->name}}" 
@@ -216,17 +216,36 @@
         $.ajax({
           url:'/api/users/'+userId+'/role/'+roleName,
           method: 'POST',
-          data: {_token:CSRF_TOKEN, api_token: API_TOKEN, user:userId, role:roleName},
-          success: function(response){
-            console.log(['success', response]);
-          },
-          error: function(response){
-            console.log(['error', response]);
-          }
-        })
+          data: {_token:CSRF_TOKEN, api_token: API_TOKEN, user:userId, role:roleName}
+        });
       }
     });
     //---END--- Changing roles
+    
+
+    //Give or take superAdmin
+    
+    $(".user-superAdmin").on('focus', function(){
+      this.oldIndex = this.checked;
+    });
+
+    $(".user-superAdmin").on('change', function(){
+        var userId = $(this).data('user');
+
+      if(!confirm('Are you suere')){
+        this.checked = this.oldIndex;
+      }else{
+        $.ajax({
+          url:'/api/users/superAdmin/'+userId,
+          method: 'POST',
+          data: {_token:CSRF_TOKEN, api_token: API_TOKEN}
+        });
+      }
+    });
+
+    //---END--- Give or take superAdmin
+    
+    
     
   });
 </script>

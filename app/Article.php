@@ -94,6 +94,23 @@ class Article extends Model
         return round($price,2);
     }
 
+    public function discountedPrice()
+    {
+        return $this->price*((100-$this->discount)/100);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function isWished(){
+        if($this->users->find(auth()->id()) === null){
+            return false;
+        }
+        return true;
+    }
+
 }
 
 

@@ -107,8 +107,8 @@
                   <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
                      data-toggle="tooltip"
                      data-placement="top"
-                     title="Add to Wishlist">
-                    <i class="icon-medical-022 u-line-icon-pro"></i>
+                     title="{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}">
+                    <i class="addToWishlist fa {{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}} g-font-size-18" data-article="{{$article->id}}"></i>
                   </a>
                 </li>
               </ul>
@@ -133,6 +133,9 @@
   $(document).on('ready', function(){
       var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
       var API_TOKEN = $("meta[name='api-token']").attr("content");
+
+
+    //Add to cart
     $(".article").on('click', '.addToCart', function(){
       var orderId = $(this).data('order');
       var articleId = $(this).data('article');
@@ -177,6 +180,45 @@
 
       });
       
+    });
+    //---END---Add to cart
+    
+
+    //Add to wishlist
+    function toggleWishlist(articleId){
+      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+      var API_TOKEN = $("meta[name='api-token']").attr('content');
+      $.ajax({
+          url:'/api/wishlist/'+articleId,
+          method: 'post',
+          data: {_token:CSRF_TOKEN, api_token:API_TOKEN}
+        });
+    }
+
+    $("i.addToWishlist").click(function(){
+      var iconElement = $(this);
+      var parentElement = iconElement.parent();
+      var classes = iconElement.attr("class");
+      var articleId = iconElement.data('article');
+      if(classes.indexOf("fa-heart-o")>=0){
+        parentElement.tooltip('hide')
+        .attr('data-original-title', 'Remove from wishlist')
+        .tooltip('show');
+        iconElement.removeClass("fa-heart-o");
+        iconElement.addClass("fa-heart");
+        iconElement.addClass("text-danger");
+        toggleWishlist(articleId);
+        
+      }else{
+        parentElement.tooltip('hide')
+        .attr('data-original-title', 'Add to wishlist')
+        .tooltip('show');
+        iconElement.removeClass("fa-heart");
+        iconElement.addClass("fa-heart-o");
+        iconElement.removeClass("text-danger");
+        toggleWishlist(articleId);
+      }
+
     });
 
     

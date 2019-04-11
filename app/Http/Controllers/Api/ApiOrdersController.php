@@ -13,6 +13,6 @@ class ApiOrdersController extends Controller
     {
     	$order->addArticle($article, $request->quantity);
 
-    	return $order->items()->with('article.photos')->get();
+    	return $request->all();
     }
 }
