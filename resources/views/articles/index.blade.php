@@ -91,7 +91,7 @@
               </div>
               <!-- End Product Info -->
 
-              @if(auth()->check())
+              @auth
               <ul class="list-inline media-body text-right">
                 <li class="list-inline-item align-middle mx-0">
                   <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
@@ -113,7 +113,7 @@
                 </li>
               </ul>
               <!-- End Products Icons -->
-              @endif
+              @endauth
             </div>
             <!-- End Product -->
           </div>
@@ -173,11 +173,7 @@
             renderArticles(items[i]);
           }*/
           location.reload();
-        },
-        error: function(response){
-
         }
-
       });
       
     });
@@ -191,11 +187,20 @@
       $.ajax({
           url:'/api/wishlist/'+articleId,
           method: 'post',
-          data: {_token:CSRF_TOKEN, api_token:API_TOKEN}
+          data: {_token:CSRF_TOKEN, api_token:API_TOKEN},
+          success: function(response){
+            console.log(['success', response]);
+          },
+          error: function(response){
+            console.log(['error', response]);
+          }
         });
     }
 
     $("i.addToWishlist").click(function(){
+      if(API_TOKEN.length == -1){
+        alert('A a aaa I thouth of that one too');
+      }
       var iconElement = $(this);
       var parentElement = iconElement.parent();
       var classes = iconElement.attr("class");

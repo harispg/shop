@@ -18,6 +18,16 @@ class Article extends Model
             $this->photos()->sync($photos);
     }
 
+    public function getSmallPhoto()
+    {
+        return $this->photos->first()->thumbnail_small;
+    }
+
+    public function getThumbnail()
+    {
+        return $this->photos->first()->thumbnail_path;
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class);

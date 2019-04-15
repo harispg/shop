@@ -29,8 +29,15 @@ class LoginController extends Controller
      * @var string
      */
     protected function redirectTo()
-    {
-        return url()->previous();
+    {   
+        $loginIndex = array_search('login', session('visitedPaths'));
+        $indexBeforeLogin = $loginIndex + 1;
+        if(isset(session('visitedPaths')[$indexBeforeLogin])){
+            return url(session('visitedPaths')[$indexBeforeLogin]);
+        }else{
+            return '/';
+        }
+
     }
 
 
@@ -62,7 +69,7 @@ class LoginController extends Controller
 
         $this->loginOrCreate($user, $request);
 
-        return redirect()->intended();
+        return redirect($this->redirectTo());
     }
 
     /**

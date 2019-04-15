@@ -10,6 +10,9 @@
 		<p><strike>Article pictures should be clickable</strike></p>
 		<p><strike>Make admin page for users</strike></p>
 		<p><strike>Implement tag system</strike></p>
+		<p>Check why is article shown in categories dropdown ugly</p>
+		<p>Make pages contact us, new, featured</p>
+		<p>Work out how to have grid and list views</p>
 		<p>Make front end messages dynamic</p>
 		<p>Implement Discounts system</p>
 		<p>Implement Orders system</p>
@@ -18,22 +21,7 @@
 	</div>
 	<div class="col col-md-5">
 		<h3>In Progress:</h3>
-		<p>Discounts system<br />
-			
-
-		{{-- Making admin page for users:<br />
-			I need a table with roles and superAdmin checkboxes
-			Functionality:
-			Give and take away roles,
-			Give or take superAdmin ability,
-			Give discount
-			check orders
-			check total spent
-			check total discounts
-			check 
-		</p> --}}
-		</ul>
-		
+		<p>Discounts system<br />	
 	</div>
 	
 

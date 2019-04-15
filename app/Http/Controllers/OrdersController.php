@@ -13,7 +13,7 @@ class OrdersController extends Controller
     {
         $this->middleware(['auth', 'ownsOrder']);
     }
-    public function show(Order $order)
+    public function show(Request $request, Order $order)
     {
         if($order->items->count() == 0){
             return view('shop.emptyCart');

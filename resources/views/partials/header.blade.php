@@ -64,14 +64,9 @@
                     <a class="g-color-black g-color-primary--hover g-pa-3" href="#!"><i class="fa fa-twitter"></i></a>
                   </li>
                   <li class="list-inline-item">
-                    <a class="g-color-black g-color-primary--hover g-pa-3" href="#!"><i class="fa fa-tumblr"></i></a>
-                  </li>
-                  <li class="list-inline-item">
                     <a class="g-color-black g-color-primary--hover g-pa-3" href="#!"><i class="fa fa-pinterest-p"></i></a>
                   </li>
-                  <li class="list-inline-item">
-                    <a class="g-color-black g-color-primary--hover g-pa-3" href="#!"><i class="fa fa-google"></i></a>
-                  </li>
+
                 </ul>
                 <!-- End Social Icons -->
               </div>
@@ -278,7 +273,7 @@
                         </form>
                       </li>
                       <li>
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="page-wishlist-1.html">
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="{{route('wishlist.index')}}">
                           Wishlist
                         </a>
                       </li>
@@ -351,7 +346,7 @@
                           <div class="mb-5">
                             <h4 class="mt-5">Your Cart is Currently Empty</h4>
                           </div>
-                          <a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" href="#!">Start Shopping</a>
+                          <a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25" href="{{route('articles.index')}}">Start Shopping</a>
                         </div>
                         @endif
                     </div>
@@ -442,42 +437,17 @@
               <div id="navBar" class="collapse navbar-collapse align-items-center flex-sm-row g-pt-15 g-pt-0--lg">
                 <ul class="navbar-nav ml-auto">
                   <!-- Home - Submenu -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl">
-                    <a id="nav-link--home" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#!"
-                       aria-haspopup="true"
-                       aria-expanded="false"
-                       aria-controls="nav-submenu--home">
+                  <li class="nav-item g-mx-10--lg g-mx-15--xl">
+                    <a id="nav-link--home" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="{{route('home')}}">
                       Home
                     </a>
-
-                    <!-- Submenu -->
-                    <ul id="nav-submenu--home" class="hs-sub-menu list-unstyled u-shadow-v11 g-min-width-220 g-brd-top g-brd-primary g-brd-top-2 g-mt-17"
-                        aria-labelledby="nav-link--home">
-                      <li class="dropdown-item">
-                        <a class="nav-link g-color-gray-dark-v4" href="home-page-1.html">Home Default</a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a class="nav-link g-color-gray-dark-v4" href="home-page-2.html">Home 2
-                          <span class="u-label g-rounded-3 g-font-size-10 g-bg-lightred g-py-3 g-pos-rel g-top-minus-1 g-ml-5">New</span>
-                        </a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a class="nav-link g-color-gray-dark-v4" href="home-page-3.html">Home 3
-                          <span class="u-label g-rounded-3 g-font-size-10 g-bg-lightred g-py-3 g-pos-rel g-top-minus-1 g-ml-5">New</span>
-                        </a>
-                      </li>
-                    </ul>
-                    <!-- End Submenu -->
                   </li>
                   <!-- End Home - Submenu -->
 
                   <!-- Pages - Submenu -->
-                  <li class="nav-item hs-has-sub-menu g-mx-10--lg g-mx-15--xl">
-                    <a id="nav-link--pages" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#!"
-                       aria-haspopup="true"
-                       aria-expanded="false"
-                       aria-controls="nav-submenu--pages">
-                      Pages
+                  <li class="nav-itemg-mx-10--lg g-mx-15--xl">
+                    <a id="nav-link--pages" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="{{route('articles.index')}}">
+                      Articles
                     </a>
 
                     <!-- Submenu -->
@@ -792,7 +762,7 @@
                       data-animation-in="fadeIn"
                       data-animation-out="fadeOut"
                       data-position="right">
-                    <a id="mega-menu-label-3" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="#!" aria-haspopup="true" aria-expanded="false">
+                    <a id="mega-menu-label-3" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="{{route('home')."#categories"}}" aria-haspopup="true" aria-expanded="false">
                       Categories
                       <i class="hs-icon hs-icon-arrow-bottom g-font-size-11 g-ml-7"></i>
                     </a>
@@ -800,97 +770,37 @@
                     <!-- Mega Menu -->
                     <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-3">
                       <div class="row">
+                        @foreach($categories->chunk(4) as $set)
                         <div class="col-sm-6 col-lg-2 g-mb-30 g-mb-0--md">
                           <!-- Links -->
+                          @foreach($set as $category)
                           <div class="mb-5">
-                            <span class="d-block g-font-weight-500 text-uppercase mb-2">Home Decor</span>
+                            <span class="d-block g-font-weight-500 text-uppercase mb-2">{{$category->name}}</span>
 
                             <ul class="list-unstyled">
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Wall Decor</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Pillows &amp; Throws</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Window Treatments</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Mirrors</a></li>
+                              @foreach($category->articles as $article)
+                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="{{route('articles.show', ['article' => $article->id])}}">{{$article->name}}</a></li>
+                              @endforeach
                             </ul>
                           </div>
-                          <!-- End Links -->
-
-                          <!-- Links -->
-                          <span class="d-block g-font-weight-500 text-uppercase mb-2">Industrial Decor</span>
-
-                          <ul class="list-unstyled">
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Letter Block</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Glass Sconce</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Risa Storage Jar</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Model Plane</a></li>
-                          </ul>
+                          @endforeach
                           <!-- End Links -->
                         </div>
-
-                        <div class="col-sm-6 col-lg-3 g-mb-30 g-mb-0--md">
-                          <!-- Links -->
-                          <div class="mb-5">
-                            <span class="d-block g-font-weight-500 text-uppercase mb-2">Kitchen &amp; Tabletop</span>
-
-                            <ul class="list-unstyled">
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Coffee &amp; Tea</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Cooking &amp; Baking</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Cutlery &amp; Cutting</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Serving</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Food Storage</a></li>
-                            </ul>
-                          </div>
-                          <!-- End Links -->
-
-                          <div class="mb-5 g-mb-0--lg">
-                            <!-- Links -->
-                            <span class="d-block g-font-weight-500 text-uppercase mb-2">Office</span>
-
-                            <ul class="list-unstyled">
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Writing Instruments</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Bookcases</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Filing Cabinets</a></li>
-                            </ul>
-                            <!-- End Links -->
-                          </div>
-                        </div>
-
-                        <div class="col-sm-6 col-lg-3 g-mb-30 g-mb-0--md">
-                          <!-- Links -->
-                          <div class="mb-5">
-                            <span class="d-block g-font-weight-500 text-uppercase mb-2">Modern Lighting</span>
-
-                            <ul class="list-unstyled">
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Bridgers 59" Floor Lamp</a></li>
-                              <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Miltiades 27" Table Lamp</a></li>
-                            </ul>
-                          </div>
-                          <!-- End Links -->
-
-                          <!-- Links -->
-                          <span class="d-block g-font-weight-500 text-uppercase mb-2">Coastal Living Room Furniture</span>
-
-                          <ul class="list-unstyled">
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Washington Console Table</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Anfield Coffee Table</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Banbury 2 Drawer End Table</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Landsdowne 53" Tv Stand</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Sevan Swivel Barrel Chair</a></li>
-                            <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="#!">Enfield Credenza</a></li>
-                          </ul>
-                          <!-- End Links -->
-                        </div>
+                        @endforeach
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
+                          @if($article = $articles->where('featured', true)->random())
                           <article class="g-pos-rel">
-                            <img class="img-fluid" src="/assets/img-temp/700x700/img1.jpg" alt="Image Description">
+                            <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
 
                             <div class="g-pos-abs g-bottom-30 g-left-30">
-                              <span class="d-block g-color-gray-dark-v4 mb-2">Modern Lighting</span>
-                              <span class="d-block h4">Desk Clock 65" Table Lamp</span>
-                              <span class="d-block g-color-gray-dark-v3 g-font-size-16 mb-4">$156.00</span>
+                              <span class="d-block g-color-gray-dark-v4 mb-2"></span>
+                              <span class="d-block h4">{{$article->name}}</span>
+                              <span class="d-block g-color-gray-dark-v3 g-font-size-16 mb-4">{{$article->price}}</span>
                               <a class="btn u-btn-primary u-shadow-v29 g-font-size-12 text-uppercase g-py-10 g-px-20" href="#!">Add to Cart</a>
                             </div>
                           </article>
+                          @endif
                         </div>
                       </div>
                     </div>

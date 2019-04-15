@@ -244,7 +244,7 @@
       <!-- Description -->
       <div class="container">
         <div class="g-brd-y g-brd-gray-light-v4 g-pt-100 g-pb-70">
-          <h2 class="h4 mb-3">Description</h2>
+          <h2 class="h4 mb-3">Specification</h2>
 
           <div class="row">
             <div class="col-md-12 g-mb-30">
@@ -430,10 +430,19 @@
 
       //Add to cart
       $("#addToCart").on('click', function(){
+        var API_TOKEN = $("meta[name='api-token']").attr('content');
+        if(API_TOKEN == undefined){
+          swal.fire({
+            type: 'info',
+            title: 'Please register',
+            text: 'You have to register before using all features.'
+          });
+          return;
+        }
+        var quantity = $("input.js-result").val();
         var _this = $(this);
         var orderId = $(this).data('order');
         var articleId = $(this).data('article');
-        var quantity = $("input.js-result").val();
         var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
         var API_TOKEN = $("meta[name='api-token']").attr('content');
         $.ajax({
@@ -459,6 +468,15 @@
           });
       }
       $("#addToWishlist").click(function(){
+        var API_TOKEN = $("meta[name='api-token']").attr('content');
+        if(API_TOKEN == undefined){
+          swal.fire({
+            type: 'warning',
+            title: 'Please register',
+            text: 'You have to register before using all features.'
+          });
+          return;
+        }
         var button = $(this);
         var iconElement = button.find("i.fa");
         var spanElement = button.find("span");

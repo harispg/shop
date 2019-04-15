@@ -30,7 +30,28 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+    {   
+        $loginIndex = array_search('login', session('visitedPaths'));
+        if($loginIndex != false){
+            $indexBeforeLogin = $loginIndex + 1;
+            if(isset(session('visitedPaths')[$indexBeforeLogin])){
+                return url(session('visitedPaths')[$indexBeforeLogin]);
+            }else{
+                return '/';
+            }
+
+        }else{
+            $registerIndex = array_search('register', session('visitedPaths'));
+            $indexBeforeRegister = $registerIndex + 1;
+            if(isset(session('visitedPaths')[$indexBeforeRegister])){
+                return url(session('visitedPaths')[$indexBeforeRegister]);
+            }else{
+                return '/';
+            }
+        }
+
+    }
 
     /**
      * Create a new controller instance.

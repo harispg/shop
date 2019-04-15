@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
         \DB::listen(function($query){ \Log::info($query->sql, $query->bindings); });
 
         \View::share('user', auth()->user());
+        \View::share('categories', Category::all());
     }
 
     /**

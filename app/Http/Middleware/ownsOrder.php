@@ -16,11 +16,15 @@ class ownsOrder
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-            if($request->user()->id != $request->order->id){
+    {       
+            $orderId=getStringBetween($request->path(), 'orders/', '/');
+            $order = Order::find($orderId);
+            if($request->user()->id != $order->owner->id){
+            if ($request->expectsJson()) {
+                return response()->json(['message'=>'You are not authorized to view this order']);
+            }
             return response(view('shop.401'));
             }
              return $next($request);
-       
     }
 }

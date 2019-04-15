@@ -1,8 +1,9 @@
 <!-- Categories -->
+<a name="categories"></a>
 <div class="container g-pt-100 g-pb-70">
   <div class="text-center mx-auto g-max-width-600 g-mb-50">
           <h2 class="g-color-black mb-4">Categories of our products</h2>
-          <p class="lead">We are the champions my friend. We'll keep on fighting until the end.</p>
+          <p class="lead">We are the champions my friends, we'll keep on fighting 'til the end.</p>
         </div>
   <div class="row g-mx-minus-10">
     @foreach($categories as $category)
