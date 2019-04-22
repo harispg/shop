@@ -16,6 +16,24 @@ Route::get('plan', function(){
 })->middleware(['auth']);//,role:admin
 
 
+//For checking if user is authenticated before API requests
+Route::get('/userTokensForApiAuthentication', function (Request $request) {
+    if(! auth()->check()){
+    	return response()->json(
+    		[
+    			'API_TOKEN' => 'Unauthenticated', 
+    			'CSRF_TOKEN' => 'Session expired'
+    		]
+    	);
+    }
+    return response()->json(
+    	[
+    		'API_TOKEN'=>$request->user()->api_token, 
+    		'CSRF_TOKEN' => $request->session()->has('_token') ? $request->session()->token():'Session expired'
+    	]
+    );
+});
+
 
 
 Auth::routes(['verify' => true]);

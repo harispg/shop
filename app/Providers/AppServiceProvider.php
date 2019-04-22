@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Article;
 use App\Category;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
 
         \View::share('user', auth()->user());
         \View::share('categories', Category::all());
+        \View::share('allArticles', Article::all());
     }
 
     /**

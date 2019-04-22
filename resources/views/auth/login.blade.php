@@ -2,34 +2,6 @@
 
 @section('content')
 
-    <!-- Breadcrumbs -->
-    {{-- <section class="g-bg-gray-light-v5 g-py-50">
-      <div class="container">
-        <div class="d-sm-flex text-center">
-          <div class="align-self-center">
-            <h2 class="h3 g-font-weight-300 w-100 g-mb-10 g-mb-0--md">Login</h2>
-          </div>
-
-          <div class="align-self-center ml-auto">
-            <ul class="u-list-inline">
-              <li class="list-inline-item g-mr-5">
-                <a class="u-link-v5 g-color-main g-color-primary--hover" href="#!">Home</a>
-                <i class="g-color-gray-light-v2 g-ml-5">/</i>
-              </li>
-              <li class="list-inline-item g-mr-5">
-                <a class="u-link-v5 g-color-main g-color-primary--hover" href="#!">Pages</a>
-                <i class="g-color-gray-light-v2 g-ml-5">/</i>
-              </li>
-              <li class="list-inline-item g-color-primary">
-                <span>Login</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section> --}}
-    <!-- Breadcrumbs -->
-
     <!-- Login -->
     <section class="container g-py-100">
       <div class="row justify-content-center">
@@ -111,27 +83,6 @@
                     </a>
                   </li>
                 </ul>
-
-              {{-- <div class="d-flex justify-content-center text-center g-mb-30 pt-4">
-                <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
-                <span class="align-self-center g-color-gray-dark-v5 mx-4">OR</span>
-                <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
-              </div>
-
-              <div class="row no-gutters">
-                <div class="col-6">
-                  <button class="btn btn-block u-btn-facebook g-py-13 mr-2" type="button">
-                    <i class="mr-1 fa fa-facebook"></i>
-                    Facebook
-                  </button>
-                </div>
-                <div class="col-6">
-                  <button class="btn btn-block u-btn-twitter g-py-13 ml-2" type="button">
-                    <i class="mr-1 fa fa-twitter"></i>
-                    Twitter
-                  </button>
-                </div>
-              </div> --}}
             </form>
             <!-- End Form -->
 

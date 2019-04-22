@@ -91,7 +91,6 @@
               </div>
               <!-- End Product Info -->
 
-              @auth
               <ul class="list-inline media-body text-right">
                 <li class="list-inline-item align-middle mx-0">
                   <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
@@ -100,20 +99,19 @@
                      title="Add to Cart">
                     <i class="addToCart icon-finance-100 u-line-icon-pro" 
                        data-article="{{$article->id}}" 
-                       data-order="{{auth()->user()->activeOrder()->id}}"></i>
+                       data-order="@auth{{auth()->user()->activeOrder()->id}}@endauth"></i>
                   </a>
                 </li>
                 <li class="list-inline-item align-middle mx-0">
                   <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
                      data-toggle="tooltip"
                      data-placement="top"
-                     title="{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}">
-                    <i class="addToWishlist fa {{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}} g-font-size-18" data-article="{{$article->id}}"></i>
+                     title="@if(auth()->check()){{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}@else Add to wishlist @endif">
+                    <i class="addToWishlist fa @if(auth()->check()){{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}}@else fa-heart-o @endif g-font-size-18" data-article="{{$article->id}}"></i>
                   </a>
                 </li>
               </ul>
               <!-- End Products Icons -->
-              @endauth
             </div>
             <!-- End Product -->
           </div>
@@ -131,80 +129,91 @@
 <script>
 
   $(document).on('ready', function(){
-      var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-      var API_TOKEN = $("meta[name='api-token']").attr("content");
-
 
     //Add to cart
     $(".article").on('click', '.addToCart', function(){
       var orderId = $(this).data('order');
       var articleId = $(this).data('article');
 
-      function renderArticles(item){
-        $(".js-scrollbar.g-height-200").append('\
-              <div class="u-basket__product g-brd-none g-px-20">\
-                <div class="row no-gutters g-pb-5">\
-                  <div class="col-4 pr-3">\
-                    <a class="u-basket__product-img" href="#!">\
-                      <img class="img-fluid" src="/'+item.article.photos[0].thumbnail_path+'" alt="Image Description">\
-                    </a>\
-                  </div>\
-                  <div class="col-8">\
-                    <h6 class="g-font-weight-400 g-font-size-default">\
-                      <a class="g-color-black g-color-primary--hover\ g-text-underline--none--hover" href="/articles/'+item.article.id+'">'+item.article.name+'</a>\
-                    </h6>\
-                    <small class="g-color-primary g-font-size-12">'+item.quantity+' x $'+item.article.price+'</small>\
-                  </div>\
-                </div>\
-                <button type="button" class="u-basket__product-remove">&times;</button>\
-              </div>');
+      $.ajax('/userTokensForApiAuthentication',{
+          method: 'GET'
+        }).done(auth_check_callback);
+
+      function auth_check_callback(tokens){
+        if(tokens.API_TOKEN == 'Unauthenticated'){
+          swal.fire({
+              title: 'Unauthenticated',
+              text: "You need to sign in first",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3bb18f',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Login',
+              cancelButtonText: "I don't feel like it"
+            }).then((result) => {
+              if (result.value) {
+                location.href='/login';
+              }
+            });
+            return;
+        }else{
+          $.ajax('/api/orders/'+orderId+'/addArticle/'+articleId,{
+            type: 'POST',
+            data:{_token: tokens.CSRF_TOKEN, api_token: tokens.API_TOKEN},
+          }).done(function(items){
+            location.reload();
+          });
+        }
       }
 
-      $.ajax({
-        url: '/api/orders/'+orderId+'/addArticle/'+articleId,
-        type: 'POST',
-        data:{_token: CSRF_TOKEN, api_token: API_TOKEN},
-        success: function(items){
-          /*$(".basketNumberOfArticles").html(items.length);
-          $(".js-scrollbar.g-height-200").html("");
-          i=0;
-          
-          for(i; i<items.length; i++){
-            renderArticles(items[i]);
-          }*/
-          location.reload();
-        }
-      });
       
     });
     //---END---Add to cart
     
 
     //Add to wishlist
-    function toggleWishlist(articleId){
-      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
-      var API_TOKEN = $("meta[name='api-token']").attr('content');
-      $.ajax({
-          url:'/api/wishlist/'+articleId,
-          method: 'post',
-          data: {_token:CSRF_TOKEN, api_token:API_TOKEN},
-          success: function(response){
-            console.log(['success', response]);
-          },
-          error: function(response){
-            console.log(['error', response]);
-          }
-        });
-    }
+    
 
     $("i.addToWishlist").click(function(){
-      if(API_TOKEN.length == -1){
-        alert('A a aaa I thouth of that one too');
-      }
       var iconElement = $(this);
       var parentElement = iconElement.parent();
       var classes = iconElement.attr("class");
       var articleId = iconElement.data('article');
+
+      function toggleWishlist(articleId){
+
+        $.ajax('/userTokensForApiAuthentication',{
+            method: 'GET'
+          }).done(auth_check_callback);
+
+        function auth_check_callback(tokens){
+          if(tokens.API_TOKEN == 'Unauthenticated'){
+            swal.fire({
+                title: 'You are not signed in',
+                text: "Your progress will not be saved",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3bb18f',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Login',
+                cancelButtonText: "Not now"
+              }).then((result) => {
+                if (result.value) {
+                  location.href='/login';
+                }
+              });
+              return;
+          }else{
+            $.ajax('/api/wishlist/'+articleId,{
+              type: 'POST',
+              data:{_token: tokens.CSRF_TOKEN, api_token: tokens.API_TOKEN},
+            });
+          }
+        }  
+      }
+
+
+
       if(classes.indexOf("fa-heart-o")>=0){
         parentElement.tooltip('hide')
         .attr('data-original-title', 'Remove from wishlist')

@@ -325,15 +325,15 @@
                         <div class="row no-gutters g-pb-5">
                           <div class="col-4 pr-3">
                             <a class="u-basket__product-img" href="#!">
-                              <img class="img-fluid" src="/{{$item->article->photos->first()->thumbnail_path}}" alt="Image Description">
+                              <img class="img-fluid" src="/{{$item->photo()->thumbnail_path}}" alt="Image Description">
                             </a>
                           </div>
 
                           <div class="col-8">
                             <h6 class="g-font-weight-400 g-font-size-default">
-                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="{{route('articles.show', ['article' => $item->article->id])}}">{{$item->article->name}}</a>
+                              <a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="{{route('articles.show', ['article' => $item->article->id])}}">{{$item->name()}}</a>
                             </h6>
-                            <small class="g-color-primary g-font-size-12">{{$item->quantity}} x ${{$item->article->price}}</small>
+                            <small class="g-color-primary g-font-size-12">{{$item->quantity}} x ${{$item->price()}}</small>
                           </div>
                         </div>
                         <button type="button" class="u-basket__product-remove" data-item="{{$item->id}}">&times;</button>
@@ -789,12 +789,12 @@
                         @endforeach
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
-                          @if($article = $articles->where('featured', true)->random())
+                          @if($article = $allArticles->where('featured', true)->random())
                           <article class="g-pos-rel">
                             <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
 
                             <div class="g-pos-abs g-bottom-30 g-left-30">
-                              <span class="d-block g-color-gray-dark-v4 mb-2"></span>
+                              <span class="d-block g-color-gray-dark-v4 mb-2">{{$article->description}}</span>
                               <span class="d-block h4">{{$article->name}}</span>
                               <span class="d-block g-color-gray-dark-v3 g-font-size-16 mb-4">{{$article->price}}</span>
                               <a class="btn u-btn-primary u-shadow-v29 g-font-size-12 text-uppercase g-py-10 g-px-20" href="#!">Add to Cart</a>

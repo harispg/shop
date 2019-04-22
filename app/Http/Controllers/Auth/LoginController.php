@@ -31,12 +31,14 @@ class LoginController extends Controller
     protected function redirectTo()
     {   
         $loginIndex = array_search('login', session('visitedPaths'));
-        $indexBeforeLogin = $loginIndex + 1;
-        if(isset(session('visitedPaths')[$indexBeforeLogin])){
-            return url(session('visitedPaths')[$indexBeforeLogin]);
-        }else{
-            return '/';
+        $numberOfPaths = sizeof(session('visitedPaths'));
+        for ($i=$loginIndex+1; $i < $numberOfPaths ; $i++) { 
+            if (session('visitedPaths')[$i] != 'userTokensForApiAuthentication'){
+                return url(session('visitedPaths')[$i]);
+            }
         }
+        
+        return '/';
 
     }
 
