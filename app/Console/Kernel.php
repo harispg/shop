@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,8 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $currentTime = Carbon::now();
+        $schedule->call(function(){
+            $inactiveUsers = User::where('updated_at', '<', $currentTime->subWeeks(23)->get();
+            
+        })->dailyAt('04:00');
     }
 
     /**

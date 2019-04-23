@@ -99,6 +99,8 @@
     var filename = $('input[type=file]').val().split('\\').pop();
     $("span.file-name").html(filename);
     });
+
+
   });
 </script>
 @endsection

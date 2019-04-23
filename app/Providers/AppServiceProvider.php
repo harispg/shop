@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        \DB::listen(function($query){ \Log::info($query->sql, $query->bindings); });
+       // \DB::listen(function($query){ \Log::info($query->sql, $query->bindings); });
 
         \View::share('user', auth()->user());
         \View::share('categories', Category::all());
