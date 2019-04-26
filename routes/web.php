@@ -2,7 +2,9 @@
 
 use App\Article;
 use App\Category;
+use App\Mail\InactiveWarningMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 
 Route::get('/', function () {
@@ -32,6 +34,12 @@ Route::get('/userTokensForApiAuthentication', function (Request $request) {
     		'CSRF_TOKEN' => $request->session()->has('_token') ? $request->session()->token():'Session expired'
     	]
     );
+});
+
+Route::get('harisMailTest', function(){
+    $user = App\User::first();
+    Mail::to($user)->send(new InactiveWarningMail($user));
+    return 'Haris';
 });
 
 

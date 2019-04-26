@@ -269,6 +269,7 @@ $(document).ready(function(){
     formData.append('_token', CSRF_TOKEN);
     formData.append('_method', 'PATCH');
     formData.append('api_token', API_TOKEN);
+    formData.append('categoryId', categoryId);
     
     $.ajax({
         type: 'POST',
@@ -327,7 +328,7 @@ $(document).ready(function(){
             type: 'POST',
             dataType: 'JSON',
             url: "/api/categories/"+categoryId,
-            data: {_token: CSRF_TOKEN, _method: 'DELETE', api_token: API_TOKEN},
+            data: {_token: CSRF_TOKEN, _method: 'DELETE', api_token: API_TOKEN, categoryId: categoryId},
             success: function(response){
               console.log('deleted sucessfully');
               table.row(row).remove().draw();

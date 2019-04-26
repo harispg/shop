@@ -15,7 +15,7 @@ class ApiCategoriesController extends Controller
         $this->middleware('can:api|categories.create')->only('store');
     }
     
-    public function update(Request $request, Category $category)
+    public function update(Request $request)
     {
     	$this->validate($request, [
     		'name' => 'required|min:3',
@@ -30,6 +30,7 @@ class ApiCategoriesController extends Controller
             $category->photos()->sync($photo);
         }
 
+        $category = Category::find($request->categoryId);
     	$category->name = $request->name;
         $category->description = $request->description;
         $category->updated_at = now();
@@ -58,8 +59,9 @@ class ApiCategoriesController extends Controller
         return response()->json($category);
     }
 
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
+        $category = Category::find($request->categoryId);
         $category->delete();
         return response()->json('success');
     }
