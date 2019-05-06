@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('master')
 
 @section('content')
-<div class="container">
+<div class="container g-py-100">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
