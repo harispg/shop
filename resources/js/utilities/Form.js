@@ -24,6 +24,10 @@ class Form {
 			this[field] = '';
 		}
 
+		if(this.errors.has('email') && this.errors.get('email')=='These credentials do not match our records.'){
+			return;
+		}
+
 		this.errors.clear();
 	}
 
@@ -32,10 +36,12 @@ class Form {
 	 * @return {Object} Contains all fields from the form.
 	 */
 	data(){
-		let data = {};
+		let data = new FormData();
 
 		for(let property in this.originalData){
-			data[property] = this[property];
+			if(this[property] != null){
+				data.append(property, this[property]);
+			}
 		}
 
 		return data;
@@ -53,10 +59,18 @@ class Form {
 		return this.submit('delete', url);
 	}
 
-	submit(requestType, url) {
+	postWithFile(url) {
+		return this.submit('post', url, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		});
+	}
+
+	submit(requestType, url, headers = null) {
 
 		return new Promise((resolve, reject) => {
-			axios[requestType](url, this.data())
+			axios[requestType](url, this.data(), headers)
 				.then(response => {
 					this.onSuccess(response.data);
 
@@ -75,9 +89,6 @@ class Form {
 
 	onSuccess(data) {
 
-		alert(data.message); //temporary
-
-
 		this.reset();
 
 	}
@@ -85,6 +96,10 @@ class Form {
 	onFail(errors) {
 
 		this.errors.record(errors);
+
+		if(this.errors.has('email') && this.errors.get('email')=='These credentials do not match our records.'){
+			this.reset();
+		}
 	}
 
 

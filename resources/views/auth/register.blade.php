@@ -7,9 +7,9 @@
             <header class="text-center mb-4">
               <h2 class="h2 g-color-black g-font-weight-600">Signup</h2>
             </header>
-
+              <register-component></register-component>
             <!-- Form -->
-            <form class="g-py-15" enctype="multipart/form-data" method="POST" action="{{route('register')}}">
+            {{-- <form class="g-py-15" enctype="multipart/form-data" method="POST" action="{{route('register')}}">
                 @csrf
               <div class="row">
                   <div class='form-group col-xs-12 col-sm-12 mb-4 {{$errors->has('name')?"u-has-error-v1":""}}'>
@@ -78,7 +78,7 @@
               </div>
 
 
-            </form>
+            </form> --}}
             <!-- End Form -->
 
             <footer class="text-center">

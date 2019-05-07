@@ -36,15 +36,11 @@ Route::get('/userTokensForApiAuthentication', function (Request $request) {
     );
 });
 
-Route::get('harisMailTest', function(){
-    $user = App\User::first();
-    Mail::to($user)->send(new InactiveWarningMail($user));
-    return 'Haris';
-});
-
-
-
 Auth::routes(['verify' => true]);
+
+Route::get('/email-verification', function(){
+    return view('auth.verify');
+});
 
 Route::get('admin', function(){
 	return view('admin.master');
