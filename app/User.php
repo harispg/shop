@@ -16,6 +16,12 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $guarded=[];
+    /**
+     * this attribute tells model to append computed atributes
+     * to json representation of models
+     * @var array
+     */
+    protected $append=['active_order'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -124,6 +130,11 @@ class User extends Authenticatable implements MustVerifyEmail
             return null;
         }
         return Order::with('items.article')->where([['user_id', $this->id], ['order_status_id',1]])->firstOrFail();
+    }
+
+
+    public function getActiveOrderAttribute(){
+        return $this->activeOrder();
     }
 
     public function itemsOrdered()

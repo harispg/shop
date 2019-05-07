@@ -89,12 +89,11 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
+    {   
         $avatar = '/Images/dummyPics/avatar.svg';
-        if(array_key_exists('photo', $data)){
+        if(array_key_exists('photo', $data) && $data['photo'] != null){
         $avatar = Photo::savePhoto($data['photo'])->thumbnail_path;
         }
-
 
         return User::create([
             'name' => $data['name'],

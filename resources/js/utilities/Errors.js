@@ -50,7 +50,6 @@ class Errors {
 	 * @return void
 	 */
 	clear(field){
-
 		if(field) {
 			delete this.errors[field];
 			return;

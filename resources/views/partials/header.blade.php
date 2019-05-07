@@ -21,8 +21,8 @@
     
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     <!-- CSS Global Compulsory -->
-    <link rel="stylesheet" href="/unifyAssets/vendor/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/unifyAssets/vendor/icon-line/css/simple-line-icons.css">
+{{--     <link rel="stylesheet" href="/unifyAssets/vendor/bootstrap/bootstrap.min.css">
+ --}}    <link rel="stylesheet" href="/unifyAssets/vendor/icon-line/css/simple-line-icons.css">
 
 
     <!-- CSS Implementing Plugins -->
@@ -47,7 +47,7 @@
   </head>
 
   <body>
-    <main>
+    <main id="app">
       <!-- Header -->
       <header id="js-header" class="u-header u-header--static u-shadow-v19">
         <!-- Top Bar -->
