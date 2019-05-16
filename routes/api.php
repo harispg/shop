@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 
 Route::group(['middleware' => ['auth:api']], function () {
+Route::get('articles', 'Api\ApiArticlesController@index');
 
 Route::post('/photos', 'Api\ApiPhotosController@store');
 Route::post('/findPhotos', 'Api\ApiPhotosController@find');

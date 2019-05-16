@@ -16,7 +16,7 @@ class ArticlesController extends Controller
     {
         $this->middleware(['auth','can:articles.modify'])->except(['index', 'show']);
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +24,7 @@ class ArticlesController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = Article::with('photos')->paginate(8);
+        $articles = Article::with(['photos', 'categories'])->paginate(8);
         return view('articles.index', compact(['articles']));
     }
 

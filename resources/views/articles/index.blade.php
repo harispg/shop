@@ -65,11 +65,13 @@
         <!-- End Filters -->
 
         <!-- Products -->
+          {{-- <shop-articles></shop-articles> --}}
         <div class="row g-pt-30 g-mb-50">
         @foreach($articles as $article)
           <div class="article col-6 col-lg-3 g-mb-30">
+            <shop-article :article="{{$article}}"></shop-article>
             <!-- Product -->
-            <figure class="g-pos-rel g-mb-20">
+            {{-- <figure class="g-pos-rel g-mb-20">
               <a href="{{route('articles.show', ['article'=>$article->id])}}"><img class="img-fluid" src="/{{$article->photos->first()->thumbnail_path}}" alt="Image Description"></a>  
               @if($article->new)
               <figcaption class="w-100 g-bg-primary g-bg-black--hover text-center g-pos-abs g-bottom-0 g-transition-0_2 g-py-5">
@@ -89,7 +91,7 @@
                 <a class="d-inline-block g-color-gray-dark-v5 g-font-size-13" href="{{route('categoryArticles', ['category'=>$article->categories->first()->name])}}">{{$article->categories->first()->name}}</a>
                 <span class="d-block g-color-black g-font-size-17">{{$article->price}}</span>
               </div>
-              <!-- End Product Info -->
+              End Product Info
 
               <ul class="list-inline media-body text-right">
                 <li class="list-inline-item align-middle mx-0">
@@ -112,7 +114,7 @@
                 </li>
               </ul>
               <!-- End Products Icons -->
-            </div>
+            </div> --}}
             <!-- End Product -->
           </div>
           @endforeach

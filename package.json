@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "normalize.css": "^8.0.1",
+        "portal-vue": "^2.1.4",
         "sweetalert2": "^8.2.6"
     }
 }

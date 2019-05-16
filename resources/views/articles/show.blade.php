@@ -1,4 +1,4 @@
-@extends('master')
+  @extends('master')
 
 @section('content')
 
@@ -96,8 +96,8 @@
                   </button>
                 </div>
                 <div class="col g-px-5 g-mb-10">
-                  <button id="addToWishlist" class="btn btn-block btn-outline-{{$article->isWished()?"danger":"secondary"}} g-color-gray-dark-v4 g-color-white--hover g-font-size-12 text-uppercase g-py-15" data-article="{{$article->id}}" type="button">
-                    <span>{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}</span> <i
+                  <button id="addToWishlist" class="btn btn-block btn-outline-{{$article->isWished()?"danger":"secondary"}} g-color-gray-dark-v4 g-color-white--hover g-font-size-11 text-uppercase g-py-15" data-article="{{$article->id}}" type="button">
+                    <span>{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}</span><i
                     class="align-middle
                      ml-2 fa
                      {{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}}
@@ -107,134 +107,6 @@
               </div>
               <!-- End Buttons -->
 
-              <!-- Nav Tabs -->
-              <ul class="nav d-flex justify-content-between g-font-size-12 text-uppercase" role="tablist" data-target="nav-1-1-default-hor-left">
-                <li class="nav-item g-brd-bottom g-brd-gray-dark-v4">
-                  <a class="nav-link active g-color-primary--parent-active g-pa-0 g-pb-1" data-toggle="tab" href="#nav-1-1-default-hor-left--3" role="tab">Returns</a>
-                </li>
-                <li class="nav-item g-brd-bottom g-brd-gray-dark-v4">
-                  <a class="nav-link g-color-primary--parent-active g-pa-0 g-pb-1" data-toggle="tab" href="#nav-1-1-default-hor-left--1" role="tab">View Size Guide</a>
-                </li>
-                <li class="nav-item g-brd-bottom g-brd-gray-dark-v4">
-                  <a class="nav-link g-color-primary--parent-active g-pa-0 g-pb-1" data-toggle="tab" href="#nav-1-1-default-hor-left--2" role="tab">Delivery</a>
-                </li>
-              </ul>
-              <!-- End Nav Tabs -->
-
-              <!-- Tab Panes -->
-              <div id="nav-1-1-default-hor-left" class="tab-content">
-                <div class="tab-pane fade show active g-pt-30" id="nav-1-1-default-hor-left--3" role="tabpanel">
-                  <p class="g-color-gray-dark-v4 g-font-size-13 mb-0">You can return/exchange your orders in Unify E-commerce. For more information, read our
-                    <a href="page-help-1.html">Help</a>.</p>
-                </div>
-
-                <div class="tab-pane fade g-pt-30" id="nav-1-1-default-hor-left--1" role="tabpanel">
-                  <h4 class="g-font-size-15 mb-3">General Clothing Size Guide</h4>
-
-                  <!-- Size -->
-                  <table>
-                    <tbody>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">Unify Size (UK)</td>
-                        <td class="align-top g-width-50 g-py-5">S</td>
-                        <td class="align-top g-width-50 g-py-5">M</td>
-                        <td class="align-top g-width-50 g-py-5">L</td>
-                        <td class="align-top g-width-50 g-py-5">XL</td>
-                        <td class="align-top g-width-50 g-py-5">XXL</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">UK</td>
-                        <td class="align-top g-width-50 g-py-5">6</td>
-                        <td class="align-top g-width-50 g-py-5">8</td>
-                        <td class="align-top g-width-50 g-py-5">10</td>
-                        <td class="align-top g-width-50 g-py-5">12</td>
-                        <td class="align-top g-width-50 g-py-5">14</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">Europe</td>
-                        <td class="align-top g-width-50 g-py-5">32</td>
-                        <td class="align-top g-width-50 g-py-5">34</td>
-                        <td class="align-top g-width-50 g-py-5">36</td>
-                        <td class="align-top g-width-50 g-py-5">38</td>
-                        <td class="align-top g-width-50 g-py-5">40</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">US</td>
-                        <td class="align-top g-width-50 g-py-5">2</td>
-                        <td class="align-top g-width-50 g-py-5">4</td>
-                        <td class="align-top g-width-50 g-py-5">6</td>
-                        <td class="align-top g-width-50 g-py-5">8</td>
-                        <td class="align-top g-width-50 g-py-5">10</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">Australia</td>
-                        <td class="align-top g-width-50 g-py-5">6</td>
-                        <td class="align-top g-width-50 g-py-5">8</td>
-                        <td class="align-top g-width-50 g-py-5">10</td>
-                        <td class="align-top g-width-50 g-py-5">12</td>
-                        <td class="align-top g-width-50 g-py-5">14</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-width-150 g-py-5">Japan</td>
-                        <td class="align-top g-width-50 g-py-5">7</td>
-                        <td class="align-top g-width-50 g-py-5">9</td>
-                        <td class="align-top g-width-50 g-py-5">11</td>
-                        <td class="align-top g-width-50 g-py-5">13</td>
-                        <td class="align-top g-width-50 g-py-5">15</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Size -->
-                </div>
-
-                <div class="tab-pane fade g-pt-30" id="nav-1-1-default-hor-left--2" role="tabpanel">
-                  <!-- Shipping Mehtod -->
-                  <table>
-                    <thead class="h6 g-brd-bottom g-brd-gray-light-v3 g-color-gray-dark-v3 g-font-size-13">
-                      <tr>
-                        <th class="g-width-100 g-font-weight-500 g-pa-0 g-pb-10">Destination</th>
-                        <th class="g-width-140 g-font-weight-500 g-pa-0 g-pb-10">Delivery type</th>
-                        <th class="g-width-150 g-font-weight-500 g-pa-0 g-pb-10">Delivery time</th>
-                        <th class="g-font-weight-500 text-right g-pa-0 g-pb-10">Cost</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-py-10">UK</td>
-                        <td class="align-top g-py-10">Standard delivery</td>
-                        <td class="align-top g-font-size-11 g-py-10">2-3 Working days</td>
-                        <td class="align-top text-right g-py-10">$5.5</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-py-10"></td>
-                        <td class="align-top g-py-10">Next day</td>
-                        <td class="align-top g-font-size-11 g-py-10">Order before 12pm monday - thursday and receive it the next day</td>
-                        <td class="align-top text-right g-py-10">$9.5</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-py-10"></td>
-                        <td class="align-top g-py-10">Saturday delivery</td>
-                        <td class="align-top g-font-size-11 g-py-10">Saturday delivery for orders placed before 12pm on friday</td>
-                        <td class="align-top text-right g-py-10">$12.00</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-py-10">Europe</td>
-                        <td class="align-top g-py-10">Standard delivery</td>
-                        <td class="align-top g-font-size-11 g-py-10">3-9 Working days</td>
-                        <td class="align-top text-right g-py-10">$20.00</td>
-                      </tr>
-                      <tr class="g-color-gray-dark-v4 g-font-size-12">
-                        <td class="align-top g-py-10">America</td>
-                        <td class="align-top g-py-10">Standard delivery</td>
-                        <td class="align-top g-font-size-11 g-py-10">3-9 Working days</td>
-                        <td class="align-top text-right g-py-10">$25.00</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Shipping Mehtod -->
-                </div>
-              </div>
-              <!-- End Tab Panes -->
             </div>
           </div>
         </div>
@@ -485,7 +357,7 @@
         if(classes.indexOf("fa-heart-o")>=0){
           button.removeClass("btn-outline-secondary");
           button.addClass("btn-outline-danger");
-          spanElement.text("Remove from whishlist");
+          spanElement.text("Remove from wishlist");
           iconElement.removeClass("fa-heart-o");
           iconElement.addClass("fa-heart");
           iconElement.addClass("text-danger");

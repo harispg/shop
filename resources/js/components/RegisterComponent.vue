@@ -1,5 +1,5 @@
 <template>
-  <form class="g-py-15" enctype="multipart/form-data" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+  <form class="g-py-15" @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
     <div class="row">
       <div class='form-group col-xs-12 col-sm-12 mb-4'>
         <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Name:</label>

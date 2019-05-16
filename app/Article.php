@@ -8,6 +8,12 @@ class Article extends Model
 {
 	protected $guarded = [];
 
+    /**
+     * this attribute tells model to append computed atributes
+     * to json representation of models
+     * @var array
+     */
+    protected $appends=['wished'];
     public function photos()
     {
     	return $this->belongsToMany(Photo::class);
@@ -119,6 +125,10 @@ class Article extends Model
             return false;
         }
         return true;
+    }
+
+    public function getWishedAttribute(){
+        return $this->isWished();
     }
 
 }

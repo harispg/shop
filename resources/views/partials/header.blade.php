@@ -438,9 +438,7 @@
                 <ul class="navbar-nav ml-auto">
                   <!-- Home - Submenu -->
                   <li class="nav-item g-mx-10--lg g-mx-15--xl">
-                    <a id="nav-link--home" class="nav-link text-uppercase g-color-primary--hover g-px-5 g-py-20" href="{{route('home')}}">
-                      Home
-                    </a>
+                    <big-meny></big-meny>
                   </li>
                   <!-- End Home - Submenu -->
 
@@ -1077,5 +1075,6 @@
             </div>
           </nav>
         </div>
+        <portal-target name="nav-after"></portal-target>
       </header>
       <!-- End Header -->

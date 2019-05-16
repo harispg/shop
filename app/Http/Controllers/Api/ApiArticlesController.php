@@ -5,9 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Article;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ApiArticlesController extends Controller
 {
+
+    public function index()
+    {
+        $articles = Article::with(['photos', 'categories'])->get();
+        return response()->json($articles);
+    }
     public function destroy(Article $article)
     {
     	try{
