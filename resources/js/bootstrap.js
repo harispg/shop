@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import PortalVue from 'portal-vue';
+import VModal from 'vue-js-modal';
 
 try {
     window.Popper = require('popper.js').default;
@@ -11,6 +12,7 @@ try {
 
 window.Vue = Vue;
 Vue.use(PortalVue);
+Vue.use(VModal);
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

@@ -120,6 +120,8 @@
           @endforeach
         </div>
 
+        <modal-login></modal-login>
+
         <div id="loginModal" class="modal inmodal fade" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -160,7 +162,7 @@
 @section('script')
 <script>
 
-  $(document).on('ready', function(){
+  /*$(document).on('ready', function(){
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
     //Add to cart
@@ -346,6 +348,6 @@
     });
 
     
-  });
+  });*/
 </script>
 @endsection
