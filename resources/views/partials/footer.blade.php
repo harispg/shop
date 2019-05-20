@@ -352,7 +352,6 @@
     <script src="/js/app.js"></script>
     <script src="/unifyAssets/vendor/jquery/jquery.min.js"></script>
     <script src="/unifyAssets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-    <script src="/unifyAssets/vendor/popper.js/popper.min.js"></script>
     <script src="/unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
 
     <!-- JS Implementing Plugins -->

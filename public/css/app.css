@@ -11188,3 +11188,14 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   height: 45rem;
   overflow-y: auto;
 }
+
+.tooltip {
+  opacity: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tooltip-inner {
+  font-weight: 900;
+}

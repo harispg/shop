@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import PortalVue from 'portal-vue';
 import VModal from 'vue-js-modal';
+import swal from 'sweetalert2';
 
 try {
     window.Popper = require('popper.js').default;
@@ -22,6 +23,8 @@ Vue.use(VModal);
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.swal = swal;
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 

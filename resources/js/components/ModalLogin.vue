@@ -1,9 +1,9 @@
 <template>
 	<modal 
-	name="login-modal-vue"
-	height="auto"
-	width="30%"
-	:pivotY=".5"
+		name="login-modal-vue"
+		height="auto"
+		width="100%"
+		:pivotY=".5"
 	>
 	 	<div>
           <div class="modal-dialog">

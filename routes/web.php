@@ -86,7 +86,7 @@ Route::get('orders/{user}/index', 'OrdersController@usersOrders')->name('user.or
 Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
 
 
-Route::get('/test/{alina}/sve', function(Request $request){
-	return $request->alina;
+Route::get('/test', function(Request $request){
+	return view('test');
 });
 

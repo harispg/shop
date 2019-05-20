@@ -1,8 +1,8 @@
+// Normalize.css
+//@import '~normalize.css/normalize.css';
 //Bootrstrap
 @import '~bootstrap/scss/bootstrap.scss';
 
-// Normalize.css
-//@import '~normalize.css/normalize.css';
 // Sweetalert2
 @import '~sweetalert2/src/sweetalert2.scss';
 
@@ -13,4 +13,13 @@
 .article-photos {
 	height : 45rem;
 	overflow-y: auto;
+}
+.tooltip {
+	opacity: 100;
+	position: absolute;
+	top:0;
+	left:0;
+}
+.tooltip-inner {
+	font-weight: 900;
 }

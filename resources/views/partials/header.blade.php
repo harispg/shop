@@ -1076,5 +1076,11 @@
           </nav>
         </div>
         <portal-target name="nav-after"></portal-target>
+        <sticky>
+         <div class="container-fluid bg-info">
+            ŽIVOT JE NEZAUSTAVLJIV PUT KA GROBU. TREBA GA DOBRO ISKORISTITI.
+          </div>
+        <sticky>
+
       </header>
       <!-- End Header -->
