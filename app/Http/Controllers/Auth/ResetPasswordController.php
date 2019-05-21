@@ -25,17 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
-    {   
-        $loginIndex = array_search('login', session('visitedPaths'));
-        $indexBeforeLogin = $loginIndex + 1;
-        if(isset(session('visitedPaths')[$indexBeforeLogin])){
-            return url(session('visitedPaths')[$indexBeforeLogin]);
-        }else{
-            return '/';
-        }
-
-    }
+    protected $redirectTo = "/";
 
     /**
      * Create a new controller instance.

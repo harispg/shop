@@ -53,7 +53,7 @@ class CategoriesController extends Controller
      */
     public function show(Category $category)
     {
-        $articles = $category->articles()->paginate(8);
+        $articles = $category->articles()->with(['photos', 'categories'])->paginate(8);
         return view('articles.index', compact('articles'));
     }
 

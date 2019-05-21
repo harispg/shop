@@ -1926,8 +1926,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
+      var _this = this;
+
       this.form.post('/login').then(function (response) {
-        return location.reload();
+        Auth.storeUser(response);
+
+        _this.$emit('logedIn');
       })["catch"](function (response) {
         return console.log('Authentication not successful');
       });
@@ -1947,6 +1951,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LoginComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginComponent.vue */ "./resources/js/components/LoginComponent.vue");
+/* harmony import */ var tooltip_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tooltip.js */ "./node_modules/tooltip.js/dist/esm/tooltip.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1971,12 +1987,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     LoginComponent: _LoginComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  methods: {
+    closeModal: function closeModal() {
+      this.$modal.hide('login-modal-vue');
+    },
+    logedIn: function logedIn() {
+      this.$modal.hide('login-modal-vue');
+      swal.fire({
+        type: 'success',
+        title: 'You are loged in',
+        showConfirmButton: false,
+        timer: 700
+      });
+    }
+  },
   created: function created() {
-    Event.$on('heartclicked', function () {
+    Event.$on('loginRequired', function () {
       this.$modal.show('login-modal-vue');
     });
   }
@@ -2104,6 +2135,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _WishlistComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WishlistComponent.vue */ "./resources/js/components/WishlistComponent.vue");
+/* harmony import */ var tooltip_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tooltip.js */ "./node_modules/tooltip.js/dist/esm/tooltip.js");
+//
 //
 //
 //
@@ -2146,6 +2179,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['article'],
   components: {
@@ -2155,6 +2189,13 @@ __webpack_require__.r(__webpack_exports__);
     return {
       data: this.article
     };
+  },
+  mounted: function mounted() {
+    var elem = this.$refs.addToCart;
+    new tooltip_js__WEBPACK_IMPORTED_MODULE_1__["default"](elem, {
+      placement: elem.dataset.tooltipPlacement,
+      title: elem.dataset.tooltip
+    });
   }
 });
 
@@ -2260,14 +2301,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     heartClicked: function heartClicked() {
-      var _this2 = this;
-
-      axios.get('/userTokensForApiAuthentication').then(function (response) {
-        _this2.api_token = response.data['API_TOKEN'];
-        _this2.api_token === 'Unauthenticated' ? Event.$emit('heartclicked') : _this2.toggleWished();
-
-        _this2.tooltip.updateTitleContent(_this2.tooltipTitle());
-      });
+      if (this.user = Auth.user()) {
+        this.api_token = this.user.api_token;
+        this.toggleWished();
+        this.tooltip.updateTitleContent(this.tooltipTitle());
+      } else {
+        Event.$emit('loginRequired');
+      }
     }
   },
   mounted: function mounted() {
@@ -41881,9 +41921,30 @@ var render = function() {
                 "div",
                 { staticClass: "g-px-30 g-py-20" },
                 [
-                  _c("h2", [_vm._v("Login")]),
+                  _c("div", { staticClass: "modal-header border-0" }, [
+                    _c("h3", { staticClass: "modal-title" }, [_vm._v("Login")]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: {
+                          id: "closeButton",
+                          type: "button",
+                          "data-tooltip": "Close",
+                          "data-tooltip-placement": "top"
+                        },
+                        on: { click: _vm.closeModal }
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×")
+                        ])
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
-                  _c("login-component")
+                  _c("login-component", { on: { logedIn: _vm.logedIn } })
                 ],
                 1
               )
@@ -42345,18 +42406,14 @@ var render = function() {
           _c(
             "a",
             {
-              directives: [
-                {
-                  name: "tooltip",
-                  rawName: "v-tooltip:left",
-                  value: "Add to cart",
-                  expression: "'Add to cart'",
-                  arg: "left"
-                }
-              ],
+              ref: "addToCart",
               staticClass:
                 "u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle",
-              attrs: { href: "#!" }
+              attrs: {
+                href: "#!",
+                "data-tooltip": "Add to cart",
+                "data-tooltip-placement": "left"
+              }
             },
             [
               _c("i", {
@@ -54608,6 +54665,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ModalLogin_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ModalLogin.vue */ "./resources/js/components/ModalLogin.vue");
 /* harmony import */ var _components_Sticky_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Sticky.vue */ "./resources/js/components/Sticky.vue");
 /* harmony import */ var tooltip_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tooltip.js */ "./node_modules/tooltip.js/dist/esm/tooltip.js");
+/* harmony import */ var _utilities_Auth_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utilities/Auth.js */ "./resources/js/utilities/Auth.js");
+/* harmony import */ var _utilities_Form_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utilities/Form.js */ "./resources/js/utilities/Form.js");
 
 
 
@@ -54616,15 +54675,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+window.Auth = new _utilities_Auth_js__WEBPACK_IMPORTED_MODULE_8__["default"]();
 window.Event = new Vue();
-Vue.directive('tooltip', {
-  bind: function bind(elem, bindings) {
-    new tooltip_js__WEBPACK_IMPORTED_MODULE_7__["default"](elem, {
-      placement: bindings.arg,
-      title: bindings.value
-    });
-  }
-});
 new Vue({
   el: "#app",
   components: {
@@ -54635,15 +54689,7 @@ new Vue({
     ModalLogin: _components_ModalLogin_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     Sticky: _components_Sticky_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
-  mounted: function mounted() {
-    $("[data-tooltip]").each(function () {
-      var elem = this;
-      new tooltip_js__WEBPACK_IMPORTED_MODULE_7__["default"](elem, {
-        placement: elem.dataset.tooltipPlacement || 'top',
-        title: elem.dataset.tooltip
-      });
-    });
-  }
+  mounted: function mounted() {}
 });
 
 /***/ }),
@@ -55179,6 +55225,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WishlistComponent_vue_vue_type_template_id_529e3446___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Auth.js":
+/*!****************************************!*\
+  !*** ./resources/js/utilities/Auth.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Auth =
+/*#__PURE__*/
+function () {
+  function Auth() {
+    var _this = this;
+
+    _classCallCheck(this, Auth);
+
+    this.data = null;
+    axios.get('/authUser').then(function (response) {
+      return _this.data = response.data;
+    });
+  }
+
+  _createClass(Auth, [{
+    key: "check",
+    value: function check() {
+      return this.data != 'Unauthenticated';
+    }
+  }, {
+    key: "user",
+    value: function user() {
+      return this.check() ? this.data : null;
+    }
+  }, {
+    key: "storeUser",
+    value: function storeUser(data) {
+      this.data = data;
+    }
+  }]);
+
+  return Auth;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Auth);
 
 /***/ }),
 

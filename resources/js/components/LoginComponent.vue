@@ -103,7 +103,10 @@
 
       onSubmit() {
         this.form.post('/login')
-        .then(response => location.reload())
+        .then(response => {
+          Auth.storeUser(response);
+          this.$emit('logedIn');
+        })
         .catch(response => console.log('Authentication not successful'));
       }
     }

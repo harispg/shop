@@ -65,13 +65,15 @@
 			},
 
 			heartClicked(){
-				axios.get('/userTokensForApiAuthentication')
-				.then((response) => {
-					this.api_token = response.data['API_TOKEN'];
-					(this.api_token === 'Unauthenticated') ? Event.$emit('heartclicked') : this.toggleWished();
+				if(this.user = Auth.user()){
+					this.api_token = this.user.api_token;
+					this.toggleWished();
 					this.tooltip.updateTitleContent(this.tooltipTitle());
-				});
+				}else{
+					Event.$emit('loginRequired');
+				}
 			},
+
 		},
 		mounted() {
 			let elem = this.$el

@@ -30,30 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
-    {   
-        $loginIndex = array_search('login', session('visitedPaths'));
-        if($loginIndex != false){
-            $numberOfPaths = sizeof(session('visitedPaths'));
-            for ($i=$loginIndex+1; $i < $numberOfPaths ; $i++) { 
-                if (session('visitedPaths')[$i] != 'userTokensForApiAuthentication'){
-                    return url(session('visitedPaths')[$i]);
-                }
-            }
-        }else{
-            $registerIndex = array_search('register', session('visitedPaths'));
-            $indexBeforeRegister = $registerIndex + 1;
-            if(isset(session('visitedPaths')[$indexBeforeRegister])){
-                return url(session('visitedPaths')[$indexBeforeRegister]);
-            }
-
-            return '/';
-            
-        }
-
-        return '/';
-
-    }
+    protected $redirectTo = "/";
 
     /**
      * Create a new controller instance.

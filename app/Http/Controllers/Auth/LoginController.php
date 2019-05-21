@@ -28,19 +28,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected function redirectTo()
-    {   
-        $loginIndex = array_search('login', session('visitedPaths'));
-        $numberOfPaths = sizeof(session('visitedPaths'));
-        for ($i=$loginIndex+1; $i < $numberOfPaths ; $i++) { 
-            if (session('visitedPaths')[$i] != 'userTokensForApiAuthentication'){
-                return url(session('visitedPaths')[$i]);
-            }
-        }
-        
-        return '/';
-
-    }
+    protected $redirectTo = "/";
+    
 
 
     /**
@@ -94,6 +83,29 @@ class LoginController extends Controller
         auth()->login($user);
         $this->authenticated($request, $user);
         //flash()->success('Welcome','You are now loged in');        
+    }
+
+
+    /**
+     * Send the response after the user was authenticated.
+     * ------This function overwrites the one in AuthenticatesUsers trait
+     * -----we needed this because we want json response for json requests when logging in.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendLoginResponse(Request $request)
+    {
+
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if($request->expectsJson()){
+            return response()->json(auth()->user());
+        }
+
+        return $this->authenticated($request, $this->guard()->user())
+                ?: redirect()->intended($this->redirectPath());
     }
 
     /**

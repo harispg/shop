@@ -17,6 +17,10 @@ Route::get('plan', function(){
 	return view('PLAN');
 })->middleware(['auth']);//,role:admin
 
+// Getting user for api
+Route::get('authUser', function() {
+    return auth()->user() ?: 'Unauthenticated';
+});
 
 //For checking if user is authenticated before API requests
 Route::get('/userTokensForApiAuthentication', function (Request $request) {
@@ -35,6 +39,8 @@ Route::get('/userTokensForApiAuthentication', function (Request $request) {
     	]
     );
 });
+
+
 
 Auth::routes(['verify' => true]);
 
