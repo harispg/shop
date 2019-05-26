@@ -12,8 +12,20 @@ class Auth{
 		return this.check() ? this.data : null;
 	}
 
+	name(){
+			if(this.data == null || this.data == 'Unauthenticated'){
+				return null
+			}else{
+				return this.data.name
+			}
+	}
+
 	storeUser(data){
 		this.data = data;
+	}
+
+	update(){
+		axios.get('/authUser').then(response => this.data = response.data);
 	}
 
 }

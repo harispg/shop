@@ -11,6 +11,7 @@ class OrderItem extends Model
 	use WorksWithArticles;
 
 	protected $guarded = [];
+	protected $appends = ['name', 'price', 'photo', 'total'];
 
     public function order()
     {

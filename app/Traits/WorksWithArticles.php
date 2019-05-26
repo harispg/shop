@@ -50,4 +50,20 @@ trait WorksWithArticles{
     {
     	return $this->article->name;
     }
+    
+    public function getNameAttribute(){
+        return $this->name();
+    }
+
+    public function getPriceAttribute(){
+        return $this->price();
+    }
+
+    public function getPhotoAttribute(){
+        return $this->photo()->thumbnail_path;
+    }
+
+    public function getTotalAttribute(){
+        return $this->total();
+    }
 }

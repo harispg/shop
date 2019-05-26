@@ -105,7 +105,8 @@
         this.form.post('/login')
         .then(response => {
           Auth.storeUser(response);
-          this.$emit('logedIn');
+          Event.$emit('loggedIn', response);
+
         })
         .catch(response => console.log('Authentication not successful'));
       }

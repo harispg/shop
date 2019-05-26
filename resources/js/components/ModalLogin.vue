@@ -23,7 +23,7 @@
 						        </button>
                           </div>
                         <!-- Form -->
-                       <login-component @logedIn="logedIn"></login-component>
+                       <login-component></login-component>
                         <!-- End Form -->    
                         </div>              
                 </div>
@@ -40,20 +40,23 @@
 	methods: {
 		closeModal(){
 			this.$modal.hide('login-modal-vue');
-		},
-		logedIn() {
-			this.$modal.hide('login-modal-vue');
-			swal.fire({
-				type: 'success',
-				title: 'You are loged in',
-				showConfirmButton: false,
-				timer: 700
-			})
 		}
 	},
 	created() {
 		Event.$on('loginRequired', function() {
 			this.$modal.show('login-modal-vue');
+		});
+
+		Event.$on('loggedIn', function() {
+			this.$modal.hide('login-modal-vue');
+			Auth.update();
+			swal.fire({
+				type: 'success',
+				title: 'You are loged in',
+				showConfirmButton: false,
+				timer: 700
+			});
+
 		});
 	}
 

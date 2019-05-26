@@ -4,7 +4,7 @@
 	data-tooltip-placement="right"
 
 	>
-	<i :class="'g-font-size-18 addToWishlist fa ' + heartColor(this.isAdded)" :data-article="this.articleId" @click="heartClicked"></i>
+	<i :class="'g-font-size-18 addToWishlist fa ' + heartColor(this.isWished)" :data-article="this.articleId" @click="heartClicked"></i>
 </a>
 </template>
 
@@ -16,7 +16,7 @@
 		data() {
 			return {
 				api_token: null,
-				isAdded: this.state,
+				isWished: this.state,
 				tooltip: null
 			}
 		},
@@ -31,12 +31,11 @@
 			},
 
 			tooltipTitle(){
-				return this.isAdded ? 'Remove from wishlist' : 'Add to wishlist';
+				return this.isWished ? 'Remove from wishlist' : 'Add to wishlist';
 			},
 
 			toggleWished() {
-
-				this.isAdded = this.isAdded ? false : true;
+				this.isWished = this.isWished ? false : true;
 				axios.post('/api/wishlist/'+this.articleId, {api_token: this.api_token})
 				.then(response => this.wishlistMessage())
 				.catch(
@@ -49,7 +48,7 @@
 			},
 
 			wishlistMessage(){
-				this.isAdded ? 
+				this.isWished ? 
 				swal.fire({
 					type: 'success',
 					title: 'Added to wishlist',

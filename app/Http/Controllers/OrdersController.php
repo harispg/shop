@@ -51,4 +51,9 @@ class OrdersController extends Controller
     {
         return view('orders.usersOrders', compact('user'));
     }
+
+    public function articles(Request $request, Order $order)
+    {
+        return $order->items;
+    }
 }

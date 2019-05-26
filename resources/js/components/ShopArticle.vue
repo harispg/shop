@@ -55,7 +55,6 @@
     },
 
     mounted(){
-
       let elem = this.$refs.addToCart;
       new Tooltip(elem, {
         placement: elem.dataset.tooltipPlacement,

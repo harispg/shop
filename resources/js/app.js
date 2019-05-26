@@ -1,5 +1,6 @@
 import './bootstrap.js';
 import LoginComponent from './components/LoginComponent.vue';
+import TopnavComponent from './components/TopnavComponent.vue';
 import RegisterComponent from './components/RegisterComponent.vue';
 import BigMeny from './components/BigMeny.vue';
 import ShopArticle from './components/ShopArticle.vue';
@@ -15,6 +16,7 @@ new Vue({
 	
 	components: { 
 		LoginComponent, 
+		TopnavComponent,
 		RegisterComponent, 
 		BigMeny, 
 		ShopArticle, 

@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * to json representation of models
      * @var array
      */
-    protected $appends=['active_order_id'];
+    protected $appends=['active_order_id', 'items_ordered'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -145,6 +145,11 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->activeOrder()->items->count();
         }
         return 0;
+    }
+
+    public function getItemsOrderedAttribute()
+    {
+        return $this->itemsOrdered();
     }
 
     public function articles()
