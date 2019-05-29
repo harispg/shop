@@ -60,7 +60,7 @@ class LoginController extends Controller
 
         $this->loginOrCreate($user, $request);
 
-        return redirect($this->redirectTo());
+        return redirect($this->redirectTo);
     }
 
     /**
@@ -101,7 +101,7 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         if($request->expectsJson()){
-            return response()->json(auth()->user());
+            return response()->json(['user'=>auth()->user(), '_token'=> csrf_token()]);
         }
 
         return $this->authenticated($request, $this->guard()->user())

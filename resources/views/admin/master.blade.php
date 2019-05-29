@@ -26,15 +26,6 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-        <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 
 
@@ -96,7 +87,7 @@
     {{-- <script src="/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
     <script src="/inspinia/js/demo/peity-demo.js"></script> --}}
 
-    <script src="/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+{{--     <script src="/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/metismenu"></script> --}}
 
     <!-- Custom and plugin javascript -->
@@ -108,7 +99,6 @@
     {{-- <script src="/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script> --}}
 
     @yield('pluginScripts')
-    <script src="/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 

@@ -1842,6 +1842,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['itemsordered', 'articles'],
   watch: {
     articles: function articles(newVal, oldVal) {
+      console.log(newVal);
       this.items = newVal;
     }
   },
@@ -2030,7 +2031,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onSubmit: function onSubmit() {
       this.form.post('/login').then(function (response) {
-        Auth.storeUser(response);
+        $('meta[name="csrf-token"]').attr('content', response._token);
+        console.log({
+          token: $('meta[name="csrf-token"').attr('content'),
+          response: response._token
+        });
         Event.$emit('loggedIn', response);
       })["catch"](function (response) {
         return console.log('Authentication not successful');
@@ -2103,7 +2108,6 @@ __webpack_require__.r(__webpack_exports__);
     });
     Event.$on('loggedIn', function () {
       this.$modal.hide('login-modal-vue');
-      Auth.update();
       swal.fire({
         type: 'success',
         title: 'You are loged in',
@@ -2351,20 +2355,21 @@ __webpack_require__.r(__webpack_exports__);
       authenticated: false,
       activeOrderId: null,
       itemsOrdered: 0,
-      userName: 'User',
+      userName: '',
       articlesOrdered: []
     };
   },
   created: function created() {
     var _this = this;
 
-    axios.get('authUser').then(function (response) {
+    axios.get('/authUser').then(function (response) {
       _this.authenticated = response.data != 'Unauthenticated';
       _this.userName = response.data != 'Unauthenticated' ? response.data.name : 'Account';
       _this.activeOrderId = response.data != 'Unauthenticated' ? response.data.active_order_id : false;
       _this.itemsOrdered = response.data != 'Unauthenticated' ? response.data.items_ordered : false;
 
       if (response.data.items_ordered > 0) {
+        console.log(_this.activeOrderId);
         axios.get('/orders/' + _this.activeOrderId + '/articles').then(function (response) {
           return _this.articlesOrdered = response.data;
         });
@@ -2413,9 +2418,9 @@ __webpack_require__.r(__webpack_exports__);
   props: ['state', 'articleId'],
   data: function data() {
     return {
-      api_token: null,
       isWished: this.state,
-      tooltip: null
+      tooltip: null,
+      user: {}
     };
   },
   methods: {
@@ -2428,22 +2433,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     tooltipTitle: function tooltipTitle() {
       return this.isWished ? 'Remove from wishlist' : 'Add to wishlist';
-    },
-    toggleWished: function toggleWished() {
-      var _this = this;
-
-      this.isWished = this.isWished ? false : true;
-      axios.post('/api/wishlist/' + this.articleId, {
-        api_token: this.api_token
-      }).then(function (response) {
-        return _this.wishlistMessage();
-      })["catch"](function (response) {
-        return swal.fire({
-          type: 'error',
-          title: 'Some error occured, please contact administrator!',
-          showConfirmButton: true
-        });
-      });
     },
     wishlistMessage: function wishlistMessage() {
       this.isWished ? swal.fire({
@@ -2458,14 +2447,25 @@ __webpack_require__.r(__webpack_exports__);
         timer: 700
       });
     },
+    //When logging here without reloading the page you are left with old csrf token,
+    //that is why we added _token data because in loginComponent we fetch new csrf and set it to the page
+    //but axios uses the old token set up in resources/js/bootstrap.js file.
     heartClicked: function heartClicked() {
-      if (this.user = Auth.user()) {
-        this.api_token = this.user.api_token;
-        this.toggleWished();
-        this.tooltip.updateTitleContent(this.tooltipTitle());
-      } else {
-        Event.$emit('loginRequired');
-      }
+      var _this = this;
+
+      axios.post('/wishlist/' + this.articleId, {
+        _token: $('meta[name="csrf-token"]').attr('content')
+      }).then(function (response) {
+        _this.isWished = _this.isWished ? false : true;
+
+        _this.wishlistMessage();
+
+        _this.tooltip.updateTitleContent(_this.tooltipTitle());
+      })["catch"](function (error) {
+        if (error.response.data.message == 'Unauthenticated.') {
+          Event.$emit('loginRequired');
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -55072,8 +55072,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ModalLogin_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ModalLogin.vue */ "./resources/js/components/ModalLogin.vue");
 /* harmony import */ var _components_Sticky_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Sticky.vue */ "./resources/js/components/Sticky.vue");
 /* harmony import */ var tooltip_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tooltip.js */ "./node_modules/tooltip.js/dist/esm/tooltip.js");
-/* harmony import */ var _utilities_Auth_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utilities/Auth.js */ "./resources/js/utilities/Auth.js");
-/* harmony import */ var _utilities_Form_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./utilities/Form.js */ "./resources/js/utilities/Form.js");
+/* harmony import */ var _utilities_Form_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./utilities/Form.js */ "./resources/js/utilities/Form.js");
 
 
 
@@ -55084,22 +55083,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-window.Auth = new _utilities_Auth_js__WEBPACK_IMPORTED_MODULE_9__["default"]();
 window.Event = new Vue();
-new Vue({
-  el: "#app",
-  components: {
-    LoginComponent: _components_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TopnavComponent: _components_TopnavComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    RegisterComponent: _components_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    BigMeny: _components_BigMeny_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ShopArticle: _components_ShopArticle_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    ModalLogin: _components_ModalLogin_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    Sticky: _components_Sticky_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
-  },
-  mounted: function mounted() {}
-});
+
+if (document.getElementById("app") != null) {
+  new Vue({
+    el: "#app",
+    components: {
+      LoginComponent: _components_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+      TopnavComponent: _components_TopnavComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+      RegisterComponent: _components_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      BigMeny: _components_BigMeny_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+      ShopArticle: _components_ShopArticle_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+      ModalLogin: _components_ModalLogin_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      Sticky: _components_Sticky_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    },
+    mounted: function mounted() {}
+  });
+}
 
 /***/ }),
 
@@ -55753,77 +55753,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_WishlistComponent_vue_vue_type_template_id_529e3446___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/utilities/Auth.js":
-/*!****************************************!*\
-  !*** ./resources/js/utilities/Auth.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Auth =
-/*#__PURE__*/
-function () {
-  function Auth() {
-    var _this = this;
-
-    _classCallCheck(this, Auth);
-
-    this.data = null;
-    axios.get('/authUser').then(function (response) {
-      return _this.data = response.data;
-    });
-  }
-
-  _createClass(Auth, [{
-    key: "check",
-    value: function check() {
-      return this.data != 'Unauthenticated';
-    }
-  }, {
-    key: "user",
-    value: function user() {
-      return this.check() ? this.data : null;
-    }
-  }, {
-    key: "name",
-    value: function name() {
-      if (this.data == null || this.data == 'Unauthenticated') {
-        return null;
-      } else {
-        return this.data.name;
-      }
-    }
-  }, {
-    key: "storeUser",
-    value: function storeUser(data) {
-      this.data = data;
-    }
-  }, {
-    key: "update",
-    value: function update() {
-      var _this2 = this;
-
-      axios.get('/authUser').then(function (response) {
-        return _this2.data = response.data;
-      });
-    }
-  }]);
-
-  return Auth;
-}();
-
-/* harmony default export */ __webpack_exports__["default"] = (Auth);
 
 /***/ }),
 

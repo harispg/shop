@@ -84,13 +84,14 @@ Route::get('admin/users/index', 'UsersController@index')->middleware('can:users.
 Route::get('admin/users/{user}', 'UsersController@show')->middleware('can:users.work')->name('admin.users.show');
 
 
+Route::get('orders/{order}/articles', 'OrdersController@articles');
 Route::get('orders/{order}/show', 'OrdersController@show')->name('orders.show');
 Route::post('orders/{order}/update', 'OrdersController@update')->name('orders.update');
 Route::post('orders/{order}/payment', 'OrdersController@payment')->name('orders.payment');
 Route::get('orders/{user}/index', 'OrdersController@usersOrders')->name('user.orders.index');
-Route::get('orders/{order}/articles', 'OrdersController@articles');
 
 Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
+Route::post('wishlist/{article}', 'WishlistController@addRemoveWishlist')->name('wishlist');
 
 
 Route::get('/test', function(Request $request){

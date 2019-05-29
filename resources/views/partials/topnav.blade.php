@@ -1,4 +1,4 @@
-<topnav-component inline-template>
+<topnav-component inline-template v-cloak>
         <div class="u-header__section g-brd-bottom g-brd-gray-light-v4 g-transition-0_3">
           <div class="container">
             <div class="row justify-content-between align-items-center g-mx-0--lg">

@@ -15,9 +15,9 @@
 
 		data() {
 			return {
-				api_token: null,
 				isWished: this.state,
-				tooltip: null
+				tooltip: null,
+				user: {},
 			}
 		},
 
@@ -34,18 +34,6 @@
 				return this.isWished ? 'Remove from wishlist' : 'Add to wishlist';
 			},
 
-			toggleWished() {
-				this.isWished = this.isWished ? false : true;
-				axios.post('/api/wishlist/'+this.articleId, {api_token: this.api_token})
-				.then(response => this.wishlistMessage())
-				.catch(
-					response => swal.fire({
-						type: 'error',
-						title: 'Some error occured, please contact administrator!',
-						showConfirmButton: true,
-					}));
-
-			},
 
 			wishlistMessage(){
 				this.isWished ? 
@@ -62,17 +50,20 @@
 					timer: 700
 				})
 			},
-
+			//When logging here without reloading the page you are left with old csrf token,
+			//that is why we added _token data because in loginComponent we fetch new csrf and set it to the page
+			//but axios uses the old token set up in resources/js/bootstrap.js file.
 			heartClicked(){
-				if(this.user = Auth.user()){
-					this.api_token = this.user.api_token;
-					this.toggleWished();
-					this.tooltip.updateTitleContent(this.tooltipTitle());
-				}else{
-					Event.$emit('loginRequired');
-				}
+				axios.post('/wishlist/'+this.articleId, {_token:$('meta[name="csrf-token"]').attr('content')}).then((response) => {
+						this.isWished = this.isWished ? false : true;
+						this.wishlistMessage();
+						this.tooltip.updateTitleContent(this.tooltipTitle());
+					 }).catch((error) => {
+					 	if(error.response.data.message == 'Unauthenticated.'){
+							Event.$emit('loginRequired');
+					 	}
+					 });
 			},
-
 		},
 		mounted() {
 			let elem = this.$el

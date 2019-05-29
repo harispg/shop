@@ -23,3 +23,10 @@
 .tooltip-inner {
 	font-weight: 900;
 }
+[v-cloak] { display: none; }
+
+@media (max-width: 480px) {
+  #account-dropdown-2 {
+    right:0
+  }
+}

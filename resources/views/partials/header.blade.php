@@ -432,7 +432,8 @@
                         @endforeach
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
-                          @if($article = $allArticles->where('featured', true)->random())
+                          @if($allArticles->where('featured',true)->isNotEmpty())
+                          {{$article = $allArticles->where('featured', true)->random()}}
                           <article class="g-pos-rel">
                             <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
 

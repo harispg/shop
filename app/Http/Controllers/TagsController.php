@@ -9,7 +9,7 @@ class TagsController extends Controller
 {
     public function show(Tag $tag)
     {
-    	$articles = $tag->articles()->paginate(8);
+    	$articles = $tag->articles()->with(['photos', 'categories'])->paginate(8);
 
     	return view('articles.index', compact('articles'));
     }

@@ -11,7 +11,8 @@ class OrdersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'ownsOrder']);
+        $this->middleware('auth');
+        $this->middleware('ownsOrder')->except(['usersOrders', 'update']);
     }
     public function show(Request $request, Order $order)
     {

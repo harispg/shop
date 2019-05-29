@@ -78,6 +78,7 @@
 		props: ['itemsordered', 'articles'],
 		watch: {
 			articles: function(newVal, oldVal){
+				console.log(newVal);
 				this.items = newVal;
 			}
 		},

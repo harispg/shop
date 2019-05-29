@@ -49,7 +49,6 @@
 
 		Event.$on('loggedIn', function() {
 			this.$modal.hide('login-modal-vue');
-			Auth.update();
 			swal.fire({
 				type: 'success',
 				title: 'You are loged in',

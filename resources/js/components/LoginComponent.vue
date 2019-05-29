@@ -104,9 +104,9 @@
       onSubmit() {
         this.form.post('/login')
         .then(response => {
-          Auth.storeUser(response);
+          $('meta[name="csrf-token"]').attr('content', response._token);
+          console.log({token: $('meta[name="csrf-token"').attr('content'), response: response._token });
           Event.$emit('loggedIn', response);
-
         })
         .catch(response => console.log('Authentication not successful'));
       }

@@ -7,18 +7,19 @@ import BasketComponent from './BasketComponent.vue';
 				authenticated: false,
 				activeOrderId: null,
 				itemsOrdered: 0,
-				userName: 'User',
+				userName: '',
 				articlesOrdered: []
 			}
 		},
 		created(){
 			let _this = this;
-			axios.get('authUser').then(response => {
+			axios.get('/authUser').then(response => {
 				_this.authenticated = (response.data != 'Unauthenticated');
 				_this.userName = (response.data != 'Unauthenticated') ? response.data.name : 'Account';
 				_this.activeOrderId = (response.data != 'Unauthenticated') ? response.data.active_order_id : false;
 				_this.itemsOrdered = (response.data != 'Unauthenticated') ? response.data.items_ordered : false;
 				if(response.data.items_ordered>0){
+					console.log(_this.activeOrderId);
 					axios.get('/orders/'+_this.activeOrderId+'/articles')
 						 .then(response => _this.articlesOrdered = response.data);
 				}

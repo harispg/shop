@@ -28,7 +28,7 @@ Route::delete('items/{item}', 'Api\ApiItemsController@destroy');
 Route::post('users/{user}/role/{role}', 'Api\ApiUsersController@changeRole')->middleware('can:api|users.work');
 Route::post('users/superAdmin/{user}', 'Api\ApiUsersController@toggleSupperAdmin')->middleware('isSuper:api');
 
-Route::post('wishlist/{article}', 'Api\ApiWishlistController@addRemoveWishlist')->name('wishlist');
+
 
 });
     //
