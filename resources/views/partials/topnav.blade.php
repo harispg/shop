@@ -207,7 +207,7 @@
                       </li>
 
                       <li v-if="authenticated">
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" onclick="event.preventDefault(); getElementById('logoutForm').submit(); Auth.update()" href="#!">
+                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" onclick="event.preventDefault(); getElementById('logoutForm').submit();" href="#!">
                           Logout
                         </a>
                         <form id="logoutForm" style="visibility: hidden" action="{{route('logout')}}" method="POST">
@@ -235,7 +235,7 @@
 
 
                 <!-- Basket -->
-                <basket-component v-if="activeOrderId" :itemsOrdered="itemsOrdered" :articles="articlesOrdered">
+                <basket-component v-if="activeOrderId" :orderId="activeOrderId">
 
                 </basket-component>
                 <!-- End Basket -->

@@ -60,6 +60,7 @@ Route::get('articles/new', function(){
 })->name('articles.new');
 
 Route::resource('articles', 'ArticlesController');
+Route::post('articles/{article}/addToActiveOrder', 'ArticlesController@addToActiveOrder')->name('articles.addToActiveOrder');
 
 Route::get('/login/google', 'Auth\LoginController@redirectToGoogle')->name('loginGoogle');
 Route::get('google/callback', 'Auth\LoginController@handleGoogleCallback');
@@ -83,8 +84,7 @@ Route::get('/tags/{tag}', 'TagsController@show')->name('tags.articles');
 Route::get('admin/users/index', 'UsersController@index')->middleware('can:users.work')->name('admin.users.index');
 Route::get('admin/users/{user}', 'UsersController@show')->middleware('can:users.work')->name('admin.users.show');
 
-
-Route::get('orders/{order}/articles', 'OrdersController@articles');
+Route::get('orders/{order}', 'OrdersController@getOrder');
 Route::get('orders/{order}/show', 'OrdersController@show')->name('orders.show');
 Route::post('orders/{order}/update', 'OrdersController@update')->name('orders.update');
 Route::post('orders/{order}/payment', 'OrdersController@payment')->name('orders.payment');

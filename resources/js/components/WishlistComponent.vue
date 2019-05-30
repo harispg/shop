@@ -17,7 +17,6 @@
 			return {
 				isWished: this.state,
 				tooltip: null,
-				user: {},
 			}
 		},
 

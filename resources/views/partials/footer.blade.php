@@ -452,7 +452,7 @@
         
 
         //removing products from basket
-        $(".u-basket__product-remove").on('click', function(){
+        /*$(".u-basket__product-remove").on('click', function(){
           var itemId = $(this).data('item');
             swal.fire({
             title: 'Are you sure?',
@@ -489,7 +489,7 @@
               location.reload();
             }
           });
-        });
+        });*/
       });  
 
       // initialization of countdowns

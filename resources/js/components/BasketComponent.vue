@@ -11,7 +11,7 @@
 			data-dropdown-hide-on-scroll="false"
 			data-dropdown-animation-in="fadeIn"
 			data-dropdown-animation-out="fadeOut">
-			<span class="basketNumberOfArticles u-badge-v1--sm g-color-white g-bg-primary g-font-size-11 g-line-height-1_4 g-rounded-50x g-pa-4" style="top: 6px !important; right: 4px !important;" v-text="itemsordered"></span>
+			<span class="basketNumberOfArticles u-badge-v1--sm g-color-white g-bg-primary g-font-size-11 g-line-height-1_4 g-rounded-50x g-pa-4" style="top: 6px !important; right: 4px !important;" v-text="order.items_count"></span>
 			<i class="icon-hotel-restaurant-105 u-line-icon-pro"></i>
 		</a>
 	</div>
@@ -23,26 +23,12 @@
 	</div>
 	<div class="js-scrollbar g-height-200">
 		<!-- Product -->
-		<div class="u-basket__product g-brd-none g-px-20" v-if="itemsordered" v-for="item in items">
-			<div class="row no-gutters g-pb-5">
-				<div class="col-4 pr-3">
-					<a class="u-basket__product-img" href="#!">
-						<img class="img-fluid" :src="'/'+item.photo" alt="Image Description">
-					</a>
-				</div>
-
-				<div class="col-8">
-					<h6 class="g-font-weight-400 g-font-size-default">
-						<a class="g-color-black g-color-primary--hover g-text-underline--none--hover" href="'/articles/'+item.id" v-text="item.name"></a>
-					</h6>                                                 
-					<small class="g-color-primary g-font-size-12" v-text="item.quantity +' x ' + item.price"></small>
-				</div>
-			</div>
-			<button type="button" class="u-basket__product-remove" :data-item="item.id">&times;</button>
+		<div class="u-basket__product g-brd-none g-px-20" v-if="order.items_count" v-for="item in items">
+			<basket-item :item="item" @totalUpdated="function(amount){total+=amount}"></basket-item>	
 		</div>
 		<!-- End Product -->
 
-		<div class="container text-center" v-if="!itemsordered">
+		<div class="container text-center" v-if="!order.items_count">
 			<div class="mb-5">
 				<h4 class="mt-5">Your Cart is Currently Empty</h4>
 			</div>
@@ -57,14 +43,14 @@
 				<strong class="d-block g-py-10 text-uppercase g-color-main g-font-weight-500 g-py-10">Total</strong>
 			</div>
 			<div class="col">
-				<strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10">$ ORDEROV TOTAL</strong>
+				<strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10" v-text="'$ '+total"></strong>
 			</div>
 		</div>
 	</div>
 
 	<div class="g-pa-20">
 		<div class="text-center g-mb-15">
-			<a class="text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover" href="/TaNarudzba">
+			<a class="text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover" :href="orderUrl">
 				View Cart
 				<i class="ml-2 icon-finance-100 u-line-icon-pro"></i>
 			</a>
@@ -74,21 +60,44 @@
 </div>
 </template>
 <script>
+	import BasketItem from './BasketItem.vue';
 	export default{
-		props: ['itemsordered', 'articles'],
-		watch: {
-			articles: function(newVal, oldVal){
-				console.log(newVal);
-				this.items = newVal;
-			}
-		},
+		components: {BasketItem},
+		props: ['orderid'],
+
 		data() {
 			return {
-				items: []
+				order: {},
+				items: [],
+				total: '',
 			}
 		},
-		created(){
-			this.items = this.articles;
+
+		computed: {
+			orderUrl(){
+				return '/orders/'+this.order.id+'/show';
+			}
+		},
+
+		mounted(){
+			axios.get('/orders/'+this.orderid)
+					 .then(response =>  {
+					 	_this.order = response.data;
+					 	_this.items = response.data.items;
+					 	_this.total = response.data.total;
+					 });
+			let _this = this;
+			Event.$on('itemAdded', function(item){
+				let newItem = _this.items.filter(anItem => {
+					return anItem.id === item.id
+				});
+				if(newItem.length <= 0){
+					_this.items.unshift(item);
+				    _this.order.items_count ++;
+				    _this.total += item.price;
+				    $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
+				}
+			});
 		}
 	}
 </script>

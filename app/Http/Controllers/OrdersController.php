@@ -53,8 +53,9 @@ class OrdersController extends Controller
         return view('orders.usersOrders', compact('user'));
     }
 
-    public function articles(Request $request, Order $order)
+    public function getOrder($order)
     {
-        return $order->items;
+        $order = Order::with('items')->findOrFail($order);
+        return $order;
     }
 }

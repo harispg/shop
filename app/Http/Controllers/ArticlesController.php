@@ -14,7 +14,8 @@ class ArticlesController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','can:articles.modify'])->except(['index', 'show']);
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('can:articles.modify')->except(['index', 'show', 'addToActiveOrder']);
     }
     
     /**
@@ -188,6 +189,12 @@ class ArticlesController extends Controller
         flash()->success('Article updated', 'You have successfully updated your article');
 
         return redirect()->back();
+    }
+
+    public function addToActiveOrder(Request $request, Article $article)
+    {
+        auth()->user()->activeOrder()->addArticle($article, $request->quantity);
+        return auth()->user()->activeOrder()->itemOfArticle($article);
     }
 
     /**

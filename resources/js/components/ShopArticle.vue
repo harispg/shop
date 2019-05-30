@@ -24,13 +24,7 @@
 
       <ul class="list-inline media-body text-right">
         <li class="list-inline-item align-middle mx-0">
-          <a ref="addToCart" class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-             data-tooltip="Add to cart"
-             data-tooltip-placement="left">
-            <i class="addToCart icon-finance-100 u-line-icon-pro" 
-               :data-article="this.data.id" 
-               data-order=""></i>
-          </a>
+          <add-to-cart :articleId="this.data.id"></add-to-cart>
         </li>
         <li class="list-inline-item align-middle mx-0">
           <wishlist-component :state="this.data.wished" :articleId="this.data.id"></wishlist-component>
@@ -41,25 +35,18 @@
   </div>
 </template>
 <script>
+  import AddToCart from './AddToCart.vue';
   import WishlistComponent from './WishlistComponent.vue';
   import Tooltip from 'tooltip.js';
 	export default {
 		props: ['article'],
 
-    components: {WishlistComponent},
+    components: {WishlistComponent, AddToCart},
 
     data() {
       return {
         data: this.article,
       }
-    },
-
-    mounted(){
-      let elem = this.$refs.addToCart;
-      new Tooltip(elem, {
-        placement: elem.dataset.tooltipPlacement,
-        title: elem.dataset.tooltip
-      });
     }
 	}
 </script>

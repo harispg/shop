@@ -20,7 +20,7 @@ Route::delete('articles/{article}','Api\ApiArticlesController@destroy')->middlew
 Route::post('articles/{article}/new', 'Api\ApiArticlesController@changeNewAttribute')->middleware('can:api|articles.modify');
 Route::post('articles/{article}/featured', 'Api\ApiArticlesController@changeFeaturedAttribute')->middleware('can:api|articles.modify');
 
-Route::post('orders/{order}/addArticle/{article}', 'Api\ApiOrdersController@addArticle')->middleware('ownsOrder');
+
 
 Route::post('items/{item}', 'Api\ApiItemsController@add');
 Route::delete('items/{item}', 'Api\ApiItemsController@destroy');

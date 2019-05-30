@@ -722,11 +722,11 @@
           </nav>
         </div>
         <portal-target name="nav-after"></portal-target>
-        <sticky>
+        {{-- <sticky>
          <div class="container-fluid bg-info p-5">
             IDEMO NA MORE, SVI NA KUPANJE. ALI ISTO NEĆEMO JER JE POMET.
           </div>
-        <sticky>
+        <sticky> --}}
 
       </header>
       <!-- End Header -->

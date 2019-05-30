@@ -7,12 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
 	protected $guarded = [];
+    protected $appends = ['items_count', 'total'];
 
     public function items()
     {
     	return $this->hasMany(OrderItem::class, 'order_id');
     }
 
+    /**
+     * Returns number of items in order
+     * @return [Integer]
+     */
+    public function getItemsCountAttribute()
+    {
+        return $this->items->count();
+    }
+
+    /**
+     * [Returns relationship between Order and OrderStatus]
+     * @return [Eloquent relationship]
+     */
     public function status()
     {
     	return $this->belongsTo(OrderStatus::class, 'order_status_id');
@@ -60,6 +74,11 @@ class Order extends Model
         }
         $result = $this->subTotal() - $this->subTotal()*(1/$this->discount);
         return round($result, 2);
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->orderTotal();
     }
 
     public function owner()
