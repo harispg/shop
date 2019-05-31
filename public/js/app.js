@@ -2239,6 +2239,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -42517,7 +42518,8 @@ var render = function() {
         name: "login-modal-vue",
         height: "auto",
         width: "100%",
-        pivotY: 0.5
+        pivotY: 0.5,
+        classes: "col-lg-4 offset-lg-4"
       }
     },
     [

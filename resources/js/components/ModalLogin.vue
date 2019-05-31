@@ -3,7 +3,8 @@
 		name="login-modal-vue"
 		height="auto"
 		width="100%"
-		:pivotY=".5"
+		:pivotY="0.5"
+		classes="col-lg-4 offset-lg-4"
 	>
 	 	<div>
           <div class="modal-dialog">
