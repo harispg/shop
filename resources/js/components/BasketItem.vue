@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="u-basket__product g-brd-none g-px-20">
 		<div class="row no-gutters g-pb-5">
 				<div class="col-4 pr-3">
 					<a class="u-basket__product-img" href="#!">

@@ -23,8 +23,8 @@
 	</div>
 	<div class="js-scrollbar g-height-200">
 		<!-- Product -->
-		<div class="u-basket__product g-brd-none g-px-20" v-if="order.items_count" v-for="item in items">
-			<basket-item :item="item" @totalUpdated="function(amount){total+=amount}"></basket-item>	
+		<div>	
+			<basket-item :item="item" @totalUpdated="function(amount){total+=amount}" v-for="item in items" :key="item.id"></basket-item>	
 		</div>
 		<!-- End Product -->
 
@@ -43,7 +43,7 @@
 				<strong class="d-block g-py-10 text-uppercase g-color-main g-font-weight-500 g-py-10">Total</strong>
 			</div>
 			<div class="col">
-				<strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10" v-text="'$ '+total"></strong>
+				<strong class="d-block g-py-10 g-color-main g-font-weight-500 g-py-10" v-text="'$ '+showTotal"></strong>
 			</div>
 		</div>
 	</div>
@@ -69,13 +69,17 @@
 			return {
 				order: {},
 				items: [],
-				total: '',
+				total: 0,
 			}
 		},
 
 		computed: {
 			orderUrl(){
 				return '/orders/'+this.order.id+'/show';
+			},
+
+			showTotal(){
+				return this.total.toFixed(2);
 			}
 		},
 
@@ -95,7 +99,6 @@
 					_this.items.unshift(item);
 				    _this.order.items_count ++;
 				    _this.total += item.price;
-				    $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
 				}
 			});
 		}

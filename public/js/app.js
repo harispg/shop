@@ -1897,12 +1897,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       order: {},
       items: [],
-      total: ''
+      total: 0
     };
   },
   computed: {
     orderUrl: function orderUrl() {
       return '/orders/' + this.order.id + '/show';
+    },
+    showTotal: function showTotal() {
+      return this.total.toFixed(2);
     }
   },
   mounted: function mounted() {
@@ -1924,7 +1927,6 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.order.items_count++;
         _this.total += item.price;
-        $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
       }
     });
   }
@@ -41764,48 +41766,39 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "js-scrollbar g-height-200" },
-          [
+        _c("div", { staticClass: "js-scrollbar g-height-200" }, [
+          _c(
+            "div",
             _vm._l(_vm.items, function(item) {
-              return _vm.order.items_count
-                ? _c(
-                    "div",
-                    { staticClass: "u-basket__product g-brd-none g-px-20" },
-                    [
-                      _c("basket-item", {
-                        attrs: { item: item },
-                        on: {
-                          totalUpdated: function(amount) {
-                            _vm.total += amount
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  )
-                : _vm._e()
+              return _c("basket-item", {
+                key: item.id,
+                attrs: { item: item },
+                on: {
+                  totalUpdated: function(amount) {
+                    _vm.total += amount
+                  }
+                }
+              })
             }),
-            _vm._v(" "),
-            !_vm.order.items_count
-              ? _c("div", { staticClass: "container text-center" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
-                      attrs: { href: "/articles" }
-                    },
-                    [_vm._v("Start Shopping")]
-                  )
-                ])
-              : _vm._e()
-          ],
-          2
-        ),
+            1
+          ),
+          _vm._v(" "),
+          !_vm.order.items_count
+            ? _c("div", { staticClass: "container text-center" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
+                    attrs: { href: "/articles" }
+                  },
+                  [_vm._v("Start Shopping")]
+                )
+              ])
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix g-px-15" }, [
           _c(
@@ -41821,7 +41814,7 @@ var render = function() {
                 _c("strong", {
                   staticClass:
                     "d-block g-py-10 g-color-main g-font-weight-500 g-py-10",
-                  domProps: { textContent: _vm._s("$ " + _vm.total) }
+                  domProps: { textContent: _vm._s("$ " + _vm.showTotal) }
                 })
               ])
             ]
@@ -41914,7 +41907,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "u-basket__product g-brd-none g-px-20" }, [
     _c("div", { staticClass: "row no-gutters g-pb-5" }, [
       _c("div", { staticClass: "col-4 pr-3" }, [
         _c(
