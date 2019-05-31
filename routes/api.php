@@ -23,8 +23,6 @@ Route::post('articles/{article}/featured', 'Api\ApiArticlesController@changeFeat
 
 
 Route::post('items/{item}', 'Api\ApiItemsController@add');
-Route::delete('items/{item}', 'Api\ApiItemsController@destroy');
-
 Route::post('users/{user}/role/{role}', 'Api\ApiUsersController@changeRole')->middleware('can:api|users.work');
 Route::post('users/superAdmin/{user}', 'Api\ApiUsersController@toggleSupperAdmin')->middleware('isSuper:api');
 

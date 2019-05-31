@@ -89,6 +89,7 @@ Route::get('orders/{order}/show', 'OrdersController@show')->name('orders.show');
 Route::post('orders/{order}/update', 'OrdersController@update')->name('orders.update');
 Route::post('orders/{order}/payment', 'OrdersController@payment')->name('orders.payment');
 Route::get('orders/{user}/index', 'OrdersController@usersOrders')->name('user.orders.index');
+Route::delete('orders/{order}/items/{item}', 'OrdersController@deleteItem');
 
 Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
 Route::post('wishlist/{article}', 'WishlistController@addRemoveWishlist')->name('wishlist');

@@ -14,7 +14,7 @@
 					<small class="g-color-primary g-font-size-12" v-text="item.quantity +' x ' + item.price"></small>
 				</div>
 			</div>
-			<button type="button" class="u-basket__product-remove" :data-item="item.id">&times;</button>
+			<button type="button" class="u-basket__product-remove" :data-item="item.id" @click="removeItem()">&times;</button>
 	</div>
 </template>
 <script>
@@ -23,6 +23,14 @@
 		computed: {
 			photoPath(){
 				return '/'+this.item.photo;
+			}
+		},
+
+		methods: {
+			removeItem(){
+				axios.post('/orders/'+this.item.order_id+'/items/'+this.item.id,{_method:'DELETE'})
+					.then(response => Event.$emit('itemRemoved', response.data))
+					.catch(error => console.log(error.response.data));
 			}
 		},
 

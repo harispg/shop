@@ -58,4 +58,14 @@ class OrdersController extends Controller
         $order = Order::with('items')->findOrFail($order);
         return $order;
     }
+    /**
+     * Remove item from specific order
+     * @return void
+     */
+    public function deleteItem(Order $order, OrderItem $item)
+    {
+        $oldItem = $item;
+        $order->remove($item);
+        return $oldItem;
+    }
 }

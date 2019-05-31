@@ -1929,6 +1929,21 @@ __webpack_require__.r(__webpack_exports__);
         _this.total += item.price;
       }
     });
+    Event.$on('itemRemoved', function (data) {
+      var item = data;
+
+      var itemsLeft = _this.items.filter(function (oneOfItems) {
+        return oneOfItems.id != item.id;
+      });
+
+      _this.items = itemsLeft;
+      _this.order.items_count--;
+      _this.total -= item.price;
+
+      if (!_this.items.length > 0) {
+        _this.total = 0;
+      }
+    });
   }
 });
 
@@ -1967,6 +1982,17 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     photoPath: function photoPath() {
       return '/' + this.item.photo;
+    }
+  },
+  methods: {
+    removeItem: function removeItem() {
+      axios.post('/orders/' + this.item.order_id + '/items/' + this.item.id, {
+        _method: 'DELETE'
+      }).then(function (response) {
+        return Event.$emit('itemRemoved', response.data);
+      })["catch"](function (error) {
+        return console.log(error.response.data);
+      });
     }
   },
   mounted: function mounted() {
@@ -41769,6 +41795,16 @@ var render = function() {
         _c("div", { staticClass: "js-scrollbar g-height-200" }, [
           _c(
             "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.order.items_count,
+                  expression: "order.items_count"
+                }
+              ]
+            },
             _vm._l(_vm.items, function(item) {
               return _c("basket-item", {
                 key: item.id,
@@ -41783,21 +41819,33 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          !_vm.order.items_count
-            ? _c("div", { staticClass: "container text-center" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
-                    attrs: { href: "/articles" }
-                  },
-                  [_vm._v("Start Shopping")]
-                )
-              ])
-            : _vm._e()
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.order.items_count,
+                  expression: "!order.items_count"
+                }
+              ],
+              staticClass: "container text-center"
+            },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
+                  attrs: { href: "/articles" }
+                },
+                [_vm._v("Start Shopping")]
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "clearfix g-px-15" }, [
@@ -41945,7 +41993,12 @@ var render = function() {
       "button",
       {
         staticClass: "u-basket__product-remove",
-        attrs: { type: "button", "data-item": _vm.item.id }
+        attrs: { type: "button", "data-item": _vm.item.id },
+        on: {
+          click: function($event) {
+            return _vm.removeItem()
+          }
+        }
       },
       [_vm._v("×")]
     )

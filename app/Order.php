@@ -9,6 +9,10 @@ class Order extends Model
 	protected $guarded = [];
     protected $appends = ['items_count', 'total'];
 
+    /**
+     * Order has Many items and Item belongs to Order
+     * @return Eloquent relationship
+     */
     public function items()
     {
     	return $this->hasMany(OrderItem::class, 'order_id');
@@ -84,6 +88,16 @@ class Order extends Model
     public function owner()
     {
         return $this->belongsTo(User::class,'user_id', 'id');
+    }
+
+    /**
+     * Removes an item from order
+     * @param  App\OrderItem  $item 
+     * @return void
+     */
+    public function remove($item)
+    {
+        $this->items->find($item)->delete();
     }
 
 

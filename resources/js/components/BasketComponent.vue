@@ -23,12 +23,12 @@
 	</div>
 	<div class="js-scrollbar g-height-200">
 		<!-- Product -->
-		<div>	
+		<div v-show="order.items_count">	
 			<basket-item :item="item" @totalUpdated="function(amount){total+=amount}" v-for="item in items" :key="item.id"></basket-item>	
 		</div>
 		<!-- End Product -->
 
-		<div class="container text-center" v-if="!order.items_count">
+		<div class="container text-center" v-show="!order.items_count">
 			<div class="mb-5">
 				<h4 class="mt-5">Your Cart is Currently Empty</h4>
 			</div>
@@ -101,6 +101,20 @@
 				    _this.total += item.price;
 				}
 			});
+
+			Event.$on('itemRemoved', function(data){
+				let item=data;
+				let itemsLeft = _this.items.filter(function(oneOfItems){
+					return oneOfItems.id != item.id;
+				});
+				_this.items = itemsLeft;
+				_this.order.items_count --;
+				_this.total -= item.price;
+				if (! _this.items.length > 0){
+					_this.total = 0;
+				}
+
+			})
 		}
 	}
 </script>
