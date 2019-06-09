@@ -101,7 +101,7 @@ class LoginController extends Controller
         $this->clearLoginAttempts($request);
 
         if($request->expectsJson()){
-            return response()->json(['user'=>auth()->user(), '_token'=> csrf_token()]);
+            return response()->json(['user'=>auth()->user()->load('articles:id'), '_token'=> csrf_token()]);
         }
 
         return $this->authenticated($request, $this->guard()->user())

@@ -27,7 +27,15 @@
           <add-to-cart :articleId="this.data.id"></add-to-cart>
         </li>
         <li class="list-inline-item align-middle mx-0">
-          <wishlist-component :state="this.data.wished" :articleId="this.data.id"></wishlist-component>
+          <wishlist-component :state="this.data.wished" :article_id="this.data.id" inline-template>
+            <a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
+              :data-tooltip="tooltipTitle()"
+              data-tooltip-placement="right"
+
+              >
+              <i :class="'g-font-size-18 addToWishlist fa ' + heartColor(this.isWished)" :data-article="this.article_id" @click="heartClicked"></i>
+            </a>
+          </wishlist-component>
         </li>
       </ul>
       <!-- End Products Icons -->
@@ -41,12 +49,22 @@
 	export default {
 		props: ['article'],
 
+    watch: {
+      article: function(newVal, oldVal){
+        this.data = newVal;
+      }
+    },
+
     components: {WishlistComponent, AddToCart},
 
     data() {
       return {
-        data: this.article,
+        data: '',
       }
+    },
+
+    created(){
+      this.data = this.article;
     }
 	}
 </script>

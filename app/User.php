@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\WorksWithRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
+    use WorksWithRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -33,62 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    /**
-     * Checks if a user has Role
-     * @param  [string]  $role 
-     * @return boolean 
-     */
-    public function hasRole($role)
-    {
-        if(is_string($role)){
-            return $this->roles->where('name', $role)->count();
-        }
-
-        return $role->intersect($this->roles)->count();
-    }
-
-    public function getRole()
-    {
-        return $this->roles->first();
-    }
-
-    public function getRoleName()
-    {
-        if($this->roles->count()>0){
-            return $this->getRole()->name;
-        }else{
-            return "no role";
-        } 
-    }
-
-    /**
-     * Gives role to a user
-     * @param  [string] $role
-     * @return void
-     */
-    public function giveRole($role){
-        if(!is_string($role)){abort(422,'Role must be a string');}
-        if($this->hasRole($role)){abort(422, 'Already have this role');}
-        $roleId = Role::where('name', $role)->first()->id;
-        $this->roles()->sync($roleId);
-    }
-
-    /**
-     * Takes away role from user
-     * @param  [string] $role
-     * @return void
-     */
-    public function takeAwayRole($role){
-        if(!is_string($role)){abort(422,'Role must be a string');}
-        if(!$this->hasRole($role)){abort(422, "User doesn't have this role");}
-        $roleId = Role::where('name', $role)->first()->id;
-        $this->roles()->detach($roleId);
-    }
+   
 
     
     public function sendEmailVerificationNotification()
@@ -99,17 +46,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function comments()
     {
         return $this->hasMany(Comment::class);
-    }
-
-    /**
-     * Checks if user is Super Admin
-     * @return boolean 
-     */
-    public function isSuper(){
-        if($this->superAdmin){
-            return true;
-        }
-        return false;
     }
 
 
@@ -138,9 +74,13 @@ class User extends Authenticatable implements MustVerifyEmail
          return $this->activeOrder() ? $this->activeOrder()->id : null;
     }
 
+
     public function articles()
     {
         return $this->belongsToMany(Article::class);
     }
 
+   /* public function getLikedArticlesAttribute(){
+        return $this->articles->pluck('id')->toArray();
+    }*/
 }

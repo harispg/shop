@@ -1,21 +1,21 @@
 <template>
-	<a class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-	:data-tooltip="tooltipTitle()"
-	data-tooltip-placement="right"
-
-	>
-	<i :class="'g-font-size-18 addToWishlist fa ' + heartColor(this.isWished)" :data-article="this.articleId" @click="heartClicked"></i>
-</a>
+	
 </template>
 
 <script>
 	import Tooltip from 'tooltip.js';
 	export default {
-		props: ['state', 'articleId'],
+		props: ['state', 'article_id'],
+
+		watch: {
+			state: function(newVal, oldVal) {
+				this.isWished = newVal;
+			}
+		},
 
 		data() {
 			return {
-				isWished: this.state,
+				isWished: '',
 				tooltip: null,
 			}
 		},
@@ -53,18 +53,22 @@
 			//that is why we added _token data because in loginComponent we fetch new csrf and set it to the page
 			//but axios uses the old token set up in resources/js/bootstrap.js file.
 			heartClicked(){
-				axios.post('/wishlist/'+this.articleId, {_token:$('meta[name="csrf-token"]').attr('content')}).then((response) => {
+				axios.post('/wishlist/'+this.article_id, {_token:$('meta[name="csrf-token"]').attr('content')}).then((response) => {
 						this.isWished = this.isWished ? false : true;
 						this.wishlistMessage();
 						this.tooltip.updateTitleContent(this.tooltipTitle());
 					 }).catch((error) => {
 					 	if(error.response.data.message == 'Unauthenticated.'){
 							Event.$emit('loginRequired');
+					 	}else{
+					 		location.reload();
 					 	}
 					 });
 			},
 		},
 		mounted() {
+			let _this = this;
+			this.isWished = this.state;
 			let elem = this.$el
 			this.tooltip = new Tooltip(elem, {
 				placement: elem.dataset.tooltipPlacement,

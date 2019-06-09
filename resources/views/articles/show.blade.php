@@ -45,7 +45,6 @@
               <!-- Product Info -->
               <div class="g-mb-30">
                 <h1 class="g-font-weight-300 mb-4">{{$article->name}}</h1>
-
                 @include('ratings.rating')
                 <p>{{$article->description}}</p>
               </div>
@@ -92,17 +91,16 @@
               <div class="row g-mx-minus-5 g-mb-20 g-mt-50">
                 <div class="col g-px-5 g-mb-10">
                   <button id="addToCart" class="btn btn-block u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-25" type="button" @if(auth()->check()) data-order="{{auth()->user()->activeOrder()->id}}"@endif data-article="{{$article->id}}">
-                    Add to cart<i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
+                    Update cart<i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
                   </button>
                 </div>
+
                 <div class="col g-px-5 g-mb-10">
-                  <button id="addToWishlist" class="btn btn-block btn-outline-{{$article->isWished()?"danger":"secondary"}} g-color-gray-dark-v4 g-color-white--hover g-font-size-11 text-uppercase g-py-15" data-article="{{$article->id}}" type="button">
-                    <span>{{$article->isWished()?"Remove from wishlist":"Add to wishlist"}}</span><i
-                    class="align-middle
-                     ml-2 fa
-                     {{$article->isWished()?"fa-heart text-danger":"fa-heart-o"}}
-                      g-font-size-15"></i>
+                  <wishlist-component :state="{{$article->isWished() ? $article->isWished() : "undefined"}}" :article_id="{{$article->id}}" inline-template>
+                  <button id="addToWishlist" class="btn btn-block btn-outline-danger g-color-gray-dark-v4 g-color-white--hover g-font-size-11 text-uppercase g-py-15" data-article="{{$article->id}}" type="button" @click="heartClicked">
+                    Wishlist       <i :class="'g-font-size-14 addToWishlist fa ' + heartColor(this.isWished)" :data-article="this.article_id"></i>
                   </button>
+                    </wishlist-component>
                 </div>
               </div>
               <!-- End Buttons -->
@@ -189,191 +187,192 @@
 
 @section('script')
  <script>
-   $(document).on('ready', function(){
+  $(document).on('ready', function(){
+    $.HSCore.helpers.HSRating.init();
 
-    //fill stars according to user rating of the article
-      function fillStars(rating){
-       var collection = $(".js-rating");
-       var i=0;
-       $(collection).children("li").each(function(){
-        if(i<rating){
-          $(this).addClass("g-color-primary ");
-          i++;
-        }
-       });}
+   //  //fill stars according to user rating of the article
+   //    function fillStars(rating){
+   //     var collection = $(".js-rating");
+   //     var i=0;
+   //     $(collection).children("li").each(function(){
+   //      if(rating-i>0.5){
+   //        $(this).addClass("g-color-primary ");
+   //        i++;
+   //      }
+   //     });}
 
-    //Open reply to comment form
-      $(".replyToggler").on('click', function(){
-        var commentId = $(this).data('comment');
-        var container= $(".reply#"+commentId);
-        var button = container.find("button");
-        if(container.attr("hidden")){
-          container.attr("hidden", false);
-          container.find("textarea").focus();
-          button.removeClass("g-py-15 g-px-25");
-          button.html("Reply");
-        }else{
-          $(".reply#"+commentId).attr("hidden", true);
-        }
-      });
+   //  //Open reply to comment form
+   //    $(".replyToggler").on('click', function(){
+   //      var commentId = $(this).data('comment');
+   //      var container= $(".reply#"+commentId);
+   //      var button = container.find("button");
+   //      if(container.attr("hidden")){
+   //        container.attr("hidden", false);
+   //        container.find("textarea").focus();
+   //        button.removeClass("g-py-15 g-px-25");
+   //        button.html("Reply");
+   //      }else{
+   //        $(".reply#"+commentId).attr("hidden", true);
+   //      }
+   //    });
 
-      //Users rating of the article
-      var rating = $(".js-rating").data("rating-by-user");
-      //ratings plugin initialization
-      $.HSCore.helpers.HSRating.init();
-      //draw stars acording to users rating
-      fillStars(rating);
+   //    //Users rating of the article
+   //    var rating = $(".js-rating").data("rating-by-user");
+   //    //ratings plugin initialization
+   //    $.HSCore.helpers.HSRating.init();
+   //    //draw stars acording to users rating
+   //    fillStars(rating);
 
-      //rating ajax
-      $(".js-rating").on('click','li', function(){
-        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
-        var rating = $(this).parent();
-        var stars = rating.children(".click").length;
-        var articleId = rating.data('article');
-        $.ajax({
-          type: 'POST',
-          dataType: 'JSON',
-          url: "/ratings/"+articleId,
-          data: {_token: CSRF_TOKEN, rating: stars},
-          success: function(response){
-            $(".avgRating").html("Average rating: "+response[0]);
-            if(response[2]==1){
-              $(".usersRatings").html("Rated by: 1 person");
-            }else{
-              $(".usersRatings").html("Rated by: "+response[2]+" people");
-            }
-          },
-          error: function(response){
-            $(".notAllowed").html(response.statusText);
-            $(".notAllowed").attr("hidden", false);
-          }
-        });
+   //    //rating ajax
+   //    $(".js-rating").on('click','li', function(){
+   //      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+   //      var rating = $(this).parent();
+   //      var stars = rating.children(".click").length;
+   //      var articleId = rating.data('article');
+   //      $.ajax({
+   //        type: 'POST',
+   //        dataType: 'JSON',
+   //        url: "/ratings/"+articleId,
+   //        data: {_token: CSRF_TOKEN, rating: stars},
+   //        success: function(response){
+   //          $(".avgRating").html("Average rating: "+response[0]);
+   //          if(response[2]==1){
+   //            $(".usersRatings").html("Rated by: 1 person");
+   //          }else{
+   //            $(".usersRatings").html("Rated by: "+response[2]+" people");
+   //          }
+   //        },
+   //        error: function(response){
+   //          $(".notAllowed").html(response.statusText);
+   //          $(".notAllowed").attr("hidden", false);
+   //        }
+   //      });
 
-      });
-      //deleting comments
-      $(".delete").on('click', function(e){
-        e.preventDefault();
-        var commentId = $(this).data('comment');
-        var _this = $(this);
+   //    });
+   //    //deleting comments
+   //    $(".delete").on('click', function(e){
+   //      e.preventDefault();
+   //      var commentId = $(this).data('comment');
+   //      var _this = $(this);
 
-        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
-        swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.value) {
-          $.ajax({
-          type: 'POST',
-          method: 'DELETE',
-          url: "/comments/"+commentId,
-          data: {_token: CSRF_TOKEN, _method: 'DELETE'},
-          success: function(response){
-            _this.closest("li").attr("hidden", true);
-          },
-          error: function(response){
-            /*swal.fire({
-              type: 'error',
-              title: response.responseText,
-              text: 'You need to be registered to rate articles',
-              showConfirmButton: false,
-              timer: 1500,
-            });*/
-            $(".delete-warning").attr("hidden", false);
-            $(".delete-warning").html(response.statusText);
-          }
-        });
+   //      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+   //      swal.fire({
+   //      title: 'Are you sure?',
+   //      text: "You won't be able to revert this!",
+   //      type: 'warning',
+   //      showCancelButton: true,
+   //      confirmButtonColor: '#3085d6',
+   //      cancelButtonColor: '#d33',
+   //      confirmButtonText: 'Yes, delete it!'
+   //    }).then((result) => {
+   //      if (result.value) {
+   //        $.ajax({
+   //        type: 'POST',
+   //        method: 'DELETE',
+   //        url: "/comments/"+commentId,
+   //        data: {_token: CSRF_TOKEN, _method: 'DELETE'},
+   //        success: function(response){
+   //          _this.closest("li").attr("hidden", true);
+   //        },
+   //        error: function(response){
+   //          swal.fire({
+   //            type: 'error',
+   //            title: response.responseText,
+   //            text: 'You need to be registered to rate articles',
+   //            showConfirmButton: false,
+   //            timer: 1500,
+   //          });
+   //          $(".delete-warning").attr("hidden", false);
+   //          $(".delete-warning").html(response.statusText);
+   //        }
+   //      });
 
-          swal.fire({
-            title:'Deleted!',
-            text: 'Your category has been deleted.',
-            type:'success',
-            showConfirmButton:false,
-            'timer': 850
-          })
-        }
-      });
+   //        swal.fire({
+   //          title:'Deleted!',
+   //          text: 'Your category has been deleted.',
+   //          type:'success',
+   //          showConfirmButton:false,
+   //          'timer': 850
+   //        })
+   //      }
+   //    });
         
-      });
+   //    });
 
-      //Add to cart
-      $("#addToCart").on('click', function(){
-        var API_TOKEN = $("meta[name='api-token']").attr('content');
-        if(API_TOKEN == undefined){
-          swal.fire({
-            type: 'info',
-            title: 'Please register',
-            text: 'You have to register before using all features.'
-          });
-          return;
-        }
-        var quantity = $("input.js-result").val();
-        var _this = $(this);
-        var orderId = $(this).data('order');
-        var articleId = $(this).data('article');
-        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
-        var API_TOKEN = $("meta[name='api-token']").attr('content');
-        $.ajax({
-          url: '/api/orders/'+orderId+'/addArticle/'+articleId,
-          type:'POST',
-          data:{_token:CSRF_TOKEN, api_token: API_TOKEN, quantity: quantity, order: orderId, article: articleId},
-          success: function(response){
-            console.log(response);
-            location.reload();
-          }
-        });
-      });
-      //---END--- Add to cart
+   //    //Add to cart
+   //    $("#addToCart").on('click', function(){
+   //      var API_TOKEN = $("meta[name='api-token']").attr('content');
+   //      if(API_TOKEN == undefined){
+   //        swal.fire({
+   //          type: 'info',
+   //          title: 'Please register',
+   //          text: 'You have to register before using all features.'
+   //        });
+   //        return;
+   //      }
+   //      var quantity = $("input.js-result").val();
+   //      var _this = $(this);
+   //      var orderId = $(this).data('order');
+   //      var articleId = $(this).data('article');
+   //      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+   //      var API_TOKEN = $("meta[name='api-token']").attr('content');
+   //      $.ajax({
+   //        url: '/api/orders/'+orderId+'/addArticle/'+articleId,
+   //        type:'POST',
+   //        data:{_token:CSRF_TOKEN, api_token: API_TOKEN, quantity: quantity, order: orderId, article: articleId},
+   //        success: function(response){
+   //          console.log(response);
+   //          location.reload();
+   //        }
+   //      });
+   //    });
+   //    //---END--- Add to cart
       
-      //Add to wishlist
-      function toggleWishlist(articleId){
-        var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
-        var API_TOKEN = $("meta[name='api-token']").attr('content');
-        $.ajax({
-            url:'/api/wishlist/'+articleId,
-            method: 'post',
-            data: {_token:CSRF_TOKEN, api_token:API_TOKEN}
-          });
-      }
-      $("#addToWishlist").click(function(){
-        var API_TOKEN = $("meta[name='api-token']").attr('content');
-        if(API_TOKEN == undefined){
-          swal.fire({
-            type: 'warning',
-            title: 'Please register',
-            text: 'You have to register before using all features.'
-          });
-          return;
-        }
-        var button = $(this);
-        var iconElement = button.find("i.fa");
-        var spanElement = button.find("span");
-        var classes = iconElement.attr("class");
-        var articleId = button.data('article');
-        if(classes.indexOf("fa-heart-o")>=0){
-          button.removeClass("btn-outline-secondary");
-          button.addClass("btn-outline-danger");
-          spanElement.text("Remove from wishlist");
-          iconElement.removeClass("fa-heart-o");
-          iconElement.addClass("fa-heart");
-          iconElement.addClass("text-danger");
-          toggleWishlist(articleId);
+   //    //Add to wishlist
+   //    function toggleWishlist(articleId){
+   //      var CSRF_TOKEN = $("meta[name='csrf-token']").attr('content');
+   //      var API_TOKEN = $("meta[name='api-token']").attr('content');
+   //      $.ajax({
+   //          url:'/api/wishlist/'+articleId,
+   //          method: 'post',
+   //          data: {_token:CSRF_TOKEN, api_token:API_TOKEN}
+   //        });
+   //    }
+   //    $("#addToWishlist").click(function(){
+   //      var API_TOKEN = $("meta[name='api-token']").attr('content');
+   //      if(API_TOKEN == undefined){
+   //        swal.fire({
+   //          type: 'warning',
+   //          title: 'Please register',
+   //          text: 'You have to register before using all features.'
+   //        });
+   //        return;
+   //      }
+   //      var button = $(this);
+   //      var iconElement = button.find("i.fa");
+   //      var spanElement = button.find("span");
+   //      var classes = iconElement.attr("class");
+   //      var articleId = button.data('article');
+   //      if(classes.indexOf("fa-heart-o")>=0){
+   //        button.removeClass("btn-outline-secondary");
+   //        button.addClass("btn-outline-danger");
+   //        spanElement.text("Remove from wishlist");
+   //        iconElement.removeClass("fa-heart-o");
+   //        iconElement.addClass("fa-heart");
+   //        iconElement.addClass("text-danger");
+   //        toggleWishlist(articleId);
           
-        }else{
-          button.removeClass("btn-outline-danger");
-          button.addClass("btn-outline-secondary");
-          spanElement.text("Add to wishlist");
-          iconElement.removeClass("fa-heart");
-          iconElement.addClass("fa-heart-o");
-          iconElement.removeClass("text-danger");
-          toggleWishlist(articleId);
-        }
-      });
-   });
+   //      }else{
+   //        button.removeClass("btn-outline-danger");
+   //        button.addClass("btn-outline-secondary");
+   //        spanElement.text("Add to wishlist");
+   //        iconElement.removeClass("fa-heart");
+   //        iconElement.addClass("fa-heart-o");
+   //        iconElement.removeClass("text-danger");
+   //        toggleWishlist(articleId);
+   //      }
+   //    });
+  });
 
  </script>
 @endsection

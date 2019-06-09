@@ -14,26 +14,25 @@ class RatingsController extends Controller
     }
     public function store(Request $request, Article $article)
     {
-        /*if(!auth()->check()){
-            return response('Not Autheticated',401);
-        }*/
 
     	$this->validate($request, [
     		'rating' => 'required|integer|between:1,5'
     	]);
 
-        
-
-    	$rating = Rating::updateOrCreate([
-    		'article_id' => $article->id,
-    		'user_id' => auth()->id(),
-    	], 
-    	[
-    		'rating'=> $request->rating
-    	]
+    	Rating::updateOrCreate(
+            [
+        		'article_id' => $article->id,
+        		'user_id' => auth()->id(),
+        	], 
+        	[
+        		'rating'=> $request->rating
+        	]
     	);
-
-
-    	return [$article->avgRating(), $article->ratingByUser(auth()->user()), $article->ratings->count()];
+    	return response()->json(
+            [ 
+                'avg' => $article->avgRating(), 
+                'count' => $article->ratings->count()
+            ]
+        );
     }
 }

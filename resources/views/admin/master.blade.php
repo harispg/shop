@@ -17,7 +17,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="api-token" content="{{auth()->user()->api_token}}" />
 
-    <title>INSPINIA | Dashboard</title>
+    <title>Online Shop | Admin Panel</title>
 
     <link rel="stylesheet" type="text/css" href="/css/app.css">
     {{-- <link rel="stylesheet" type="text/css" href="/css/reset.css"> --}}

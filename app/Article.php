@@ -13,7 +13,7 @@ class Article extends Model
      * to json representation of models
      * @var array
      */
-    protected $appends=['wished'];
+    protected $appends=['wished', 'rating_by_user', 'average_rating'];
     public function photos()
     {
     	return $this->belongsToMany(Photo::class);
@@ -83,21 +83,30 @@ class Article extends Model
     {
         return number_format($this->ratings()->avg('rating'), 1);
     }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->avgRating();
+    }
     /**
      * returns rating by $user
      * @param  [App\User] $user [user instance]
      * @return [integer]       [Rating given by $user]
      */
-    public function ratingByUser($user)
+    public function ratingByUser()
     {
-        if(!$user || !$this->ratings->where('user_id',$user->id)->count()){
+        if(!auth()->user() || !$this->ratings->where('user_id',auth()->id())->count()){
             return 0;
             }
         return Rating::where(
             [
                 'article_id'=>$this->id, 
-                'user_id'=>$user->id
+                'user_id'=>auth()->id()
             ])->first()->rating;
+    }
+
+    public function getRatingByUserAttribute(){
+        return $this->ratingByUser();
     }
 
     public function belongsToCategory(Category $category)

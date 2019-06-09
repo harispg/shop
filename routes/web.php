@@ -76,6 +76,7 @@ Route::get('categories/{category}', 'CategoriesController@show')->name('category
 
 Route::post('/comments/{article}', 'CommentsController@store')->name('comments.store');
 Route::delete('/comments/{comment}', 'CommentsController@destroy');
+
 Route::post('/ratings/{article}', 'RatingsController@store');
 
 

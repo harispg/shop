@@ -12,8 +12,8 @@
 <h1 class="display-4">Product categories</h1>
 
 @can('categories.create')
-<div class="widget style1 lazur-bg col-2 btn" data-toggle="modal" data-target="#newCategory">    
-  <h2 class="font-bold">New Category</h2>
+<div class="lazur-bg btn" data-toggle="modal" data-target="#newCategory">    
+  <h3 class="font-bold">New Category</h3>
 </div>
 @endcan
 

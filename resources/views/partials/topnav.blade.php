@@ -207,12 +207,7 @@
                       </li>
 
                       <li v-if="authenticated">
-                        <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" onclick="event.preventDefault(); getElementById('logoutForm').submit();" href="#!">
-                          Logout
-                        </a>
-                        <form id="logoutForm" style="visibility: hidden" action="{{route('logout')}}" method="POST">
-                          @csrf
-                        </form>
+                        <logout-component></logout-component>
                       </li>
                       <li  v-if="authenticated">
                         <a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-font-weight-400 g-py-5 g-px-20" href="{{route('wishlist.index')}}">

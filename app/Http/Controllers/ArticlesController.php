@@ -25,8 +25,23 @@ class ArticlesController extends Controller
      */
     public function index(Request $request)
     {
-        $articles = Article::with(['photos', 'categories'])->paginate(8);
-        return view('articles.index', compact(['articles']));
+        if(isset($request->show)){
+            $perPage = $request->show;
+        }else{
+            $perPage = 8;
+        }
+        if(isset($request->sortBy)){
+            $sortBy = $request->sortBy;
+        }else{
+            $sortBy = 'updated_at';
+        }
+        if(isset($request->ascDesc)){
+            $ascDesc = $request->ascDesc;
+        }else{
+            $ascDesc = 'ASC';
+        }
+        $articles = Article::with(['photos', 'categories'])->orderBy($sortBy, $ascDesc)->paginate($perPage);
+        return view('articles.index', compact(['articles', 'perPage', 'sortBy', 'ascDesc']));
     }
 
     public function adminIndex(Request $request)
@@ -58,7 +73,7 @@ class ArticlesController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|min:3',
-            'sku' => 'required|integer|min:100000|max:999999|unique:articles',
+            'sku' => 'required|integer|min:10000000|max:99999999|unique:articles',
             'description' => 'required|min:10',
             'quantity' => 'required|integer',
             'discount' => 'integer|min:0|max:99',
@@ -116,7 +131,7 @@ class ArticlesController extends Controller
      */
     public function show(Article $article)
     {
-
+        $article->load('ratings');
         $allComments = $article->getComments();
         $articles = Article::where('featured',true);
 

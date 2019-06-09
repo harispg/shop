@@ -1,7 +1,8 @@
 <script>
 import BasketComponent from './BasketComponent.vue';	
+import LogoutComponent from './LogoutComponent.vue';
 	export default {
-		components: {BasketComponent},
+		components: {BasketComponent, LogoutComponent},
 		data(){
 			return{
 				authenticated: false,
@@ -23,7 +24,7 @@ import BasketComponent from './BasketComponent.vue';
 			Event.$on('loggedIn', function(response) {
 				_this.authenticated = true;
 				_this.userName = response.user.name;
-				_this.activeOrderId = response.user.active_order_id;
+				_this.activeOrderId =response.user.active_order_id;
 				Event.$emit('orderIdReceived');
 			});
 

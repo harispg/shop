@@ -9,9 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{csrf_token()}}">
-    @if(auth()->check())
-    <meta name="api-token" content="{{auth()->user()->api_token}}">
-    @endif
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="../favicon.ico">
@@ -74,7 +71,7 @@
 
               <!-- Logo -->
               <a class="navbar-brand" href="{{route('home')}}">
-                <img src="/assets/img/logo/logo-1.png" alt="Image Description">
+                <p>Online Shop</p>
               </a>
               <!-- End Logo -->
 
@@ -421,9 +418,11 @@
                             <span class="d-block g-font-weight-500 text-uppercase mb-2">{{$category->name}}</span>
 
                             <ul class="list-unstyled">
-                              @foreach($category->articles as $article)
+                              @if($category->articles->count() >=4)
+                              @foreach($category->articles->take(4)->all() as $article)
                               <li><a class="d-block g-color-text g-color-primary--hover g-text-underline--none--hover g-py-5" href="{{route('articles.show', ['article' => $article->id])}}">{{$article->name}}</a></li>
                               @endforeach
+                              @endif
                             </ul>
                           </div>
                           @endforeach
@@ -432,8 +431,7 @@
                         @endforeach
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
-                          @if($allArticles->where('featured',true)->isNotEmpty())
-                          {{$article = $allArticles->where('featured', true)->random()}}
+                          @if($allArticles->where('featured',true)->isNotEmpty() && $article = $allArticles->where('featured', true)->random())
                           <article class="g-pos-rel">
                             <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
 
