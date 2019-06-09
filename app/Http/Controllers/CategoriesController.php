@@ -51,10 +51,25 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Request $request, Category $category)
     {
-        $articles = $category->articles()->with(['photos', 'categories'])->paginate(8);
-        return view('articles.index', compact('articles'));
+        if(isset($request->show)){
+            $perPage = $request->show;
+        }else{
+            $perPage = 8;
+        }
+        if(isset($request->sortBy)){
+            $sortBy = $request->sortBy;
+        }else{
+            $sortBy = 'updated_at';
+        }
+        if(isset($request->ascDesc)){
+            $ascDesc = $request->ascDesc;
+        }else{
+            $ascDesc = 'ASC';
+        }
+        $articles = $category->articles()->with(['photos', 'categories'])->orderBy($sortBy, $ascDesc)->paginate($perPage);
+        return view('articles.index', compact(['articles', 'perPage', 'sortBy', 'ascDesc']));
     }
 
     /**

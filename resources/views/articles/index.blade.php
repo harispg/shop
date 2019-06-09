@@ -49,7 +49,6 @@
               <option name="sortBy" value="sortBy=updated_at" @if($sortBy == 'updated_at'){{'selected'}}@endif>Date</option>
               <option name="sortBy" value="sortBy=price&ascDesc=ASC" @if($sortBy == 'price' && $ascDesc == 'ASC'){{'selected'}}@endif>Price low to high</option>
               <option name="sortBy" value="sortBy=price&ascDesc=DESC" @if($sortBy == 'price' && $ascDesc == 'DESC'){{'selected'}}@endif>Price high to low</option>
-              <option name="sortBy" value="sortBy=SKU" @if($sortBy == 'sku'){{'selected'}}@endif>SKU</option>
             </select>
             {{-- <div class="d-inline-block btn-group g-line-height-1_2">
               <button type="button" class="btn btn-secondary dropdown-toggle h6 align-middle g-brd-none g-color-gray-dark-v5 g-color-black--hover g-bg-transparent text-uppercase g-font-weight-300 g-font-size-12 g-pa-0 g-pl-10 g-ma-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
