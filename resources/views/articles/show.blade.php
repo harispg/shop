@@ -2,6 +2,7 @@
 
 @section('content')
 
+<shop-article :article_id="{{$article->id}}" inline-template>
 	<!-- Product Description -->
       <div class="container g-pt-50 g-pb-100">
         <div class="row">
@@ -73,8 +74,8 @@
                 <h5 class="g-color-gray-dark-v5 g-font-weight-400 g-font-size-default mb-0">Quantity</h5>
 
                 <div class="js-quantity input-group u-quantity-v1 g-width-80 g-brd-primary--focus">
-                  <input class="js-result form-control text-center g-font-size-13 rounded-0" type="text" 
-                   @if($user = auth()->user())value="{{$item = $user->activeOrder()->getItem($article)?$user->activeOrder()->getItem($article)->quantity:'0'}}"@else
+                  <input id="articleQuantity"class="js-result form-control text-center g-font-size-13 rounded-0" type="text" 
+                   @if($user = auth()->user())value="{{$item = $user->activeOrder()->getItem($article)?$user->activeOrder()->getItem($article)->quantity:'1'}}"@else
                    value="0"
                    @endif 
                   readonly>
@@ -90,14 +91,17 @@
               <!-- Buttons -->
               <div class="row g-mx-minus-5 g-mb-20 g-mt-50">
                 <div class="col g-px-5 g-mb-10">
-                  <button id="addToCart" class="btn btn-block u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-25" type="button" @if(auth()->check()) data-order="{{auth()->user()->activeOrder()->id}}"@endif data-article="{{$article->id}}">
+                  <add-to-cart :article_id="{{$article->id}}" inline-template>
+                  <button 
+                  class="btn btn-block u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-25" type="button"  @click.prevent="addToCart()" >
                     Update cart<i class="align-middle ml-2 icon-finance-100 u-line-icon-pro"></i>
                   </button>
+                  </add-to-cart>
                 </div>
 
                 <div class="col g-px-5 g-mb-10">
                   <wishlist-component :state="{{$article->isWished() ? $article->isWished() : "undefined"}}" :article_id="{{$article->id}}" inline-template>
-                  <button id="addToWishlist" class="btn btn-block btn-outline-danger g-color-gray-dark-v4 g-color-white--hover g-font-size-11 text-uppercase g-py-15" data-article="{{$article->id}}" type="button" @click="heartClicked">
+                  <button id="addToWishlist" class="btn btn-block btn-outline-secondary g-color-gray-dark-v4 g-color-white--hover g-font-size-11 text-uppercase g-py-15" data-article="{{$article->id}}" type="button" @click="heartClicked">
                     Wishlist       <i :class="'g-font-size-14 addToWishlist fa ' + heartColor(this.isWished)" :data-article="this.article_id"></i>
                   </button>
                     </wishlist-component>
@@ -109,6 +113,7 @@
           </div>
         </div>
       </div>
+      </shop-article>
       <!-- End Product Description -->
 
       <!-- Description -->

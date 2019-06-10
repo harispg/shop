@@ -1,18 +1,14 @@
 <template>
-	<a ref="addToCart" class="u-icon-v1 u-icon-size--sm g-color-gray-dark-v5 g-color-primary--hover g-font-size-15 rounded-circle" href="#!"
-             data-tooltip="Add to cart"
-             data-tooltip-placement="left"
-             @click="addToCart()">
-            <i class="addToCart icon-finance-100 u-line-icon-pro" ></i>
-          </a>
+
 </template>
 <script>
 	import Tooltip from 'tooltip.js';
 	export default{
-		props: ['articleId'],
+		props: ['article_id'],
 		data(){
 			return {
 				tooltip: null,
+				quantity: 1
 			}
 		},
 
@@ -28,15 +24,18 @@
 			},
 
 			addToCart(){
+				let quantity = $(".js-result").val();
 				axios.post(
-						'/articles/'+this.articleId+'/addToActiveOrder', 
-						{_token:$('meta[name="csrf-token"]').attr('content')})
+						'/articles/'+this.article_id+'/addToActiveOrder', 
+						{_token:$('meta[name="csrf-token"]').attr('content'), quantity: quantity})
 				.then((response) => {
 						Event.$emit('itemAdded', response.data);
 						this.message();
 					 }).catch((error) => {
 					 	if(error.response.data.message == 'Unauthenticated.'){
 							Event.$emit('loginRequired');
+					 	}else{
+					 		location.reload();
 					 	}
 					 });
 			},
@@ -44,10 +43,12 @@
 
 		mounted() {
 			let elem = this.$el
-			this.tooltip = new Tooltip(elem, {
-				placement: elem.dataset.tooltipPlacement,
-				title: elem.dataset.tooltip
-			});
+			if(this.$el.dataset.tooltip !==undefined){                  //checking if there are any data attributes, 
+				this.tooltip = new Tooltip(elem, {          //should change just for tooltip. But it throws error
+					placement: elem.dataset.tooltipPlacement,//cannot read property length of undefined
+					title: elem.dataset.tooltip
+				});
+			}
 		}
 	}
 </script>

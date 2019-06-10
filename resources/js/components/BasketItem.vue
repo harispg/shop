@@ -32,17 +32,6 @@
 					.then(response => Event.$emit('itemRemoved', response.data))
 					.catch(error => console.log(error.response.data));
 			}
-		},
-
-		mounted(){
-			let _this = this;
-			Event.$on('itemAdded', function(item){
-				if(_this.item.id === item.id){
-					_this.item.quantity ++;
-					_this.$emit('totalUpdated', item.price);
-				}
-			})
 		}
-
 	}
 </script>

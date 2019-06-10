@@ -24,7 +24,7 @@
 	<div class="js-scrollbar g-height-200">
 		<!-- Product -->
 		<div v-show="order.items_count">	
-			<basket-item :item="item" @totalUpdated="function(amount){total+=amount}" v-for="item in items" :key="item.id"></basket-item>	
+			<basket-item v-for="item in items" :key="item.id" :item="item"></basket-item>	
 		</div>
 		<!-- End Product -->
 
@@ -73,6 +73,37 @@
 			}
 		},
 
+		methods: {
+			itemExists(item){
+				for(let i=0; i<this.items.length; i++){
+					if(this.items[i].id == item.id){
+						return true;
+					}
+				}
+				return false;
+			},
+
+			updateItemQuantity(item){
+				for(let i=0; i<this.items.length; i++){
+					if(this.items[i].id == item.id){
+						this.items[i] = item;
+					}
+				}
+			},
+
+			appendItem(item){
+				this.items.unshift(item);
+				this.order.items_count ++;
+			},
+
+			calculateTotal(){
+				this.total = 0;
+				for(let i=0; i<this.items.length; i++){
+					this.total += this.items[i].total;
+				}
+			}
+		},
+
 		computed: {
 			orderUrl(){
 				return '/orders/'+this.order.id+'/show';
@@ -92,14 +123,8 @@
 					 });
 			let _this = this;
 			Event.$on('itemAdded', function(item){
-				let newItem = _this.items.filter(anItem => {
-					return anItem.id === item.id
-				});
-				if(newItem.length <= 0){
-					_this.items.unshift(item);
-				    _this.order.items_count ++;
-				    _this.total += item.price;
-				}
+				_this.itemExists(item) ? _this.updateItemQuantity(item) : _this.appendItem(item);
+				_this.calculateTotal();
 			});
 
 			Event.$on('itemRemoved', function(data){
@@ -109,11 +134,7 @@
 				});
 				_this.items = itemsLeft;
 				_this.order.items_count --;
-				_this.total -= item.price;
-				if (! _this.items.length > 0){
-					_this.total = 0;
-				}
-
+				_this.calculateTotal();
 			})
 		}
 	}
