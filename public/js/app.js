@@ -2797,7 +2797,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'comment-component',
+  name: 'comment-node',
   components: {
     CommentsForm: _CommentsForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     CommentComponent: _CommentComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2830,6 +2830,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleReply: function toggleReply() {
       this.showForm = this.showForm ? false : true;
+
+      if (this.showForm == true) {
+        Event.$emit('form-shown', this.comment.id);
+      }
     },
     deleteComment: function deleteComment() {
       axios.post('/comments/' + this.comment.id, {
@@ -2850,6 +2854,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {},
   mounted: function mounted() {
+    var _this = this;
+
+    Event.$on('form-shown', function (data) {
+      if (_this.comment.id != data) {
+        _this.showForm = false;
+      }
+    });
     this.isSuper = this.is_super;
     this.updated_comments = this.all_comments;
     this.selfCollection = this.all_comments[this.comment.id] ? this.all_comments[this.comment.id] : [];
@@ -43813,7 +43824,7 @@ var render = function() {
                   "li",
                   { key: instance.id },
                   [
-                    _c("comment-component", {
+                    _c("comment-node", {
                       attrs: {
                         comment: instance,
                         article_id: _vm.article_id,

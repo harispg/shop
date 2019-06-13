@@ -46,22 +46,22 @@
     </div>
   </div>
     <ul v-if="hasReplies" style="list-style-type:none;" class="pt-5 pb-5">
-        <li v-for="instance in selfCollection" :key="instance.id">
-          <comment-component 
-            :comment="instance" 
-            :article_id="article_id" 
-            :is_super="is_super" 
-            :all_comments="updated_comments">
-          </comment-component>
-        </li>
-      </ul>
+      <li v-for="instance in selfCollection" :key="instance.id">
+        <comment-node 
+          :comment="instance" 
+          :article_id="article_id" 
+          :is_super="is_super" 
+          :all_comments="updated_comments">
+        </comment-node>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
   import CommentsForm from './CommentsForm.vue';
   import CommentComponent from './CommentComponent.vue';
 	export default{
-    name: 'comment-component',
+    name: 'comment-node',
     components: {CommentsForm, CommentComponent},
 		props: ['article_id', 'comment', 'is_super', 'all_comments'],
     watch: {
@@ -92,6 +92,9 @@
 
       toggleReply(){
         this.showForm = this.showForm ? false:true;
+        if(this.showForm == true){
+          Event.$emit('form-shown', this.comment.id);
+        }
       },
 
       deleteComment(){
@@ -109,6 +112,12 @@
     created(){
     },
     mounted(){
+      let _this = this;
+      Event.$on('form-shown', function(data){
+        if (_this.comment.id != data) {
+          _this.showForm = false;
+        }
+      })
       this.isSuper = this.is_super;
       this.updated_comments = this.all_comments;
       this.selfCollection = this.all_comments[this.comment.id] ? this.all_comments[this.comment.id] : [];
