@@ -62,7 +62,7 @@ class Article extends Model
             $allComments['root'] = $allComments[""];  
             unset($allComments[""]);
         }else{
-        $allComments['root']=[]; 
+        $allComments['root']=collect([]); 
         }
 
         return $allComments;

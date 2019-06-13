@@ -39,9 +39,6 @@
         </div>
       </div>
     </div>
-    
-    
-    
   </div>
   <!-- End Media -->
   @if(isset($allComments[$comment->id]))

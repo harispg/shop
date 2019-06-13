@@ -139,7 +139,12 @@
 
       <!-- comments -->
       
-      @include('comments.comments')
+      <!-- Review -->
+        <comments-component 
+          :article_id="{{$article->id}}" 
+          :first_comments="{{$allComments}}">
+        </comments-component>
+         <!-- End Review
 
       @include('unify.featuredProducts')
       
@@ -206,20 +211,20 @@
    //      }
    //     });}
 
-   //  //Open reply to comment form
-   //    $(".replyToggler").on('click', function(){
-   //      var commentId = $(this).data('comment');
-   //      var container= $(".reply#"+commentId);
-   //      var button = container.find("button");
-   //      if(container.attr("hidden")){
-   //        container.attr("hidden", false);
-   //        container.find("textarea").focus();
-   //        button.removeClass("g-py-15 g-px-25");
-   //        button.html("Reply");
-   //      }else{
-   //        $(".reply#"+commentId).attr("hidden", true);
-   //      }
-   //    });
+    //Open reply to comment form
+      $(".replyToggler").on('click', function(){
+        var commentId = $(this).data('comment');
+        var container= $(".reply#"+commentId);
+        var button = container.find("button");
+        if(container.attr("hidden")){
+          container.attr("hidden", false);
+          container.find("textarea").focus();
+          button.removeClass("g-py-15 g-px-25");
+          button.html("Reply");
+        }else{
+          $(".reply#"+commentId).attr("hidden", true);
+        }
+      });
 
    //    //Users rating of the article
    //    var rating = $(".js-rating").data("rating-by-user");

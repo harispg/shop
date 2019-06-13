@@ -25,11 +25,9 @@ class CommentsController extends Controller
     	$comment->body = $request->body;
 
     	$article->saveComment($comment);
+        $comment->load('owner');
 
-	    if(!$comment->parent_id){
-        return redirect(url()->previous().'#commentNo'.$comment->id);
-        }
-	    return redirect(url()->previous().'#commentNo'.$comment->parent_id);
+	    return $comment;
     }
 
     public function destroy(Comment $comment)
@@ -37,7 +35,6 @@ class CommentsController extends Controller
         try{$comment->delete();}catch(Exception $e){
             return $e->message;
         }
-
         return 'Successfuly deleted a comment'; 
 
     }
