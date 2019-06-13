@@ -1,13 +1,13 @@
 <template>
 	<div class="container">
 	  <a name="comments"></a>
-	  <div class="g-brd-y g-brd-gray-light-v4 g-py-100">
+	  <div class="g-brd-y g-brd-gray-light-v4">
 	    <div class="row justify-content-center">
 	      <div class="col-lg-9">
 	        <h1 class="h3 mb-5">Comments:</h1>
 
 	        <!-- Review -->
-	        <div class="g-brd-bottom g-brd-gray-light-v4 g-pb-30 g-mb-50">
+	        <div class=" g-brd-gray-light-v4">
 	          <!-- Media -->
 	          <h3 class="h5 mb-5">Add a comment</h3>
 	          <!-- Comment Form -->
@@ -19,7 +19,7 @@
 	          </div>
 	          <!-- End Comment Form -->
 	          <!-- Comments list-->
-	          	<ul style="list-style-type:none;" class="pt-5 pb-5">
+	          	<ul style="list-style-type:none;">
 				  <li v-for="comment in commentsCollection" :key="comment.id">
 				    <comment-component 
 				      :comment="comment" 

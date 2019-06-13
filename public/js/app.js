@@ -3006,7 +3006,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: new _utilities_Form_js__WEBPACK_IMPORTED_MODULE_0__["default"]({
-        parentId: this.parent_id,
+        parentId: Number,
         body: ''
       })
     };
@@ -3018,7 +3018,13 @@ __webpack_require__.r(__webpack_exports__);
       this.form.post('/comments/' + this.article_id).then(function (response) {
         _this.$emit('comment-added', response);
       });
+    },
+    addParent: function addParent() {
+      this.form.parentId = this.parent_id;
     }
+  },
+  created: function created() {
+    this.form.parentId = this.parent_id;
   }
 });
 
@@ -43908,56 +43914,49 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("a", { attrs: { name: "comments" } }),
     _vm._v(" "),
-    _c("div", { staticClass: "g-brd-y g-brd-gray-light-v4 g-py-100" }, [
+    _c("div", { staticClass: "g-brd-y g-brd-gray-light-v4" }, [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-lg-9" }, [
           _c("h1", { staticClass: "h3 mb-5" }, [_vm._v("Comments:")]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "g-brd-bottom g-brd-gray-light-v4 g-pb-30 g-mb-50" },
-            [
-              _c("h3", { staticClass: "h5 mb-5" }, [_vm._v("Add a comment")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "g-pb-50" },
-                [
-                  _c("comments-form", {
-                    attrs: { parent_id: null, article_id: _vm.article_id },
-                    on: { "comment-added": _vm.addComment }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "ul",
-                {
-                  staticClass: "pt-5 pb-5",
-                  staticStyle: { "list-style-type": "none" }
-                },
-                _vm._l(_vm.commentsCollection, function(comment) {
-                  return _c(
-                    "li",
-                    { key: comment.id },
-                    [
-                      _c("comment-component", {
-                        attrs: {
-                          comment: comment,
-                          article_id: _vm.article_id,
-                          is_super: _vm.isSuper,
-                          all_comments: _vm.all_comments
-                        }
-                      })
-                    ],
-                    1
-                  )
-                }),
-                0
-              )
-            ]
-          )
+          _c("div", { staticClass: " g-brd-gray-light-v4" }, [
+            _c("h3", { staticClass: "h5 mb-5" }, [_vm._v("Add a comment")]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "g-pb-50" },
+              [
+                _c("comments-form", {
+                  attrs: { parent_id: null, article_id: _vm.article_id },
+                  on: { "comment-added": _vm.addComment }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticStyle: { "list-style-type": "none" } },
+              _vm._l(_vm.commentsCollection, function(comment) {
+                return _c(
+                  "li",
+                  { key: comment.id },
+                  [
+                    _c("comment-component", {
+                      attrs: {
+                        comment: comment,
+                        article_id: _vm.article_id,
+                        is_super: _vm.isSuper,
+                        all_comments: _vm.all_comments
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              0
+            )
+          ])
         ])
       ])
     ])
@@ -44010,14 +44009,10 @@ var render = function() {
             ],
             staticClass:
               "form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--focus g-resize-none rounded-3 g-py-13 g-px-15",
-            attrs: {
-              name: "body",
-              rows: "2",
-              placeholder: "Your message",
-              autofocus: ""
-            },
+            attrs: { name: "body", rows: "2", placeholder: "Your message" },
             domProps: { value: _vm.form.body },
             on: {
+              focus: _vm.addParent,
               input: function($event) {
                 if ($event.target.composing) {
                   return

@@ -5,7 +5,7 @@
 		  :action="'/comments/'+article_id"
 		  @submit.prevent="submitComment">
 		  <div class="g-mb-15">
-		  <textarea name="body" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--focus g-resize-none rounded-3 g-py-13 g-px-15" rows="2" placeholder="Your message" v-model="form.body" autofocus></textarea>
+		  <textarea name="body" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--focus g-resize-none rounded-3 g-py-13 g-px-15" rows="2" placeholder="Your message" v-model="form.body" @focus="addParent"></textarea>
 		</div>
 
 		<div class="row align-items-center">
@@ -24,7 +24,7 @@
 		data(){
 			return{
 				form: new Form({
-					parentId: this.parent_id,
+					parentId: Number,
 					body: '',
 				}),
 			}
@@ -36,7 +36,16 @@
 					.then(response => {
 						this.$emit('comment-added', response)
 				});
+			},
+
+			addParent(){
+				this.form.parentId = this.parent_id;
 			}
+			
+		},
+
+		created(){
+			this.form.parentId = this.parent_id;
 		}
 		
 	}
