@@ -79,9 +79,11 @@
               <div id="navBar" class="collapse navbar-collapse align-items-center flex-sm-row g-pt-15 g-pt-0--lg">
                 <ul class="navbar-nav ml-auto">
                   <!-- Home - Submenu -->
-                  <li class="nav-item g-mx-10--lg g-mx-15--xl">
-                    <big-meny></big-meny>
-                  </li>
+                  <a id="nav-link--home" 
+                     class="nav-link 
+                            text-uppercase 
+                            g-color-primary--hover 
+                            g-px-5 g-py-20 mb-0" href="/">Home</a>
                   <!-- End Home - Submenu -->
 
                   <!-- Pages - Submenu -->

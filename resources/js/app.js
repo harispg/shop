@@ -2,7 +2,6 @@ import './bootstrap.js';
 import LoginComponent from './components/LoginComponent.vue';
 import TopnavComponent from './components/TopnavComponent.vue';
 import RegisterComponent from './components/RegisterComponent.vue';
-import BigMeny from './components/BigMeny.vue';
 import ArticlesCollection from './components/ArticlesCollection.vue';
 import CommentsComponent from './components/comments/CommentsComponent.vue';
 import ModalLogin from './components/ModalLogin.vue';	
@@ -20,8 +19,7 @@ if(document.getElementById("app")!=null){
 	components: { 
 		LoginComponent, 
 		TopnavComponent,
-		RegisterComponent, 
-		BigMeny, 
+		RegisterComponent,
 		//ShopArticle,
 		ArticlesCollection,
 		ShopArticle, 

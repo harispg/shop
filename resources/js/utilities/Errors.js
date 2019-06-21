@@ -41,7 +41,10 @@ class Errors {
 	 * @return void
 	 */
 	record(response){
-		this.errors = response.errors;
+		if(response.message=='Unauthenticated'){
+		}else{
+			this.errors = response.errors;
+		}
 	}
 
 	/**

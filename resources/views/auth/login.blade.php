@@ -14,6 +14,11 @@
             <!-- Form -->
             <form class="g-py-15" action="{{route('login')}}" method="POST">
               @csrf
+              @if(request()->has('previous'))
+                <input type="hidden" name="previous" value={{request()->get('previous')}}>
+              @else
+                <input type="hidden" name="previous" value={{\URL::previous()}}>
+              @endif
               <div class="form-group mb-4 {{$errors->has('email')?"u-has-error-v1":""}}">
                 <label class="g-color-gray-dark-v2 g-font-weight-600 g-font-size-13">Email:</label>
                 <input class="form-control form-control-md {{$errors->has('email')?"rounded-0":"g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v4 g-brd-primary--hover rounded"}} g-py-15 g-px-15" name="email" type="email"  placeholder="johndoe@gmail.com" value="{{old('email')}}"required>

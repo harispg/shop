@@ -3,9 +3,12 @@
 		<form 
 		  method="POST" 
 		  :action="'/comments/'+article_id"
-		  @submit.prevent="submitComment">
+		  @submit.prevent="submitComment"
+		  @keydown="form.errors.clear($event.target.name)">
 		  <div class="g-mb-15">
 		  <textarea name="body" class="form-control g-color-black g-bg-white g-bg-white--focus g-brd-gray-light-v3 g-brd-primary--focus g-resize-none rounded-3 g-py-13 g-px-15" rows="2" placeholder="Your message" v-model="form.body" @focus="addParent"></textarea>
+		  <small class="form-control-feedback text-danger" v-if="form.errors.has('unauthenticated')" v-text="form.errors.get('unauthenticated')"></small>
+		  <small class="form-control-feedback text-danger" v-if="form.errors.has('body')" v-text="form.errors.get('body')"></small>
 		</div>
 
 		<div class="row align-items-center">
@@ -27,6 +30,7 @@
 					parentId: Number,
 					body: '',
 				}),
+				user: []
 			}
 		},
 
@@ -35,7 +39,8 @@
 				this.form.post('/comments/'+this.article_id)
 					.then(response => {
 						this.$emit('comment-added', response)
-				});
+					})
+					.catch(error => console.log(error));
 			},
 
 			addParent(){
@@ -46,6 +51,7 @@
 
 		created(){
 			this.form.parentId = this.parent_id;
+
 		}
 		
 	}

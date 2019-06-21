@@ -77,9 +77,7 @@ class Form {
 					return resolve(response.data);
 				})
 				.catch(error => {
-
 					this.onFail(error.response.data);
-
 					reject(error.response.data);
 				});
 
@@ -92,11 +90,22 @@ class Form {
 		this.reset();
 
 	}
-
+	/**
+	 * When axios request fails this gets done
+	 * @param  {Object} errors Object that has errors object as a property which contains properties for field with errors
+	 * in case the user is unauthenticated we need to mimic same response so everything works like it's a regular validation error
+	 * @return void
+	 */
 	onFail(errors) {
-
-		this.errors.record(errors);
-
+		if(errors.message == 'Unauthenticated.'){
+			let response = new Object();//we create new object
+			response.errors = new Object;//we add new object as a property
+			response.errors.unauthenticated=["You need to login first"];//needs to be array 
+			this.errors.record(response);//calls record method on errors object. Method is defined in Errors.js class file.
+		}else{
+			this.errors.record(errors);
+		}
+		//we check to see if user entered wrong credentials and if so we reset the form.
 		if(this.errors.has('email') && this.errors.get('email')=='These credentials do not match our records.'){
 			this.reset();
 		}

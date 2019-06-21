@@ -24,13 +24,13 @@ class ApiCategoriesController extends Controller
             'dymType' => 'alpha',
     	]);
         //TODO: return custom JSON response after validator fails
+        $category = Category::find($request->categoryId);
 
         if($request->photo){
             $photo = Photo::makePhotosFromFiles([$request->photo], $request->dimType);
             $category->photos()->sync($photo);
         }
 
-        $category = Category::find($request->categoryId);
     	$category->name = $request->name;
         $category->description = $request->description;
         $category->updated_at = now();

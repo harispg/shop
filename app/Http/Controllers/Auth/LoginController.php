@@ -29,6 +29,15 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = "/";
+
+    protected function redirectTo(){
+        if(request()->has('previous')){
+            return request()->get('previous');
+        }
+        else{
+            return '/';
+        }
+    }
     
 
 

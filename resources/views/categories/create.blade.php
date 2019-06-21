@@ -1,21 +1,19 @@
 @extends('admin.master')
 
-
-
-@section('pluginCSS')
+{{-- @section('pluginCSS')
 <link href="/inspinia/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-@endsection
-
-
+@endsection --}}
 
 @section('content')
-<h1 class="display-4">Product categories</h1>
+<div class="wrapper wrapper-content animated fadeInRight pb-0">
+<h1>Product categories</h1>
 
 @can('categories.create')
-<div class="lazur-bg btn" data-toggle="modal" data-target="#newCategory">    
+<div class="lazur-bg btn mt-3" data-toggle="modal" data-target="#newCategory">    
   <h3 class="font-bold">New Category</h3>
 </div>
 @endcan
+</div>
 
 <!-- New Category modal -->
 <div class="modal inmodal fade" 
@@ -70,26 +68,8 @@
       <div class="ibox ">
           <div class="ibox-title">
               <h5>Basic Data Tables example with responsive plugin</h5>
-              {{-- <div class="ibox-tools">
-                  <a class="collapse-link">
-                      <i class="fa fa-chevron-up"></i>
-                  </a>
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      <i class="fa fa-wrench"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-user">
-                      <li><a href="#" class="dropdown-item">Config option 1</a>
-                      </li>
-                      <li><a href="#" class="dropdown-item">Config option 2</a>
-                      </li>
-                  </ul>
-                  <a class="close-link">
-                      <i class="fa fa-times"></i>
-                  </a>
-              </div> --}}
           </div>
           <div class="ibox-content">
-
               <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover categories-table" >
           <thead>
