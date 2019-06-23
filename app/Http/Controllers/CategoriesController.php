@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Photo;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -28,9 +29,12 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $categories = Category::latest()->get();
+        $categories = Category::latest()->paginate(5);
+        if($request->expectsJson()){
+            return $categories;
+        }
         return view('categories.create', compact('categories'));
     }
 
@@ -42,7 +46,22 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'description' => 'required|min:10',
+            'photo' => 'required|mimes:jpg,jpeg,bmp,png',
+        ]);
+
+        $photo = Photo::makePhotosFromFiles([$request->photo]);
+
+        $category = Category::create([
+            'name' => $request->name,
+            'description' => $request->description
+       ]);
+
+        $category->photos()->attach($photo);
+
+        return response()->json($category);
     }
 
     /**
@@ -87,22 +106,41 @@ class CategoriesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        
+        $this->validate($request, [
+            'name' => 'required|min:3',
+            'description' => 'required|min:10',
+            'photo' => 'nullable|mimes:jpg,jpeg,bmp,png',
+        ]);
+
+        if($request->photo){
+            $photo = Photo::makePhotosFromFiles([$request->photo]);
+            $category->photos()->sync($photo);
+        }
+
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->updated_at = now();
+        $category->save();
+
+        $category->fresh();
+
+        return $category;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        $category->delete();
+        return 'deleted';
     }
 }

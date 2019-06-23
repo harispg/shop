@@ -39,26 +39,6 @@ class ApiCategoriesController extends Controller
         return response()->json($category);
     }
 
-    public function store(Request $request)
-    {
-    	$this->validate($request, [
-            'name' => 'required|min:3',
-            'description' => 'required|min:10',
-            'photo' => 'required|mimes:jpg,jpeg,bmp,png',
-        ]);
-
-        $photo = Photo::makePhotosFromFiles([$request->photo], $request->dimType);
-
-        $category = Category::create([
-            'name' => $request->name,
-            'description' => $request->description
-       ]);
-
-        $category->photos()->attach($photo);
-
-        return response()->json($category);
-    }
-
     public function destroy(Request $request)
     {
         $category = Category::find($request->categoryId);

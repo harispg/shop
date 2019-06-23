@@ -6,7 +6,7 @@
       <div class="d-flex align-items-start g-mb-15 g-mb-10--sm">
         <div class="d-block">
           <h5 class="h6" v-text="comment.owner.name"></h5>
-          <span class="d-block g-color-gray-dark-v5 g-font-size-11" v-text="comment.created_at"></span>
+          <span class="d-block g-color-gray-dark-v5 g-font-size-11" v-text="timeAgo"></span>
         </div>
         <div class="ml-auto">
 
@@ -60,6 +60,7 @@
 <script>
   import CommentsForm from './CommentsForm.vue';
   import CommentComponent from './CommentComponent.vue';
+  var moment = require('moment');
 	export default{
     name: 'comment-node',
     components: {CommentsForm, CommentComponent},
@@ -109,7 +110,10 @@
         this.shouldShow = false;
       }
     },
-    created(){
+    computed: {
+      timeAgo(){
+        return moment(this.comment.created_at).fromNow();
+      }
     },
     mounted(){
       let _this = this;

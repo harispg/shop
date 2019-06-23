@@ -72,6 +72,9 @@ Route::delete('/photos/{photo}', 'PhotosController@destroy')->name('photoDelete'
 
 Route::get('categories/create', 'CategoriesController@create')->name('categories');
 Route::get('categories/{category}', 'CategoriesController@show')->name('categoryArticles');
+Route::post('categories', 'CategoriesController@store');
+Route::PATCH('categories/{category}', 'CategoriesController@update');
+Route::delete('categories/{category}', 'CategoriesController@destroy');
 
 
 Route::post('/comments/{article}', 'CommentsController@store')->name('comments.store');
