@@ -68,6 +68,7 @@
 						 .then(response => {
 						 	_this.form.reset();
 						 	$("#newCategory").modal('toggle');
+						 	_this.$emit('new-category', response);
 						 })
 						 .catch(error => console.log(error.message));
 			},

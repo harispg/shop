@@ -11,6 +11,8 @@ import Form from './utilities/Form.js';
 import WishlistComponent from './components/WishlistComponent.vue';
 import ShopArticle from './components/ShopArticle.vue';
 import CategoriesComponent from './components/categories/CategoriesComponent.vue';
+import Paginator from './components/Paginator.vue';
+Vue.component('paginator', Paginator);
 window.Event = new Vue();
 
 if(document.getElementById("app")!=null){
@@ -35,7 +37,7 @@ if(document.getElementById("wrapper")!=null){
 	new Vue({
 		el:"#wrapper",
 		components: {
-			CategoriesComponent,
+			CategoriesComponent
 		}
 	});
 }

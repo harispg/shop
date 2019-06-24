@@ -15,8 +15,8 @@
 		},
 
 		methods: {
-			fetch(){
-				axios.get(this.url())
+			fetch(page){
+				axios.get(this.url(page))
 					 .then(this.refresh)
 					 .catch(error => console.log(error.response));
 			},
@@ -26,8 +26,12 @@
 				this.items = data.data;
 			},
 
-			url(){
-				return location.pathname;
+			url(page){
+				if(! page){
+					let query = location.search.match(/page=(\d+)/);
+					page = query ? query[1] : 1;
+				}
+				return location.pathname+'?page='+page;
 			},
 
 			photoPath(path){
@@ -46,9 +50,12 @@
 				this.items = reducedItems;
 			},
 
-			updateItems(category){
-				console.log('haris');
+			removeItem(category){
 				this.items = this.items.map(item => item.id===category.id ? category: item);
+			},
+
+			addItem(category){
+				this.items.unshift(category);
 			}
 		}
 	}

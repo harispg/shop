@@ -7,7 +7,7 @@
       <h1>Products categories</h1>
 
       @can('categories.create')
-      <new-category></new-category>
+      <new-category @new-category="addItem"></new-category>
       @endcan
     </div>
 
@@ -40,14 +40,15 @@
                 <img :src="'/'+item.thumbnail" width="100" height="100" />
               </td>
               <td name="edit" class="center">
-                <edit-category :category="item" @category_updated="updateItems"></edit-category>
+                <edit-category :category="item" @category_updated="removeItem"></edit-category>
               </td>
               <td name="delete" class="center">
                 <button class="btn btn-outline-primary delete" @click="deleteRow(item)">Delete</button>
               </td>
           </tr>
           </tbody>
-                </table>
+        </table>
+        <paginator :data_set="dataSet" @updated="fetch"></paginator>
             </div>
 
           </div>

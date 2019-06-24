@@ -61,7 +61,9 @@ class CategoriesController extends Controller
 
         $category->photos()->attach($photo);
 
-        return response()->json($category);
+        $category->fresh();
+
+        return $category;
     }
 
     /**
