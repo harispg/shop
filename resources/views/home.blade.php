@@ -4,7 +4,7 @@
 
 {{-- @include('unify.revolutionSlider') --}}
 
-@include('unify.categories')
+@include('unify.categories', ['categories' => App\Category::all()])
 
 @include('unify.featuredProducts')
 

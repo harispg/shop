@@ -1,29 +1,30 @@
       <!-- Promo Block -->
+      @if(App\Article::all()->count()>0)
       <section class="g-min-height-100vhg-flex-centered g-bg-secondary g-pos-rel">
         <div class="container g-pt-100 g-pb-70">
           <div class="row justify-content-between align-items-center">
             <div class="col-md-8 col-lg-6 order-md-2 g-mb-30">
               <div class="g-pos-rel">
-                <img class="img-fluid w-100" src="assets/img-temp/725x725/img1.png" alt="Image Description">
+                <img class="img-fluid w-100" src="{{App\Article::first()->photos->first()->thumbnail_path}}" alt="Image Description">
                 <span class="u-icon-v1 g-width-85 g-height-85 g-brd-3 g-brd-white g-color-white g-bg-primary g-font-weight-300 g-font-size-22 rounded-circle g-pos-abs g-top-100 g-left-0 g-brd-around">
-                  <i class="g-font-style-normal">$60<span class="g-font-size-16">.00</span></i>
+                  <i class="g-font-style-normal">{{$number=explode('.', App\Article::first()->price)[0]}}.<span class="g-font-size-16">{{$number=explode('.', App\Article::first()->price)[1]}}</span></i>
                 </span>
               </div>
             </div>
 
             <div class="col-md-4 order-md-1 g-mb-30">
               <div class="g-mb-30">
-                <h1 class="g-color-primary g-font-weight-400 g-font-size-40 mb-0">Leather</h1>
-                <h2 class="g-color-dark g-font-weight-300 g-font-size-75 g-line-height-1 mb-4">Gloves</h2>
-                <p class="lead">We want to create a range of beautiful, practical and modern outerwear that doesn't cost the earth.</p>
+                <h1 class="g-color-primary g-font-weight-400 g-font-size-40 mb-0">{{App\Article::first()->categories->first()->name}}</h1>
+                <h2 class="g-color-dark g-font-weight-300 g-font-size-75 g-line-height-1 mb-4">{{App\Article::first()->name}}</h2>
+                <p class="lead">{{App\Article::first()->description}}</p>
               </div>
 
-              <a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25 g-mb-70" href="#!">Shop Now</a>
+              <a class="btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25 g-mb-70" href="{{route('articles.show',['article'=> App\Article::first()->id])}}">Shop Now</a>
 
               <!-- Countdown -->
               <div class="text-uppercase">
                 <div class="js-countdown u-countdown-v3 g-line-height-1_3 g-color-black"
-                     data-end-date="2019/01/31"
+                     data-end-date="2020/01/31"
                      data-month-format="%m"
                      data-days-format="%D"
                      data-hours-format="%H"
@@ -61,4 +62,5 @@
           </div>
         </div>
       </section>
+      @endif
       <!-- End Promo Block -->

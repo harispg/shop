@@ -67,7 +67,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-        $avatar = '/Images/dummyPics/avatar.svg';
+        $avatar = 'Images/dummyPics/avatar.svg';
         if(array_key_exists('photo', $data) && $data['photo'] != null){
         $avatar = Photo::savePhoto($data['photo'])->thumbnail_path;
         }

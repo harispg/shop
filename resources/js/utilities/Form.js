@@ -47,6 +47,10 @@ class Form {
 		return data;
 	}
 
+	get(url){
+		return this.submit('get', url);
+	}
+
 	post(url){
 		return this.submit('post', url);
 	}

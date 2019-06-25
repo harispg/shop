@@ -82,9 +82,10 @@
             </div>
 
             <!-- Search Form -->
-            <form id="searchform-1" class="u-searchform-v1 u-dropdown--css-animation u-dropdown--hidden u-shadow-v20 g-max-width-400 g-brd-around g-brd-gray-light-v4 g-bg-white g-right-0 rounded g-pa-10">
+            <form id="searchform-1" class="u-searchform-v1 u-dropdown--css-animation u-dropdown--hidden u-shadow-v20 g-max-width-400 g-brd-around g-brd-gray-light-v4 g-bg-white g-right-0 rounded g-pa-10"
+            action="/search" method="GET">
               <div class="input-group">
-                <input class="form-control g-font-size-13" type="search" placeholder="Search Here...">
+                <input class="form-control g-font-size-13" type="search" name="search" placeholder="Search Products...">
                 <div class="input-group-append p-0">
                   <button class="btn u-btn-primary g-font-size-12 text-uppercase g-py-15 g-px-15" type="submit">Go</button>
                 </div>

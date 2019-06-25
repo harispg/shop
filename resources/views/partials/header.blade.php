@@ -154,41 +154,19 @@
                     <!-- Mega Menu -->
                     <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-5">
                       <div class="row">
+                        @foreach($allArticles->take(3) as $article)
                         <div class="col-md-4 g-mb-30 g-mb-0--md">
                           <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img1.jpg">
+                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="{{$article->photos->first()->thumbnail_small}}">
                             <div class="g-pos-rel g-z-index-1">
-                              <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Blouse</span>
-                              <span class="d-block h2 g-color-white mb-4">Lafayette</span>
+                              <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">{{$article->categories->first()->name}}</span>
+                              <span class="d-block h2 g-color-white mb-4">{{$article->name}}</span>
                               <a class="btn u-btn-white g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20" href="#!">Shop Now</a>
                             </div>
                           </article>
                           <!-- End Article -->
                         </div>
-
-                        <div class="col-md-4 g-mb-30 g-mb-0--md">
-                          <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img2.jpg">
-                            <div class="g-pos-rel g-z-index-1">
-                              <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Hamburg Hats</span>
-                              <span class="d-block h2 g-color-white mb-4">Beaver</span>
-                              <a class="btn u-btn-white g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20" href="#!">Shop Now</a>
-                            </div>
-                          </article>
-                          <!-- End Article -->
-                        </div>
-
-                        <div class="col-md-4 g-mb-30 g-mb-0--md">
-                          <!-- Article -->
-                          <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="/assets/img-temp/600x400/img3.jpg">
-                            <div class="g-pos-rel g-z-index-1">
-                              <span class="d-block g-color-white g-font-weight-400 text-uppercase mb-3">Glasses</span>
-                              <span class="d-block h2 g-color-white mb-4">RayBan</span>
-                              <a class="btn u-btn-white g-brd-primary--hover g-color-white--hover g-bg-primary--hover g-font-size-11 text-uppercase g-py-10 g-px-20" href="#!">Shop Now</a>
-                            </div>
-                          </article>
-                          <!-- End Article -->
-                        </div>
+                        @endforeach
                       </div>
                     </div>
                     <!-- End Mega Menu -->

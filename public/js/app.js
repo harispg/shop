@@ -2310,39 +2310,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3135,6 +3102,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.form.reset();
 
         $("#newCategory").modal('toggle');
+        $(".custom-file-label").removeClass("selected").html("");
 
         _this.$emit('new-category', response);
       })["catch"](function (error) {
@@ -60875,15 +60843,11 @@ var render = function() {
               [_vm._v("Login")]
             )
           ])
-        ]),
-        _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _vm._m(3)
+        ])
       ]
     ),
     _vm._v(" "),
-    _vm._m(4)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -60925,126 +60889,6 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "fa", attrs: { "data-check-icon": "" } })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "d-flex justify-content-center text-center g-mb-30 pt-4" },
-      [
-        _c("div", {
-          staticClass:
-            "d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"
-        }),
-        _vm._v(" "),
-        _c(
-          "span",
-          { staticClass: "align-self-center g-color-gray-dark-v3 mx-4" },
-          [_vm._v("OR")]
-        ),
-        _vm._v(" "),
-        _c("div", {
-          staticClass:
-            "d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "list-inline text-center mb-4" }, [
-      _c("li", { staticClass: "list-inline-item g-mx-2" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-facebook rounded-circle",
-            attrs: { href: "#!" }
-          },
-          [
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-facebook"
-            }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-facebook"
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "list-inline-item g-mx-2" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-twitter rounded-circle",
-            attrs: { href: "#!" }
-          },
-          [
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-twitter"
-            }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-twitter"
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "list-inline-item g-mx-2" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-google-plus rounded-circle",
-            attrs: { href: "/login/google" }
-          },
-          [
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-google"
-            }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-google"
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "list-inline-item g-mx-2" }, [
-        _c(
-          "a",
-          {
-            staticClass:
-              "u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-linkedin rounded-circle",
-            attrs: { href: "#!" }
-          },
-          [
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-linkedin"
-            }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass:
-                "g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-linkedin"
-            })
-          ]
-        )
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -76402,6 +76246,11 @@ function () {
       }
 
       return data;
+    }
+  }, {
+    key: "get",
+    value: function get(url) {
+      return this.submit('get', url);
     }
   }, {
     key: "post",

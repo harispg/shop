@@ -2,9 +2,9 @@
       <div class="container g-pb-100">
         <div class="text-center mx-auto g-max-width-600 g-mb-50">
           <h2 class="g-color-black mb-4">Featured Products</h2>
-          <p class="lead">We want to create a range of beautiful, practical and modern outerwear that doesn't cost the earth – but let's you still live life in style.</p>
+          <p class="lead">We want to create a range of useful prducts for best price.</p>
         </div>
-
+        @if($articles->count()>0)
         <div id="carouselCus1" class="js-carousel g-pb-100 g-mx-minus-10"
              data-infinite="true"
              data-slides-show="4"
@@ -75,5 +75,6 @@
 
 
         </div>
+        @endif
       </div>
       <!-- End Products -->

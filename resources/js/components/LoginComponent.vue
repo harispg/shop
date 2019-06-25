@@ -39,40 +39,7 @@
         <button class="btn btn-md u-btn-primary rounded g-py-13 g-px-25" @click.prevent="onSubmit" :disabled="form.errors.any()">Login</button>
       </div>
     </div>
-
-    <div class="d-flex justify-content-center text-center g-mb-30 pt-4">
-      <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
-      <span class="align-self-center g-color-gray-dark-v3 mx-4">OR</span>
-      <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
-    </div>
-
-    <!-- Form Social Icons -->
-    <ul class="list-inline text-center mb-4">
-      <li class="list-inline-item g-mx-2">
-        <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-facebook rounded-circle" href="#!">
-          <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-facebook"></i>
-          <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-facebook"></i>
-        </a>
-      </li>
-      <li class="list-inline-item g-mx-2">
-        <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-twitter rounded-circle" href="#!">
-          <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-twitter"></i>
-          <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-twitter"></i>
-        </a>
-      </li>
-      <li class="list-inline-item g-mx-2">
-        <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-google-plus rounded-circle" href="/login/google">
-          <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-google"></i>
-          <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-google"></i>
-        </a>
-      </li>
-      <li class="list-inline-item g-mx-2">
-        <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-linkedin rounded-circle" href="#!">
-          <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-linkedin"></i>
-          <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-linkedin"></i>
-        </a>
-      </li>
-    </ul>
+ 
   </form>
   <!-- End Form -->
 

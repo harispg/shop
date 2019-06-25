@@ -61,33 +61,13 @@
                   <div class="d-inline-block align-self-center g-width-50 g-height-1 g-bg-gray-light-v1"></div>
                 </div>
 
-                <!-- Form Social Icons -->
-                <ul class="list-inline text-center mb-4">
-                  <li class="list-inline-item g-mx-2">
-                    <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-facebook rounded-circle" href="#!">
-                      <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-facebook"></i>
-                      <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-facebook"></i>
-                    </a>
-                  </li>
-                  <li class="list-inline-item g-mx-2">
-                    <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-twitter rounded-circle" href="#!">
-                      <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-twitter"></i>
-                      <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-twitter"></i>
-                    </a>
-                  </li>
-                  <li class="list-inline-item g-mx-2">
-                    <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-google-plus rounded-circle" href="{{route('loginGoogle')}}">
-                      <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-google"></i>
-                      <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-google"></i>
-                    </a>
-                  </li>
-                  <li class="list-inline-item g-mx-2">
-                    <a class="u-icon-v1 u-icon-size--sm u-icon-slide-up--hover g-color-white g-bg-linkedin rounded-circle" href="#!">
-                      <i class="g-font-size-default g-line-height-1 u-icon__elem-regular fa fa-linkedin"></i>
-                      <i class="g-font-size-default g-line-height-0_8 u-icon__elem-hover fa fa-linkedin"></i>
-                    </a>
-                  </li>
-                </ul>
+
+                     <div class="row justify-content-center mb-5">
+                       <a class="btn btn-outline-primary" href="{{route('loginGoogle')}}" style="text-transform:none">
+                          <img width="20px" alt="Google &quot;G&quot; Logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"/>
+                           Login with Google
+                       </a>
+                     </div>
             </form>
             <!-- End Form -->
 

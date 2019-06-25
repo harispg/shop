@@ -98,8 +98,4 @@ Route::delete('orders/{order}/items/{item}', 'OrdersController@deleteItem');
 Route::get('wishlist', 'WishlistController@index')->name('wishlist.index');
 Route::post('wishlist/{article}', 'WishlistController@addRemoveWishlist')->name('wishlist');
 
-
-Route::get('/test', function(Request $request){
-	return view('test');
-});
-
+Route::get('search', 'SearchController@index');

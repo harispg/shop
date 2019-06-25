@@ -68,6 +68,7 @@
 						 .then(response => {
 						 	_this.form.reset();
 						 	$("#newCategory").modal('toggle');
+						 	$(".custom-file-label").removeClass("selected").html("");
 						 	_this.$emit('new-category', response);
 						 })
 						 .catch(error => console.log(error.message));

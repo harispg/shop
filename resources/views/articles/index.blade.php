@@ -1,4 +1,4 @@
-@extends('master')
+  @extends('master')
 
 @section('content')
 
@@ -86,6 +86,9 @@
         <div class="row g-pt-30 g-mb-50">
           <articles-collection :items="{{json_encode($articles->toArray()['data'])}}" inline-template v-cloak>
         <div class="row">
+         @if($articles->count()==0)
+            <div class="col-md-12 ml-5">Sorry, no results for your search...</div>
+         @endif
             <div class="article col-6 col-lg-3 g-mb-30" v-for="article in articles" :key="article.id">
               <shop-article :article="article" inline-template>
                   <div>
