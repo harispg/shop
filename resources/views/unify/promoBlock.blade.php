@@ -7,7 +7,7 @@
               <div class="g-pos-rel">
                 <img class="img-fluid w-100" src="{{App\Article::first()->photos->first()->thumbnail_path}}" alt="Image Description">
                 <span class="u-icon-v1 g-width-85 g-height-85 g-brd-3 g-brd-white g-color-white g-bg-primary g-font-weight-300 g-font-size-22 rounded-circle g-pos-abs g-top-100 g-left-0 g-brd-around">
-                  <i class="g-font-style-normal">{{$number=explode('.', App\Article::first()->price)[0]}}.<span class="g-font-size-16">{{$number=explode('.', App\Article::first()->price)[1]}}</span></i>
+                  <i class="g-font-style-normal">{{$number=explode('.', App\Article::first()->price)[0]}}.<span class="g-font-size-16">{{$number=explode('.', App\Article::first()->price)[1] ?? '00'}}</span></i>
                 </span>
               </div>
             </div>
