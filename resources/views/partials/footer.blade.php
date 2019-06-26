@@ -8,39 +8,6 @@
               <p class="g-font-size-13 mb-0">2018 &copy; Hariscoding. All Rights Reserved.</p>
             </div>
 
-{{--             <div class="col-md-6 text-md-right g-mb-20">
-              <ul class="list-inline g-color-gray-dark-v5 g-font-size-25 mb-0">
-                <li class="list-inline-item g-cursor-pointer mr-1">
-                  <i class="fa fa-cc-visa" title="Visa"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-                <li class="list-inline-item g-cursor-pointer mx-1">
-                  <i class="fa fa-cc-paypal" title="Paypal"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-                <li class="list-inline-item g-cursor-pointer mx-1">
-                  <i class="fa fa-cc-mastercard" title="Master Card"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-                <li class="list-inline-item g-cursor-pointer ml-1">
-                  <i class="fa fa-cc-stripe" title="Stripe"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-                <li class="list-inline-item g-cursor-pointer ml-1">
-                  <i class="fa fa-cc-discover" title="Discover"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-                <li class="list-inline-item g-cursor-pointer ml-1">
-                  <i class="fa fa-cc-jcb" title="JCB"
-                     data-toggle="tooltip"
-                     data-placement="top"></i>
-                </li>
-              </ul>
             </div> --}}
           </div>
         </div>
@@ -149,7 +116,7 @@
       });
 
         // initialization of HSScrollBar component
-        $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
+        //$.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
         // initialization of go to
         $.HSCore.components.HSGoTo.init('.js-go-to');
 

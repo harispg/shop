@@ -6,19 +6,6 @@
         <a class="navbar-brand" href="{{route('home')}}">
           <p>Online Shop</p>
         </a>
-
-        <div class="col-sm-auto g-pos-rel g-py-14">
-          <!-- List -->
-          <ul class="list-inline g-overflow-hidden g-pt-1 g-mx-minus-4 mb-0">
-            <!-- Account -->
-            <li class="list-inline-item">
-              
-            </li>
-            <!-- End Account -->
-          </ul>
-          <!-- End List -->
-        </div>
-
         <div class="col-sm-auto g-pr-15 g-pr-0--sm">
           <div class="d-inline-block mr-5">
             <a id="account-dropdown-invoker-2" class="g-color-text g-color-primary--hover g-font-weight-400 g-text-underline--none--hover" href="#!"
@@ -60,7 +47,8 @@
                     Your Orders
                   </a>
                 </li>
-              </ul></div>
+              </ul>
+            </div>
           <!-- Basket -->
           <basket-component v-if="activeOrderId" :orderId="activeOrderId"></basket-component>
           <!-- End Basket -->

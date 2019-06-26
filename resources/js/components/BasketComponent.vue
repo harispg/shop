@@ -1,27 +1,23 @@
 <template>
 	<div class="u-basket d-inline-block g-z-index-3">
 		<div class="g-py-10 g-px-6">
-			<a href="#!" id="basket-bar-invoker" class="u-icon-v1 g-color-black g-color-primary--hover g-font-size-17 g-text-underline--none--hover"
-			aria-controls="basket-bar"
-			aria-haspopup="true"
-			aria-expanded="false"
-			data-dropdown-target="#basket-bar"
-			data-dropdown-type="css-animation"
-			data-dropdown-duration="300"
-			data-dropdown-hide-on-scroll="false"
-			data-dropdown-animation-in="fadeIn"
-			data-dropdown-animation-out="fadeOut">
+			<a href="#!" class="u-icon-v1 
+			g-color-black 
+			g-color-primary--hover 
+			g-font-size-17 
+			g-text-underline--none--hover" 
+			@mouseenter="showBasket = true"
+			@mouseleave="showBasket = false">
 			<span class="basketNumberOfArticles u-badge-v1--sm g-color-white g-bg-primary g-font-size-11 g-line-height-1_4 g-rounded-50x g-pa-4" style="top: 6px !important; right: 4px !important;" v-text="order.items_count"></span>
 			<i class="icon-hotel-restaurant-105 u-line-icon-pro"></i>
 		</a>
 	</div>
-
-	<div id="basket-bar" class="u-basket__bar u-dropdown--css-animation u-dropdown--hidden g-text-transform-none g-bg-white g-brd-around g-brd-gray-light-v4"
-	aria-labelledby="basket-bar-invoker">
+	<transition name="fade">
+	<div v-if="showBasket" @mouseenter="showBasket = true" @mouseleave="showBasket = false" class="u-basket__bar u-dropdown--css-animation g-text-transform-none g-bg-white g-brd-around g-brd-gray-light-v4">
 	<div class="g-brd-bottom g-brd-gray-light-v4 g-pa-15 g-mb-10">
 		<span class="d-block h6 text-center text-uppercase mb-0">Shopping Cart</span>
 	</div>
-	<div class="js-scrollbar g-height-200">
+	<div class="g-height-200" style="overflow: auto">
 		<!-- Product -->
 		<div v-show="order.items_count">	
 			<basket-item v-for="item in items" :key="item.id" :item="item"></basket-item>	
@@ -57,6 +53,7 @@
 		</div>
 	</div>
 </div>
+</transition>
 </div>
 </template>
 <script>
@@ -70,6 +67,7 @@
 				order: {},
 				items: [],
 				total: 0,
+				showBasket: false
 			}
 		},
 
@@ -111,7 +109,7 @@
 
 			showTotal(){
 				return this.total.toFixed(2);
-			}
+			},
 		},
 
 		mounted(){
@@ -139,3 +137,11 @@
 		}
 	}
 </script>
+<style>
+	.fade-enter-active, .fade-leave-active {
+	  transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	  opacity: 0;
+	}
+</style>
