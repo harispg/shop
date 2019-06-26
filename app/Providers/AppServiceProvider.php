@@ -20,9 +20,6 @@ class AppServiceProvider extends ServiceProvider
         \DB::listen(function($query){ \Log::info($query->sql, $query->bindings); });
        
         Schema::defaultStringLength(191);
-        \View::share('user', auth()->user());
-        \View::share('categories', Category::all());
-        \View::share('allArticles', Article::all());
     }
 
     /**

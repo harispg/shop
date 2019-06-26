@@ -101,7 +101,7 @@
                     <!-- Mega Menu -->
                     <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-3">
                       <div class="row">
-                        @foreach($categories->chunk(4) as $set)
+                        @foreach(App\Category::all()->chunk(4) as $set)
                         <div class="col-sm-6 col-lg-2 g-mb-30 g-mb-0--md">
                           <!-- Links -->
                           @foreach($set as $category)
@@ -122,7 +122,7 @@
                         @endforeach
 
                         <div class="col-md-6 col-lg-4 g-mb-30 g-mb-0--md">
-                          @if($allArticles->where('featured',true)->isNotEmpty() && $article = $allArticles->where('featured', true)->random())
+                          @if(App\Article::all()->where('featured',true)->isNotEmpty() && $article = App\Article::all()->where('featured', true)->random())
                           <article class="g-pos-rel">
                             <img class="img-fluid" src="/{{$article->photos->first()->path}}" alt="Image Description">
 
@@ -154,7 +154,7 @@
                     <!-- Mega Menu -->
                     <div class="w-100 hs-mega-menu u-shadow-v11 g-text-transform-none g-brd-top g-brd-primary g-brd-top-2 g-bg-white g-pa-30 g-mt-17" aria-labelledby="mega-menu-label-5">
                       <div class="row">
-                        @foreach($allArticles->take(3) as $article)
+                        @foreach(App\Article::all()->take(3) as $article)
                         <div class="col-md-4 g-mb-30 g-mb-0--md">
                           <!-- Article -->
                           <article class="g-bg-size-cover g-bg-pos-center g-bg-cover g-bg-bluegray-opacity-0_3--after text-center g-px-40 g-py-80" data-bg-img-src="{{$article->photos->first()->thumbnail_small}}">
