@@ -12,7 +12,7 @@
 			<i class="icon-hotel-restaurant-105 u-line-icon-pro"></i>
 		</a>
 	</div>
-	<transition name="fade">
+	<transition name="delay-display-none" :duration="300">
 	<div v-if="showBasket" @mouseenter="showBasket = true" @mouseleave="showBasket = false" class="u-basket__bar u-dropdown--css-animation g-text-transform-none g-bg-white g-brd-around g-brd-gray-light-v4">
 	<div class="g-brd-bottom g-brd-gray-light-v4 g-pa-15 g-mb-10">
 		<span class="d-block h6 text-center text-uppercase mb-0">Shopping Cart</span>
@@ -138,10 +138,19 @@
 	}
 </script>
 <style>
-	.fade-enter-active, .fade-leave-active {
+
+.delay-display-none-leave-active {
+    transition-delay: .2s;
+    transition: opacity .1s;
+}
+.delay-display-none-leave-to {
+    opacity: 1
+}
+/*	.fade-enter-active, .fade-leave-active {
 	  transition: opacity .5s;
+	  transition-delay: .2;
 	}
-	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	.fade-enter, .fade-leave-to {
 	  opacity: 0;
-	}
+	}*/
 </style>

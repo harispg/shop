@@ -7894,7 +7894,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter-active, .fade-leave-active {\n  transition: opacity .5s;\n}\n.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.delay-display-none-leave-active {\n    transition-delay: .2s;\n    transition: opacity .1s;\n}\n.delay-display-none-leave-to {\n    opacity: 1\n}\n/*\t.fade-enter-active, .fade-leave-active {\n\t  transition: opacity .5s;\n\t  transition-delay: .2;\n\t}\n\t.fade-enter, .fade-leave-to {\n\t  opacity: 0;\n\t}*/\n", ""]);
 
 // exports
 
@@ -61075,161 +61075,167 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("transition", { attrs: { name: "fade" } }, [
-        _vm.showBasket
-          ? _c(
-              "div",
-              {
-                staticClass:
-                  "u-basket__bar u-dropdown--css-animation g-text-transform-none g-bg-white g-brd-around g-brd-gray-light-v4",
-                on: {
-                  mouseenter: function($event) {
-                    _vm.showBasket = true
-                  },
-                  mouseleave: function($event) {
-                    _vm.showBasket = false
+      _c(
+        "transition",
+        { attrs: { name: "delay-display-none", duration: 300 } },
+        [
+          _vm.showBasket
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "u-basket__bar u-dropdown--css-animation g-text-transform-none g-bg-white g-brd-around g-brd-gray-light-v4",
+                  on: {
+                    mouseenter: function($event) {
+                      _vm.showBasket = true
+                    },
+                    mouseleave: function($event) {
+                      _vm.showBasket = false
+                    }
                   }
-                }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "g-brd-bottom g-brd-gray-light-v4 g-pa-15 g-mb-10"
-                  },
-                  [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "d-block h6 text-center text-uppercase mb-0"
-                      },
-                      [_vm._v("Shopping Cart")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "g-height-200",
-                    staticStyle: { overflow: "auto" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.order.items_count,
-                            expression: "order.items_count"
-                          }
-                        ]
-                      },
-                      _vm._l(_vm.items, function(item) {
-                        return _c("basket-item", {
-                          key: item.id,
-                          attrs: { item: item }
-                        })
-                      }),
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.order.items_count,
-                            expression: "!order.items_count"
-                          }
-                        ],
-                        staticClass: "container text-center"
-                      },
-                      [
-                        _c("div", { staticClass: "mb-5" }, [
-                          _c("h4", { staticClass: "mt-5" }, [
-                            _vm._v("Your Cart is Currently Empty")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass:
-                              "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
-                            attrs: { href: "/articles" }
-                          },
-                          [_vm._v("Start Shopping")]
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "clearfix g-px-15" }, [
+                },
+                [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "row align-items-center text-center g-brd-y g-brd-gray-light-v4 g-font-size-default"
+                        "g-brd-bottom g-brd-gray-light-v4 g-pa-15 g-mb-10"
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass:
+                            "d-block h6 text-center text-uppercase mb-0"
+                        },
+                        [_vm._v("Shopping Cart")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "g-height-200",
+                      staticStyle: { overflow: "auto" }
                     },
                     [
                       _c(
                         "div",
-                        { staticClass: "col g-brd-right g-brd-gray-light-v4" },
-                        [
-                          _c(
-                            "strong",
+                        {
+                          directives: [
                             {
-                              staticClass:
-                                "d-block g-py-10 text-uppercase g-color-main g-font-weight-500 g-py-10"
-                            },
-                            [_vm._v("Total")]
-                          )
-                        ]
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.order.items_count,
+                              expression: "order.items_count"
+                            }
+                          ]
+                        },
+                        _vm._l(_vm.items, function(item) {
+                          return _c("basket-item", {
+                            key: item.id,
+                            attrs: { item: item }
+                          })
+                        }),
+                        1
                       ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col" }, [
-                        _c("strong", {
-                          staticClass:
-                            "d-block g-py-10 g-color-main g-font-weight-500 g-py-10",
-                          domProps: {
-                            textContent: _vm._s("$ " + _vm.showTotal)
-                          }
-                        })
-                      ])
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.order.items_count,
+                              expression: "!order.items_count"
+                            }
+                          ],
+                          staticClass: "container text-center"
+                        },
+                        [
+                          _c("div", { staticClass: "mb-5" }, [
+                            _c("h4", { staticClass: "mt-5" }, [
+                              _vm._v("Your Cart is Currently Empty")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "btn u-btn-primary g-font-size-12 text-uppercase g-py-12 g-px-25",
+                              attrs: { href: "/articles" }
+                            },
+                            [_vm._v("Start Shopping")]
+                          )
+                        ]
+                      )
                     ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "g-pa-20" }, [
-                  _c("div", { staticClass: "text-center g-mb-15" }, [
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix g-px-15" }, [
                     _c(
-                      "a",
+                      "div",
                       {
                         staticClass:
-                          "text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover",
-                        attrs: { href: _vm.orderUrl }
+                          "row align-items-center text-center g-brd-y g-brd-gray-light-v4 g-font-size-default"
                       },
                       [
-                        _vm._v("\n\t\t\t\tView Cart\n\t\t\t\t"),
-                        _c("i", {
-                          staticClass: "ml-2 icon-finance-100 u-line-icon-pro"
-                        })
+                        _c(
+                          "div",
+                          {
+                            staticClass: "col g-brd-right g-brd-gray-light-v4"
+                          },
+                          [
+                            _c(
+                              "strong",
+                              {
+                                staticClass:
+                                  "d-block g-py-10 text-uppercase g-color-main g-font-weight-500 g-py-10"
+                              },
+                              [_vm._v("Total")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col" }, [
+                          _c("strong", {
+                            staticClass:
+                              "d-block g-py-10 g-color-main g-font-weight-500 g-py-10",
+                            domProps: {
+                              textContent: _vm._s("$ " + _vm.showTotal)
+                            }
+                          })
+                        ])
                       ]
                     )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "g-pa-20" }, [
+                    _c("div", { staticClass: "text-center g-mb-15" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass:
+                            "text-uppercase g-color-primary g-color-main--hover g-font-weight-400 g-font-size-13 g-text-underline--none--hover",
+                          attrs: { href: _vm.orderUrl }
+                        },
+                        [
+                          _vm._v("\n\t\t\t\tView Cart\n\t\t\t\t"),
+                          _c("i", {
+                            staticClass: "ml-2 icon-finance-100 u-line-icon-pro"
+                          })
+                        ]
+                      )
+                    ])
                   ])
-                ])
-              ]
-            )
-          : _vm._e()
-      ])
+                ]
+              )
+            : _vm._e()
+        ]
+      )
     ],
     1
   )
