@@ -88,4 +88,9 @@ class RegisterController extends Controller
     {
         return view('auth.verify');
     }
+
+    public function verifyEmail()
+    {
+        return view('auth.verify');
+    }
 }

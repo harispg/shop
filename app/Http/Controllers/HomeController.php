@@ -29,4 +29,9 @@ class HomeController extends Controller
         $articles = Article::where('featured', true)->get();
         return view('home', compact('categories', 'articles'));return view('home');
     }
+
+    public function admin()
+    {
+        return view('admin.master');
+    }
 }

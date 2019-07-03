@@ -206,6 +206,12 @@ class ArticlesController extends Controller
         return redirect()->back();
     }
 
+    public function newArticles()
+    {
+        $articles = Article::where('new', true)->paginate(8);
+        return view('articles.index', compact('articles'));
+    }
+
     public function addToActiveOrder(Request $request, Article $article)
     {
         auth()->user()->activeOrder()->addArticle($article, $request->quantity);

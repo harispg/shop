@@ -10,46 +10,20 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', 'HomeController@index')->name('home');
 Route::redirect('/home', '/');
 // Getting user for api
-Route::get('authUser', function() {
-    return auth()->user() ?: 'Unauthenticated';
-});
+Route::get('authUser', 'AuthTokensController@getUser');
 
 //For checking if user is authenticated before API requests
-Route::get('/userTokensForApiAuthentication', function (Request $request) {
-    if(! auth()->check()){
-    	return response()->json(
-    		[
-    			'API_TOKEN' => 'Unauthenticated', 
-    			'CSRF_TOKEN' => 'Session expired'
-    		]
-    	);
-    }
-    return response()->json(
-    	[
-    		'API_TOKEN'=>$request->user()->api_token, 
-    		'CSRF_TOKEN' => $request->session()->has('_token') ? $request->session()->token():'Session expired'
-    	]
-    );
-});
-
-
+Route::get('/userTokensForApiAuthentication', 'AuthTokensController@getTokens');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/email-verification', function(){
-    return view('auth.verify');
-});
+Route::get('/email-verification', 'Auth\RegisterController@verifyEmail');
 
-Route::get('admin', function(){
-	return view('admin.master');
-})->middleware(['auth', 'can:articles.modify']);
+Route::get('admin', 'HomeController@admin')->middleware(['auth', 'can:articles.modify']);
 
 Route::get('/admin/articles', 'ArticlesController@adminIndex')->middleware('can:articles.edit')->name('admin.articles.index');
 
-Route::get('articles/new', function(){
-	$articles = Article::where('new', true)->paginate(8);
-	return view('articles.index', compact('articles'));
-})->name('articles.new');
+Route::get('articles/new', 'ArticlesController@newArticles')->name('articles.new');
 
 Route::resource('articles', 'ArticlesController');
 Route::post('articles/{article}/addToActiveOrder', 'ArticlesController@addToActiveOrder')->name('articles.addToActiveOrder');
