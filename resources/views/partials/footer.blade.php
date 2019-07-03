@@ -32,9 +32,7 @@
 
     <!-- JS Global Compulsory -->
     <script src="/js/app.js"></script>
-    <script src="/unifyAssets/vendor/jquery/jquery.min.js"></script>
     <script src="/unifyAssets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
-    <script src="/unifyAssets/vendor/bootstrap/bootstrap.min.js"></script>
 
     <!-- JS Implementing Plugins -->
     <script src="/unifyAssets/vendor/hs-megamenu/src/hs.megamenu.js"></script>
@@ -116,7 +114,7 @@
       });
 
         // initialization of HSScrollBar component
-        //$.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
+        $.HSCore.components.HSScrollBar.init($('.js-scrollbar'));
         // initialization of go to
         $.HSCore.components.HSGoTo.init('.js-go-to');
 

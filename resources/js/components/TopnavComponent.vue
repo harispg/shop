@@ -11,6 +11,7 @@ import LogoutComponent from './LogoutComponent.vue';
 			}
 		},
 		created(){
+
 			let _this = this;
 			axios.get('/authUser').then(response => {
 				_this.authenticated = (response.data != 'Unauthenticated');

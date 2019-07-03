@@ -2,11 +2,10 @@
   <div class="u-header__section g-brd-bottom g-brd-gray-light-v4 g-transition-0_3">
     <div class="container">
       <div class="row justify-content-between align-items-end g-mx-0--lg">
-        
         <a class="navbar-brand" href="{{route('home')}}">
           <p>Online Shop</p>
         </a>
-        <div class="col-sm-auto g-pr-15 g-pr-0--sm">
+        <div class="g-pr-15 g-pr-0--sm">
           <div class="d-inline-block mr-5">
             <a id="account-dropdown-invoker-2" class="g-color-text g-color-primary--hover g-font-weight-400 g-text-underline--none--hover" href="#!"
                  aria-controls="account-dropdown-2"
@@ -19,7 +18,6 @@
                  data-dropdown-animation-in="fadeIn"
                  data-dropdown-animation-out="fadeOut">
                   <div class="pb-1 pl-0" v-text="userName"></div>
-
               </a>
               <ul id="account-dropdown-2" class="list-unstyled u-shadow-v29 g-pos-abs g-bg-white g-width-160 g-pb-5 g-mt-19 g-z-index-2"
                   aria-labelledby="account-dropdown-invoker-2">
