@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $categories = Category::has('articles')->get();
+        $articles = Article::where('featured', true)->get();
+        return view('home', compact('categories', 'articles'));return view('home');
     }
 }

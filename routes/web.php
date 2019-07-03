@@ -7,16 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 
-Route::get('/', function () {
-	$categories = Category::has('articles')->get();
-	$articles = Article::where('featured', true)->get();
-    return view('home', compact('categories', 'articles'));
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 Route::redirect('/home', '/');
-Route::get('plan', function(){
-	return view('PLAN');
-})->middleware(['auth']);//,role:admin
-
 // Getting user for api
 Route::get('authUser', function() {
     return auth()->user() ?: 'Unauthenticated';
