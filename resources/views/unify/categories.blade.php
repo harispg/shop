@@ -3,7 +3,7 @@
 <div class="container g-pt-100 g-pb-70">
   <div class="text-center mx-auto g-max-width-600 g-mb-50">
           <h2 class="g-color-black mb-4">Categories</h2>
-          <p class="lead">Choose category that you find interesting...</p>
+          <p class="lead">Choose a category that you find interesting...</p>
         </div>
   <div class="row g-mx-minus-10">
     @foreach($categories as $category)
